@@ -1,0 +1,347 @@
+/*
+ * @package    Talent Grid jQuery plugin.
+ * @copyright  2017 Joseph Cape (http://chacana.co.uk)
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+
+.path-mod-goodhabits .talentgrid-report-container .cell-with-smiley,
+.path-mod-goodhabits .talentgrid-report-container .cell-with-multiple-smileys {
+    cursor: pointer;
+}
+
+.path-mod-goodhabits .clearboth {
+    clear: both;
+}
+.path-mod-goodhabits .talentgrid-userlist-container {
+    float: left;
+    margin-top: 30px;
+}
+
+.path-mod-goodhabits ul.talentgrid-userlist li {
+    cursor: pointer;
+}
+
+.path-mod-goodhabits ul.talentgrid-userlist {
+    width: 200px;
+    height: 338px;
+    overflow-y: scroll;
+}
+
+.path-mod-goodhabits .table-plus-axis.report {
+    width: 338px;
+    float: left;
+}
+
+.path-mod-goodhabits .table-plus-axis {
+    margin-top: 40px;
+    width: 338px;
+}
+
+.path-mod-goodhabits div.table-plus-axis.centre-el {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.path-mod-goodhabits .mform fieldset#id_question div {
+    margin: 0;
+    padding: 0;
+}
+.path-mod-goodhabits .talentgrid-token {
+    cursor: pointer;
+    z-index: 1;
+}
+
+.path-mod-goodhabits .table-plus-axis {
+    position: relative;
+    margin-left: 50px;
+    margin-bottom: 50px;
+}
+
+.path-mod-goodhabits .talentgrid-y-axis {
+    position: absolute;
+    left: -40px;
+    top: 144px;
+}
+
+.path-mod-goodhabits .talentgrid-y-axis.large-label,
+.path-mod-goodhabits .talentgrid-x-axis.large-label {
+    font-size: 22px;
+}
+.path-mod-goodhabits .talentgrid-y-axis.large-label.small-labels-also-used {
+    left: -120px;
+}
+
+.path-mod-goodhabits .talentgrid-y-axis.large-label.only-large {
+    left: -100px;
+}
+
+.path-mod-goodhabits .talentgrid-x-axis.large-label {
+    bottom: -100px;
+}
+
+.path-mod-goodhabits .talentgrid-x-axis.large-label.only-large {
+    bottom: -60px;
+}
+
+.path-mod-goodhabits .y-sub-label {
+    position: absolute;
+}
+
+
+.path-mod-goodhabits .x-sub-label {
+    position: absolute;
+}
+
+.path-mod-goodhabits .talentgrid-x-axis {
+    position: absolute;
+    bottom: -20px;
+    left: 0;
+}
+
+.path-mod-goodhabits .rotated-text {
+    -webkit-transform: rotate(-90deg);
+    -moz-transform: rotate(-90deg);
+    -ms-transform: rotate(-90deg);
+    -o-transform: rotate(-90deg);
+    transform: rotate(-90deg);
+
+    /* also accepts left, right, top, bottom coordinates; not required, but a good idea for styling */
+    -webkit-transform-origin: 50% 50%;
+    -moz-transform-origin: 50% 50%;
+    -ms-transform-origin: 50% 50%;
+    -o-transform-origin: 50% 50%;
+    transform-origin: 50% 50%;
+
+    /* Should be unset in IE9+ I think. */
+    filter: progid:dximagetransform.microsoft.basicimage(rotation=3);
+}
+
+
+.path-mod-goodhabits .talentgrid-cell {
+    border: solid #d0d0d0 1px;
+    table-layout: fixed;
+
+    margin: 0;
+    padding: 0;
+}
+
+.path-mod-goodhabits .talentgrid-cell.cell-with-smiley {
+    height: 32px;
+}
+
+.path-mod-goodhabits .talentgrid-cell.emboldened {
+    border-left: solid black 3px;
+}
+
+.path-mod-goodhabits .talentgrid-cell.final {
+    border-right: solid black 3px;
+}
+
+.path-mod-goodhabits .talentgrid-row.final,
+.path-mod-goodhabits .talentgrid-row.final td {
+    border-bottom: solid black 3px;
+}
+
+.path-mod-goodhabits .talentgrid-row.emboldened,
+.path-mod-goodhabits .talentgrid-row.emboldened td {
+    border-top: solid black 3px;
+}
+
+.path-mod-goodhabits .talentgrid-table {
+    height: 288px;
+    width: 288px;
+    max-width: 100%;
+    background-color: transparent;
+    border-collapse: collapse;
+    border-spacing: 0;
+
+}
+
+.path-mod-goodhabits .talentgrid-image {
+    vertical-align: middle;
+    border: 0;
+}
+
+.path-mod-goodhabits td.ui-draggable {
+    background-clip: padding-box;
+}
+
+.path-mod-goodhabits .table-plus-axis {
+    float: left;
+    margin-left: 25px;
+    margin-top: 25px;
+}
+
+.path-mod-goodhabits .talentgrid-controls {
+    float: left;
+    margin-top: 160px;
+}
+
+.path-mod-goodhabits .talentgrid {
+    margin-left: 100px;
+}
+
+.path-mod-goodhabits .talentgrid-select-controls {
+    margin-top: 20px;
+}
+
+.path-mod-goodhabits .axis-selector-label {
+    margin-left: 5px;
+}
+
+.path-mod-goodhabits .drag-instructions-arrow {
+    font-size: 30px;
+    margin-right: 10px;
+}
+
+.path-mod-goodhabits .drag-instructions {
+    margin-left: 10px;
+}
+
+.path-mod-goodhabits .talentgrid-select-controls select {
+    margin-left: 3px;
+    margin-right: 3px;
+}
+
+.path-mod-goodhabits table.band-table {
+    position: absolute;
+    left: 0;
+    right: 0;
+    /*border: solid black 3px;*/
+    z-index: 1;
+}
+
+.path-mod-goodhabits table.band-table td {
+    opacity: 0;
+}
+
+.path-mod-goodhabits * {
+    font-size: 100%;
+    font-family: Arial;
+}
+
+.path-mod-goodhabits .x-val-1.y-val-9,
+.path-mod-goodhabits .x-val-2.y-val-9,
+.path-mod-goodhabits .x-val-2.y-val-8,
+.path-mod-goodhabits .x-val-3.y-val-8 {
+    background-color: #ffe879;
+}
+
+.path-mod-goodhabits .x-val-1.y-val-8,
+.path-mod-goodhabits .x-val-1.y-val-7,
+.path-mod-goodhabits .x-val-1.y-val-6,
+.path-mod-goodhabits .x-val-2.y-val-7 {
+    background-color: #fff1b0;
+}
+
+.path-mod-goodhabits .x-val-1.y-val-5,
+.path-mod-goodhabits .x-val-1.y-val-4,
+.path-mod-goodhabits .x-val-1.y-val-3,
+.path-mod-goodhabits .x-val-2.y-val-6,
+.path-mod-goodhabits .x-val-2.y-val-5,
+.path-mod-goodhabits .x-val-2.y-val-4,
+.path-mod-goodhabits .x-val-3.y-val-6,
+.path-mod-goodhabits .x-val-3.y-val-5 {
+    background-color: #fbfe92;
+}
+
+.path-mod-goodhabits .x-val-3.y-val-7,
+.path-mod-goodhabits .x-val-4.y-val-8,
+.path-mod-goodhabits .x-val-4.y-val-7,
+.path-mod-goodhabits .x-val-4.y-val-6,
+.path-mod-goodhabits .x-val-5.y-val-7 {
+    background-color: #fafe5f;
+}
+
+.path-mod-goodhabits .x-val-3.y-val-9,
+.path-mod-goodhabits .x-val-4.y-val-9 {
+    background-color: #f9cd00;
+}
+
+.path-mod-goodhabits .x-val-5.y-val-9,
+.path-mod-goodhabits .x-val-5.y-val-8,
+.path-mod-goodhabits .x-val-6.y-val-9,
+.path-mod-goodhabits .x-val-6.y-val-8,
+.path-mod-goodhabits .x-val-7.y-val-9 {
+    background-color: #f7fd0f;
+}
+
+.path-mod-goodhabits .x-val-1.y-val-2,
+.path-mod-goodhabits .x-val-1.y-val-1,
+.path-mod-goodhabits .x-val-2.y-val-3,
+.path-mod-goodhabits .x-val-2.y-val-2,
+.path-mod-goodhabits .x-val-2.y-val-1,
+.path-mod-goodhabits .x-val-3.y-val-4,
+.path-mod-goodhabits .x-val-3.y-val-3,
+.path-mod-goodhabits .x-val-3.y-val-2,
+.path-mod-goodhabits .x-val-4.y-val-3 {
+    background-color: #edffd0;
+}
+
+.path-mod-goodhabits .x-val-4.y-val-5,
+.path-mod-goodhabits .x-val-4.y-val-4,
+.path-mod-goodhabits .x-val-5.y-val-6,
+.path-mod-goodhabits .x-val-5.y-val-5,
+.path-mod-goodhabits .x-val-5.y-val-4,
+.path-mod-goodhabits .x-val-6.y-val-7,
+.path-mod-goodhabits .x-val-6.y-val-6,
+.path-mod-goodhabits .x-val-6.y-val-5,
+.path-mod-goodhabits .x-val-7.y-val-6 {
+    background-color: #cbfc78;
+}
+
+.path-mod-goodhabits .x-val-7.y-val-8,
+.path-mod-goodhabits .x-val-7.y-val-7,
+.path-mod-goodhabits .x-val-8.y-val-9,
+.path-mod-goodhabits .x-val-8.y-val-8,
+.path-mod-goodhabits .x-val-8.y-val-7,
+.path-mod-goodhabits .x-val-9.y-val-9,
+.path-mod-goodhabits .x-val-9.y-val-8 {
+    background-color: #b5e61d;
+}
+
+.path-mod-goodhabits .x-val-3.y-val-1,
+.path-mod-goodhabits .x-val-4.y-val-2,
+.path-mod-goodhabits .x-val-4.y-val-1,
+.path-mod-goodhabits .x-val-5.y-val-3,
+.path-mod-goodhabits .x-val-5.y-val-2,
+.path-mod-goodhabits .x-val-5.y-val-1,
+.path-mod-goodhabits .x-val-6.y-val-2 {
+    background-color: #d8fef1;
+}
+
+.path-mod-goodhabits .x-val-6.y-val-4,
+.path-mod-goodhabits .x-val-6.y-val-3,
+.path-mod-goodhabits .x-val-7.y-val-5,
+.path-mod-goodhabits .x-val-7.y-val-4,
+.path-mod-goodhabits .x-val-7.y-val-3,
+.path-mod-goodhabits .x-val-8.y-val-4 {
+    background-color: #7cfccf;
+}
+
+.path-mod-goodhabits .x-val-8.y-val-6,
+.path-mod-goodhabits .x-val-8.y-val-5,
+.path-mod-goodhabits .x-val-9.y-val-7,
+.path-mod-goodhabits .x-val-9.y-val-6 {
+    background-color: #1cf9ab;
+}
+
+.path-mod-goodhabits .x-val-6.y-val-1,
+.path-mod-goodhabits .x-val-7.y-val-1,
+.path-mod-goodhabits .x-val-8.y-val-1,
+.path-mod-goodhabits .x-val-9.y-val-1 {
+    background-color: #cbf2fe;
+}
+
+.path-mod-goodhabits .x-val-7.y-val-2,
+.path-mod-goodhabits .x-val-8.y-val-2,
+.path-mod-goodhabits .x-val-8.y-val-3,
+.path-mod-goodhabits .x-val-9.y-val-2 {
+    background-color: #91e4fd;
+}
+
+.path-mod-goodhabits .x-val-9.y-val-5,
+.path-mod-goodhabits .x-val-9.y-val-4,
+.path-mod-goodhabits .x-val-9.y-val-3 {
+    background-color: #31cdfb;
+}
