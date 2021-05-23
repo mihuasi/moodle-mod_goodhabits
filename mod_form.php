@@ -76,7 +76,6 @@ class mod_goodhabits_mod_form extends moodleform_mod {
         $text = get_string('freq', 'mod_goodhabits');
         $mform->addElement('select', 'freq', $text, $options);
         $mform->addHelpButton('freq', 'freq', 'mod_goodhabits');
-        $mform->addElement('header', 'goodhabitsfieldset', get_string('goodhabitsfieldset', 'mod_goodhabits'));
 
         // Add standard elements.
         $this->standard_coursemodule_elements();
