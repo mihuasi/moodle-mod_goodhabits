@@ -36,7 +36,7 @@ $name = $moduleinstance->name;
 
 $context = context_system::instance();
 
-require_capability('mod/goodhabits:view', $context);
+require_capability('mod/goodhabits:manage_personal_breaks', $context);
 $pagetitle = get_string('manage_breaks_title', 'mod_goodhabits', $name);
 
 $PAGE->set_context($context);
