@@ -32,9 +32,11 @@ require_login();
 
 $instanceid = optional_param('instance', 0, PARAM_INT);
 $moduleinstance = gh\Helper::get_module_instance($instanceid);
+$course = get_course($moduleinstance->course);
+$cm = get_coursemodule_from_instance('goodhabits', $moduleinstance->id, $course->id, false, MUST_EXIST);
 $name = $moduleinstance->name;
 
-$context = context_system::instance();
+$context = context_module::instance($cm->id);
 
 require_capability('mod/goodhabits:manage_personal_breaks', $context);
 $pagetitle = get_string('manage_breaks_title', 'mod_goodhabits', $name);
@@ -43,10 +45,14 @@ $PAGE->set_context($context);
 $PAGE->set_pagelayout('standard');
 $PAGE->set_title($pagetitle);
 $PAGE->set_heading($pagetitle);
+$PAGE->set_course($course);
+$PAGE->set_cm($cm);
 
 $params = array('instance' => $instanceid);
+$pageurl = new moodle_url('/mod/goodhabits/manage_breaks.php', $params);
 
-$PAGE->set_url('/mod/goodhabits/manage_breaks.php', $params);
+$PAGE->set_url($pageurl);
+$PAGE->navbar->add($pagetitle, $pageurl);
 
 $renderer = $PAGE->get_renderer('mod_goodhabits');
 

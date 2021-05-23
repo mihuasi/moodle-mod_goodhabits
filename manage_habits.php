@@ -33,13 +33,15 @@ require_login();
 
 $instanceid = required_param('instance', PARAM_INT);
 $moduleinstance = gh\Helper::get_module_instance($instanceid);
+$course = get_course($moduleinstance->course);
+$cm = get_coursemodule_from_instance('goodhabits', $moduleinstance->id, $course->id, false, MUST_EXIST);
 $name = $moduleinstance->name;
 
 $level = optional_param('level', 'personal', PARAM_TEXT);
 $action = optional_param('action', '', PARAM_TEXT);
 $habitid = optional_param('habitid', '', PARAM_INT);
 
-$context = context_system::instance();
+$context = context_module::instance($cm->id);
 require_capability('mod/goodhabits:view', $context);
 
 if ($level == 'activity') {
@@ -54,6 +56,8 @@ $PAGE->set_context($context);
 $PAGE->set_pagelayout('standard');
 $PAGE->set_title($pagetitle);
 $PAGE->set_heading($pagetitle);
+$PAGE->set_course($course);
+$PAGE->set_cm($cm);
 
 $params = array('instance' => $instanceid);
 
@@ -61,7 +65,11 @@ $params['level'] = $level;
 $params['action'] = $action;
 $params['habitid'] = $habitid;
 
-$PAGE->set_url('/mod/goodhabits/manage_habits.php', $params);
+$pageurl = new moodle_url('/mod/goodhabits/manage_habits.php', $params);
+
+$PAGE->set_url($pageurl);
+$PAGE->navbar->add($pagetitle, $pageurl);
+
 
 $renderer = $PAGE->get_renderer('mod_goodhabits');
 
