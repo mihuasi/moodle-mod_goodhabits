@@ -1,8 +1,15 @@
 # Good Habits #
 
-TODO Describe the plugin shortly here.
+The intention of this plugin is to help track habits over time. Within an e-learning context this may help cultivate behaviours that improve learning outcomes.
 
-TODO Provide more detailed description here.
+## Overview of features
+
+- Habit tracking by day, custom range of days or by week.
+- Every calendar entry allows for rating by both dedication and outcome.
+- Granular access control: 3 capabilities for access to plugin, management of habits and management of habit entries.
+- Uses the Privacy API to allow for control over user data.
+- Create breaks for stretches of time in which you do not want to track habits.
+- Keyboard shortcut to save values quickly (number key when editing a habit entry).
 
 ## License ##
 
