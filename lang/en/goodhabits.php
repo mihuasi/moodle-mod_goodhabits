@@ -122,6 +122,7 @@ $string['js_confirm_deletehabit'] = 'This will delete the habit {$a}.';
 $string['js_confirm_deletehabitentries'] = 'This will delete all your habit entries for {$a}.';
 $string['js_confirm_deletebreak'] = 'This will delete the break.';
 $string['freq'] = 'Frequency';
+$string['freq_help'] = 'How often you want people using this to be adding Habit Entries.';
 
 $string['activity'] = 'Activity';
 $string['personal'] = 'Personal';
