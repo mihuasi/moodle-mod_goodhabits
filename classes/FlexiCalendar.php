@@ -54,7 +54,7 @@ class FlexiCalendar {
     private function init_period_duration($periodduration) {
         $periodduration = (int) $periodduration;
         if (!Helper::validate_period_duration($periodduration)) {
-            print_error('err');
+            throw new \moodle_exception('err');
         }
         $this->periodduration = $periodduration;
     }

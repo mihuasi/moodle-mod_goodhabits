@@ -30,14 +30,14 @@ class FlexiCalendarUnit extends \DateTime {
 
     public function set_period_duration($periodduration) {
         if (!Helper::validate_period_duration($periodduration)) {
-            print_error('err');
+            throw new \moodle_exception('err');
         }
         $this->periodduration = $periodduration;
     }
 
     public function display_unit() {
         if (empty($this->periodduration)) {
-            print_error('must set periodDuration first');
+            throw new \moodle_exception('must set periodDuration first');
         }
         $offset = $this->periodduration - 1;
         $toplinedatatime = Helper::new_date_time($this, '-' . $offset . ' day');

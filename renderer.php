@@ -43,7 +43,6 @@ class mod_goodhabits_renderer extends plugin_renderer_base {
         $backurl = $calendar->get_back_url($instanceid);
         $forwardurl = $calendar->get_forward_url($instanceid);
 
-        //$html .= html_writer::link($backurl, html_writer::div('', 'arrow-left'));
         $html .= "<div class='arrow-left-container'><div class=\"arrow-left\">
 <a href=\"$backurl\">
         <span class=\"link-spanner\"></span>
@@ -93,11 +92,10 @@ class mod_goodhabits_renderer extends plugin_renderer_base {
     }
 
     public function print_habit(gh\FlexiCalendar $calendar, gh\Habit $habit) {
-        global $PAGE;
         $html = "<div class='habit habit-".$habit->id."'>";
 
-        $editglobal = has_capability('mod/goodhabits:manage_activity_habits', $PAGE->context);
-        $editpersonal = has_capability('mod/goodhabits:manage_personal_habits', $PAGE->context);
+        $editglobal = has_capability('mod/goodhabits:manage_activity_habits', $this->page->context);
+        $editpersonal = has_capability('mod/goodhabits:manage_personal_habits', $this->page->context);
         $isactivitylevel = $habit->is_activity_habit();
 
         $canmanage = false;
@@ -139,7 +137,7 @@ class mod_goodhabits_renderer extends plugin_renderer_base {
     }
 
     private function print_checkmarks(gh\FlexiCalendar $calendar, gh\Habit $habit) {
-        global $USER, $PAGE;
+        global $USER;
 
         $html = '';
 
@@ -147,7 +145,7 @@ class mod_goodhabits_renderer extends plugin_renderer_base {
 
         $entries = $habit->get_entries($USER->id, $calendar->get_period_duration());
 
-        $canmanageentries = has_capability('mod/goodhabits:manage_entries', $PAGE->context);
+        $canmanageentries = has_capability('mod/goodhabits:manage_entries', $this->page->context);
 
         $isactivitylevel = $habit->is_activity_habit();
 
@@ -201,13 +199,13 @@ class mod_goodhabits_renderer extends plugin_renderer_base {
     }
 
     public function print_hidden_data() {
-        global $CFG, $PAGE;
+        global $CFG;
 
         $data = array(
             'wwwroot' => $CFG->wwwroot,
             'sesskey' => sesskey(),
-            'can-interact' => (int) has_capability('mod/goodhabits:manage_entries', $PAGE->context),
-            'can-manage' => (int) has_capability('mod/goodhabits:manage_activity_habits', $PAGE->context),
+            'can-interact' => (int) has_capability('mod/goodhabits:manage_entries', $this->page->context),
+            'can-manage' => (int) has_capability('mod/goodhabits:manage_activity_habits', $this->page->context),
         );
 
         $datatext = '';
@@ -295,7 +293,7 @@ class mod_goodhabits_renderer extends plugin_renderer_base {
     public function print_link_as_form(moodle_url $url, $text) {
         $url = $url->out();
         $submit = "<input type='submit' value='$text' />";
-        $form = "<br /><form class='manage-breaks-form' method='post' action='$url'>$submit</form>" ;
+        $form = "<br /><form class='manage-breaks-form' method='post' action='$url'>$submit</form>";
         echo $form;
     }
 

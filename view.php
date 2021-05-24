@@ -35,7 +35,7 @@ require_once('classes/IndexHelper.php');
 require_once('classes/HabitItemsHelper.php');
 require_once('classes/BreaksHelper.php');
 
-// Course_module ID, or
+// Course_module ID, or...
 $id = optional_param('id', 0, PARAM_INT);
 
 // ... module instance id.
@@ -50,7 +50,7 @@ if ($id) {
     $course         = $DB->get_record('course', array('id' => $moduleinstance->course), '*', MUST_EXIST);
     $cm             = get_coursemodule_from_instance('goodhabits', $moduleinstance->id, $course->id, false, MUST_EXIST);
 } else {
-    print_error(get_string('missingidandcmid', 'mod_goodhabits'));
+    throw new moodle_exception(get_string('missingidandcmid', 'mod_goodhabits'));
 }
 
 require_login($course, true, $cm);
@@ -107,9 +107,6 @@ echo $renderer->print_hidden_data();
 $renderer->print_act_intro($moduleinstance);
 
 if ($habits) {
-    //echo $renderer->time_period_selector(gh\Helper::possible_period_durations(), $periodduration);
-    //TODO: this is set up to track habits day-by-day, etc...
-
     $calendarhtml = $renderer->print_calendar($calendar, $instanceid);
 
     $habitshtml = $renderer->print_habits($calendar, $habits);

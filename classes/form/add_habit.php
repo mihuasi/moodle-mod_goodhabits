@@ -25,8 +25,7 @@ namespace mod_goodhabits;
 class add_habit extends \moodleform
 {
 
-    public function definition()
-    {
+    public function definition() {
         $mform = $this->_form;
         $instanceid = (isset($this->_customdata['instance'])) ? $this->_customdata['instance'] : 0;
         $level = $this->_customdata['level'];

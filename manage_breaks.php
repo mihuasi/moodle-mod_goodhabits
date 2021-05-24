@@ -23,7 +23,7 @@
 use mod_goodhabits as gh;
 
 require_once('../../config.php');
-require_once "{$CFG->libdir}/formslib.php";
+require_once("{$CFG->libdir}/formslib.php");
 require_once($CFG->dirroot . '/mod/goodhabits/classes/form/add_break.php');
 require_once($CFG->dirroot . '/mod/goodhabits/classes/BreaksHelper.php');
 require_once($CFG->dirroot . '/mod/goodhabits/classes/Helper.php');

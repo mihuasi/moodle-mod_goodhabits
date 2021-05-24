@@ -31,7 +31,7 @@ class HabitItemsHelper {
 
     public static function get_habits($instanceid, $publishedonly = false) {
         global $DB, $USER;
-        $sql = 'SELECT * FROM {mod_goodhabits_item} 
+        $sql = 'SELECT * FROM {mod_goodhabits_item}
                     WHERE userid = :userid AND instanceid = :instanceid';
         $params = array('userid' => $USER->id, 'instanceid' => $instanceid);
         if ($publishedonly) {
@@ -75,7 +75,7 @@ class HabitItemsHelper {
 
         $params = array('name' => $name, 'userid' => $USER->id, 'instanceid' => $instanceid);
         if ($DB->record_exists('mod_goodhabits_item', $params)) {
-            print_error('Habit already exists with name ' . $name);
+            throw new \moodle_exception('Habit already exists with name ' . $name);
         }
         $record = new \stdClass();
         $record->instanceid = $instanceid;
@@ -206,13 +206,13 @@ class HabitItemsHelper {
         $delparams['level'] = $level;
         if ($allowhabitedit) {
             $deleteurl = new \moodle_url('/mod/goodhabits/manage_habits.php', $delparams);
-            $deltext = get_string('delete','mod_goodhabits');
+            $deltext = get_string('delete', 'mod_goodhabits');
             $actions[] = \html_writer::link($deleteurl, $deltext, $jsconfirm);
 
             $editparams = $delparams;
             $editparams['action'] = 'edit';
             $editurl = new \moodle_url('/mod/goodhabits/manage_habits.php', $editparams);
-            $edittext = get_string('edit','mod_goodhabits');
+            $edittext = get_string('edit', 'mod_goodhabits');
             $actions[] = \html_writer::link($editurl, $edittext);
         }
 
@@ -220,7 +220,7 @@ class HabitItemsHelper {
             $delentriesparams = $delparams;
             $delentriesparams['action'] = 'delete_entries';
             $url = new \moodle_url('/mod/goodhabits/manage_habits.php', $delentriesparams);
-            $text = get_string('delete_entries','mod_goodhabits');
+            $text = get_string('delete_entries', 'mod_goodhabits');
             $jsconfirmtxt = get_string('js_confirm_deletehabitentries', 'mod_goodhabits', $habit->name);
             $jsconfirm = Helper::js_confirm_text($jsconfirmtxt);
             $actions[] = \html_writer::link($url, $text, $jsconfirm);

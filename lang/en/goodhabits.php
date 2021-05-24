@@ -31,6 +31,7 @@ $string['modulenameplural'] = 'Good Habits Activities';
 $string['goodhabitsname'] = 'Name';
 $string['goodhabitsname_help'] = 'Name';
 $string['goodhabitssettings'] = 'Settings';
+$string['goodhabits:addinstance'] = 'Good Habits - Add Instance';
 
 $string['pluginadministration'] = 'Good Habits Admin';
 

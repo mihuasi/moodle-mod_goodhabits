@@ -26,10 +26,10 @@ defined('MOODLE_INTERNAL') || die();
 
 class IndexHelper {
 
-    static $instanceid;
+    public static $instanceid;
 
     public static function get_instance_id_from_url() {
-        // module instance id.
+        // Module instance id.
         $g = optional_param('g', 0, PARAM_INT);
         if ($g) {
             return $g;
@@ -37,7 +37,7 @@ class IndexHelper {
         if (!empty(static::$instanceid)) {
             return static::$instanceid;
         }
-        // Course module ID
+        // Course module ID.
         $id = optional_param('id', 0, PARAM_INT);
         $cm = get_coursemodule_from_id('goodhabits', $id, 0, false, MUST_EXIST);
         $instanceid = $cm->instance;

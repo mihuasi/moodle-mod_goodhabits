@@ -55,7 +55,7 @@ class HabitEntryTwoDimensional extends HabitEntry {
     public function update() {
         global $DB;
         if (!$this->existingrecord) {
-            print_error('existingRecord not found');
+            throw new \moodle_exception('existingRecord not found');
         }
         $this->existingrecord->x_axis_val = $this->xval;
         $this->existingrecord->y_axis_val = $this->yval;

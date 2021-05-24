@@ -71,7 +71,7 @@ class mod_goodhabits_mod_form extends moodleform_mod {
 
         // Adding the rest of mod_goodhabits settings, spreading all them into this fieldset
         // ... or adding more fieldsets ('header' elements) if needed for better logic.
-        //$mform->addElement('static', 'label1', 'goodhabitssettings', get_string('goodhabitssettings', 'mod_goodhabits'));
+
         $options = Helper::possible_period_durations();
         $text = get_string('freq', 'mod_goodhabits');
         $mform->addElement('select', 'freq', $text, $options);

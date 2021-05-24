@@ -93,13 +93,13 @@ class Habit {
 
     private function require_permission_to_edit() {
         if (!$this->can_edit()) {
-            print_error('nopermissions');
+            throw new \moodle_exception('nopermissions');
         }
     }
 
     private function require_permission_to_edit_entries() {
         if (!$this->can_edit_entries()) {
-            print_error('nopermissions');
+            throw new \moodle_exception('nopermissions');
         }
     }
 

@@ -25,8 +25,7 @@ namespace mod_goodhabits;
 class add_break extends \moodleform
 {
 
-    public function definition()
-    {
+    public function definition() {
         $mform = $this->_form;
         $instanceid = (isset($this->_customdata['instance'])) ? $this->_customdata['instance'] : 0;
         $text = get_string('fromdate_text', 'mod_goodhabits');
