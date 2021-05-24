@@ -35,7 +35,7 @@ require_once('classes/IndexHelper.php');
 require_once('classes/HabitItemsHelper.php');
 require_once('classes/BreaksHelper.php');
 
-// Course_module ID, or...
+// Course module ID, or...
 $id = optional_param('id', 0, PARAM_INT);
 
 // ... module instance id.
