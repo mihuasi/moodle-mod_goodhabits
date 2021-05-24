@@ -194,7 +194,7 @@
 .path-mod-goodhabits .habits .habit .time-line .checkmark.is-in-break,
 .path-mod-goodhabits .time-unit.is-in-break {
     cursor: not-allowed;
-    opacity: 65%;
+    opacity: 0.65;
 }
 
 .path-mod-goodhabits .checkmark.noxy {
@@ -338,11 +338,13 @@
     margin-top: 10px;
 }
 
-.path-mod-goodhabits div.add_break, .path-mod-goodhabits div.add_habit {
+.path-mod-goodhabits div.add_break,
+.path-mod-goodhabits div.add_habit {
     margin-top: 30px;
 }
 
-.path-mod-goodhabits p.add_break, .path-mod-goodhabits p.add_habit {
+.path-mod-goodhabits p.add_break,
+.path-mod-goodhabits p.add_habit {
     font-size: large;
     font-weight: bold;
 }
@@ -360,8 +362,8 @@
     height: 20px;
     border-top: 10px solid transparent;
     border-bottom: 10px solid transparent;
-    border-right:10px solid #4b4bcc;
-    position:relative;
+    border-right: 10px solid #4b4bcc;
+    position: relative;
 }
 
 .path-mod-goodhabits .link-spanner {
@@ -385,8 +387,8 @@
     height: 20px;
     border-top: 10px solid transparent;
     border-bottom: 10px solid transparent;
-    border-left:10px solid #4b4bcc;
-    position:relative;
+    border-left: 10px solid #4b4bcc;
+    position: relative;
 }
 
 .path-mod-goodhabits .arrow-right-container {
@@ -401,7 +403,7 @@
 }
 
 .path-mod-goodhabits .activity_habit {
-    opacity: 70%;
+    opacity: 0.7;
     cursor: context-menu;
 }
 
