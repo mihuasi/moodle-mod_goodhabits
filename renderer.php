@@ -31,7 +31,7 @@ class mod_goodhabits_renderer extends plugin_renderer_base {
      * Generates the top 'ribbon' in the activity, showing a series of days or weeks.
      *
      * @param gh\FlexiCalendar $calendar
-     * @param $instanceid
+     * @param int $instanceid
      * @return string
      */
     public function print_calendar(gh\FlexiCalendar $calendar, $instanceid) {
@@ -94,7 +94,7 @@ class mod_goodhabits_renderer extends plugin_renderer_base {
      * Generates the list of habits.
      *
      * @param gh\FlexiCalendar $calendar
-     * @param $habits
+     * @param array $habits
      * @return string
      */
     public function print_habits(gh\FlexiCalendar $calendar, $habits) {
@@ -216,8 +216,8 @@ class mod_goodhabits_renderer extends plugin_renderer_base {
     /**
      * Used to arrange the calendar and the habits html.
      *
-     * @param $calendar
-     * @param $habits
+     * @param string $calendar
+     * @param string $habits
      * @return string
      */
     public function print_module($calendar, $habits) {
@@ -274,7 +274,7 @@ class mod_goodhabits_renderer extends plugin_renderer_base {
     /**
      * Generates the button for admin to manage Activity-level habits.
      *
-     * @param $instanceid
+     * @param int $instanceid
      * @throws coding_exception
      * @throws moodle_exception
      */
@@ -302,7 +302,7 @@ class mod_goodhabits_renderer extends plugin_renderer_base {
     /**
      * Generates the button for users to manage their breaks.
      *
-     * @param $instanceid
+     * @param int $instanceid
      * @throws coding_exception
      * @throws moodle_exception
      */
@@ -316,7 +316,7 @@ class mod_goodhabits_renderer extends plugin_renderer_base {
     /**
      * Generates a home link button.
      *
-     * @param bool $name
+     * @param bool|string $name
      * @throws coding_exception
      * @throws moodle_exception
      */
@@ -335,7 +335,7 @@ class mod_goodhabits_renderer extends plugin_renderer_base {
      * Given a URL and text, returns a form with a submit button using the text.
      *
      * @param moodle_url $url
-     * @param $text
+     * @param string $text
      */
     private function print_link_as_form(moodle_url $url, $text) {
         $url = $url->out();
@@ -357,7 +357,7 @@ class mod_goodhabits_renderer extends plugin_renderer_base {
     /**
      * Generates HTML for the activity name and intro.
      *
-     * @param $instance
+     * @param object $instance
      */
     public function print_act_intro($instance) {
         $string = html_writer::div($instance->name, 'intro-name');

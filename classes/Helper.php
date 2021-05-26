@@ -138,6 +138,13 @@ class Helper {
         return array('onclick' => $action);
     }
 
+    /**
+     * Gets the instance ID given the URL vars expected while in view.php. Caches the result from ID
+     *      after the first time it is run.
+     *
+     * @return mixed
+     * @throws \coding_exception
+     */
     public static function get_instance_id_from_url() {
         // Module instance id.
         $g = optional_param('g', 0, PARAM_INT);
