@@ -26,6 +26,8 @@ defined('MOODLE_INTERNAL') || die();
 
 class Helper {
 
+    public static $instanceid;
+
     public static function validate_period_duration($periodduration) {
         $possiblevals = array_keys(static::possible_period_durations());
         return in_array($periodduration, $possiblevals) or 1;
@@ -134,6 +136,23 @@ class Helper {
         $txt = get_string('js_confirm', 'mod_goodhabits', $actiontext);
         $action = 'return confirm(\''.$txt.'\')';
         return array('onclick' => $action);
+    }
+
+    public static function get_instance_id_from_url() {
+        // Module instance id.
+        $g = optional_param('g', 0, PARAM_INT);
+        if ($g) {
+            return $g;
+        }
+        if (!empty(static::$instanceid)) {
+            return static::$instanceid;
+        }
+        // Course module ID.
+        $id = optional_param('id', 0, PARAM_INT);
+        $cm = get_coursemodule_from_id('goodhabits', $id, 0, false, MUST_EXIST);
+        $instanceid = $cm->instance;
+        static::$instanceid = $instanceid;
+        return $instanceid;
     }
 
 }

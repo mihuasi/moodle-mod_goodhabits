@@ -81,7 +81,7 @@ class BreaksHelper {
     }
 
     public static function is_in_a_break($timestamp) {
-        $instanceid = IndexHelper::get_instance_id_from_url();
+        $instanceid = Helper::get_instance_id_from_url();
         $breaks = static::get_personal_breaks($instanceid);
         foreach ($breaks as $break) {
             $start = $break->timestart;
