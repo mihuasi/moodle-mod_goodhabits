@@ -35,7 +35,7 @@ class BreaksHelper {
     /**
      * Insert a new break record if one does not exist already.
      *
-     * @param $data
+     * @param object $data
      * @return null
      * @throws \dml_exception
      */
@@ -68,7 +68,7 @@ class BreaksHelper {
     /**
      * Gets a user's breaks.
      *
-     * @param $instanceid
+     * @param int $instanceid
      * @return array
      * @throws \dml_exception
      */
@@ -104,7 +104,7 @@ class BreaksHelper {
     /**
      * Deletes a break with the ID provided.
      *
-     * @param $breakid
+     * @param int $breakid
      * @throws \dml_exception
      */
     public static function delete_break($breakid) {
@@ -115,7 +115,7 @@ class BreaksHelper {
     /**
      * Given a timestamp, returns whether or not this falls within one of the user's breaks.
      *
-     * @param $timestamp
+     * @param int $timestamp
      * @return bool
      * @throws \coding_exception
      * @throws \dml_exception

@@ -25,7 +25,7 @@ namespace mod_goodhabits;
 defined('MOODLE_INTERNAL') || die();
 
 /**
- * Handles the time
+ * Controls the current time period and dates within this that relate to Habit Entries.
  *
  * Class FlexiCalendar
  * @package mod_goodhabits
@@ -54,6 +54,13 @@ class FlexiCalendar {
 
     const DEFAULT_NUM_ENTRIES = 8;
 
+    /**
+     * FlexiCalendar constructor.
+     * @param $periodduration
+     * @param \DateTime $basedate
+     * @param $numentries
+     * @throws \moodle_exception
+     */
     public function __construct($periodduration, \DateTime $basedate, $numentries) {
         $this->init_period_duration($periodduration);
         $this->basedate = $basedate;
@@ -61,14 +68,26 @@ class FlexiCalendar {
         $this->generate_display_set();
     }
 
+    /**
+     * @return array
+     */
     public function get_display_set() {
         return $this->displayset;
     }
 
+    /**
+     * @return int
+     */
     public function get_period_duration() {
         return $this->periodduration;
     }
 
+    /**
+     * Validates and sets the period duration.
+     *
+     * @param int $periodduration
+     * @throws \moodle_exception
+     */
     private function init_period_duration($periodduration) {
         $periodduration = (int) $periodduration;
         if (!Helper::validate_period_duration($periodduration)) {
@@ -77,10 +96,20 @@ class FlexiCalendar {
         $this->periodduration = $periodduration;
     }
 
+    /**
+     * Calculates the current span, i.e. the number of days within that time period.
+     *
+     * @return int
+     */
     private function current_span() {
         return ($this->numentries * $this->periodduration);
     }
 
+    /**
+     * Generates a set of FlexiCalendarUnits. Used for rendering the calendar and habit entries.
+     *
+     * @throws \moodle_exception
+     */
     private function generate_display_set() {
         $numdaysago = $this->current_span() - 1;
         $startdate = Helper::new_date_time($this->basedate, '-' . $numdaysago . ' day');
@@ -96,6 +125,13 @@ class FlexiCalendar {
         $this->displayset = $displayset;
     }
 
+    /**
+     * Gets the URL for moving backwards through the calendar.
+     *
+     * @param int $instanceid
+     * @return \moodle_url
+     * @throws \moodle_exception
+     */
     public function get_back_url($instanceid) {
         $offset = $this->current_span() - 1;
         $backdate = Helper::new_date_time($this->basedate, '-' . $offset . ' day');
@@ -105,6 +141,13 @@ class FlexiCalendar {
         return $url;
     }
 
+    /**
+     * Gets the URL for moving forwards through the calendar.
+     *
+     * @param int $instanceid
+     * @return \moodle_url|null
+     * @throws \moodle_exception
+     */
     public function get_forward_url($instanceid) {
         $forwarddate = Helper::new_date_time($this->basedate, '+' . $this->current_span(). ' day');
         $threshold = Helper::get_end_period_date_time($this->periodduration, new \DateTime());

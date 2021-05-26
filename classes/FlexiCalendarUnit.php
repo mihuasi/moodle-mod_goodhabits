@@ -24,10 +24,25 @@ namespace mod_goodhabits;
 
 defined('MOODLE_INTERNAL') || die();
 
+/**
+ * Handles a single date and the rendering of this within the calendar.
+ *
+ * Class FlexiCalendarUnit
+ * @package mod_goodhabits
+ */
 class FlexiCalendarUnit extends \DateTime {
 
+    /**
+     * @var int - The number of days between each Habit Entry (similar to FlexiCalendar->$periodduration).
+     */
     private $periodduration;
 
+    /**
+     * Validates and sets the period duration (similar to FlexiCalendar->set_period_duration()).
+     *
+     * @param int $periodduration
+     * @throws \moodle_exception
+     */
     public function set_period_duration($periodduration) {
         if (!Helper::validate_period_duration($periodduration)) {
             throw new \moodle_exception('err');
@@ -35,6 +50,13 @@ class FlexiCalendarUnit extends \DateTime {
         $this->periodduration = $periodduration;
     }
 
+    /**
+     * Returns an array of what to display in the top line and the bottom line of a calendar unit.
+     *
+     * @return array
+     * @throws \coding_exception
+     * @throws \moodle_exception
+     */
     public function display_unit() {
         if (empty($this->periodduration)) {
             throw new \moodle_exception('must set periodDuration first');
@@ -60,6 +82,11 @@ class FlexiCalendarUnit extends \DateTime {
         return $display;
     }
 
+    /**
+     * Returns a string of the current month if this Calendar Unit occurs in a new month.
+     *
+     * @return string
+     */
     public function display_month() {
         $offset = $this->periodduration;
         $previousdatetime = Helper::new_date_time($this, '-' . $offset . ' day');
@@ -71,6 +98,13 @@ class FlexiCalendarUnit extends \DateTime {
         return '';
     }
 
+    /**
+     * Returns an array of CSS classes to apply to this calendar unit.
+     *
+     * @return array
+     * @throws \coding_exception
+     * @throws \dml_exception
+     */
     public function get_classes() {
         $month = $this->format('F');
         $month = strtolower($month);
