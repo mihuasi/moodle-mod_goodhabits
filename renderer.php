@@ -15,6 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
+ * Contains methods for output.
  * @package   mod_goodhabits
  * @copyright 2020 Joe Cape
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -26,6 +27,13 @@ defined('MOODLE_INTERNAL') || die();
 
 class mod_goodhabits_renderer extends plugin_renderer_base {
 
+    /**
+     * Generates the top 'ribbon' in the activity, showing a series of days or weeks.
+     *
+     * @param gh\FlexiCalendar $calendar
+     * @param $instanceid
+     * @return string
+     */
     public function print_calendar(gh\FlexiCalendar $calendar, $instanceid) {
         $displayset = $calendar->get_display_set();
 
@@ -82,6 +90,13 @@ class mod_goodhabits_renderer extends plugin_renderer_base {
         return $html;
     }
 
+    /**
+     * Generates the list of habits.
+     *
+     * @param gh\FlexiCalendar $calendar
+     * @param $habits
+     * @return string
+     */
     public function print_habits(gh\FlexiCalendar $calendar, $habits) {
         $arr = array();
         foreach ($habits as $habit) {
@@ -91,6 +106,14 @@ class mod_goodhabits_renderer extends plugin_renderer_base {
         return '<div class="habits">' . implode('', $arr) . '</div>';
     }
 
+    /**
+     * Generates a single habit - the name on the LHS and the "habit entries" on the RHS.
+     *
+     * @param gh\FlexiCalendar $calendar
+     * @param gh\Habit $habit
+     * @return string
+     * @throws coding_exception
+     */
     public function print_habit(gh\FlexiCalendar $calendar, gh\Habit $habit) {
         $html = "<div class='habit habit-".$habit->id."'>";
 
@@ -136,6 +159,14 @@ class mod_goodhabits_renderer extends plugin_renderer_base {
         return $html;
     }
 
+    /**
+     * 'Checkmarks' here are the circular entities used to manage habit entries.
+     *
+     * @param gh\FlexiCalendar $calendar
+     * @param gh\Habit $habit
+     * @return string
+     * @throws coding_exception
+     */
     private function print_checkmarks(gh\FlexiCalendar $calendar, gh\Habit $habit) {
         global $USER;
 
@@ -182,6 +213,13 @@ class mod_goodhabits_renderer extends plugin_renderer_base {
         return "<div class='$classes' data-id='".$habit->id."'>$html</div>";
     }
 
+    /**
+     * Used to arrange the calendar and the habits html.
+     *
+     * @param $calendar
+     * @param $habits
+     * @return string
+     */
     public function print_module($calendar, $habits) {
         $html = "<div class='goodhabits-container'>$calendar
                        <div class=\"clear-both\"></div>
@@ -190,14 +228,12 @@ class mod_goodhabits_renderer extends plugin_renderer_base {
         return $html;
     }
 
-    private function print_back_link(moodle_url $url, $text) {
-        return html_writer::link($url, '&#8592; ' . $text);
-    }
-
-    private function print_forward_link(moodle_url $url, $text) {
-        return html_writer::link($url, $text . ' &#8594;');
-    }
-
+    /**
+     * Used to make data accessible to JS. There are also server-side checks on the relevant capabilities.
+     *
+     * @return string
+     * @throws coding_exception
+     */
     public function print_hidden_data() {
         global $CFG;
 
@@ -235,29 +271,13 @@ class mod_goodhabits_renderer extends plugin_renderer_base {
         return $hiddendata . $hiddenlangstrings;
     }
 
-    public function time_period_selector($options, $selected) {
-        $optionstxt = '';
-        foreach ($options as $k => $option) {
-            $selectedtxt = ($selected == $k) ? ' selected="selected" ' : '';
-            $optionstxt .= "<option value='$k' $selectedtxt>$option</option>";
-        }
-
-        $sessionkey = $this->print_hidden_session_key();
-
-        $select = " <select name='time-period-selector' autocomplete='off'>$optionstxt</select>";
-
-        $submittxt = get_string('submit_text_change_cal', 'mod_goodhabits');
-
-        $submit = "<input type='submit' value='$submittxt'> </input>";
-        $html = "<form> $sessionkey {$select} $submit </form>";
-        return $html;
-    }
-
-    public function print_hidden_session_key() {
-        $sessionkey = sesskey();
-        return "<input type='hidden' name='sesskey' value='$sessionkey'> </input>";
-    }
-
+    /**
+     * Generates the button for admin to manage Activity-level habits.
+     *
+     * @param $instanceid
+     * @throws coding_exception
+     * @throws moodle_exception
+     */
     public function print_manage_activity_habits($instanceid) {
         $params = array('instance' => $instanceid, 'level' => 'activity');
         $url = new moodle_url('/mod/goodhabits/manage_habits.php', $params);
@@ -265,6 +285,13 @@ class mod_goodhabits_renderer extends plugin_renderer_base {
         echo $this->print_link_as_form($url, $text);
     }
 
+    /**
+     * Generates the button for users to manage their habits.
+     *
+     * @param $instanceid
+     * @throws coding_exception
+     * @throws moodle_exception
+     */
     public function print_manage_habits($instanceid) {
         $params = array('instance' => $instanceid);
         $url = new moodle_url('/mod/goodhabits/manage_habits.php', $params);
@@ -272,6 +299,13 @@ class mod_goodhabits_renderer extends plugin_renderer_base {
         echo $this->print_link_as_form($url, $text);
     }
 
+    /**
+     * Generates the button for users to manage their breaks.
+     *
+     * @param $instanceid
+     * @throws coding_exception
+     * @throws moodle_exception
+     */
     public function print_manage_personal_breaks($instanceid) {
         $params = array('instance' => $instanceid);
         $url = new moodle_url('/mod/goodhabits/manage_breaks.php', $params);
@@ -279,6 +313,13 @@ class mod_goodhabits_renderer extends plugin_renderer_base {
         echo $this->print_link_as_form($url, $text);
     }
 
+    /**
+     * Generates a home link button.
+     *
+     * @param bool $name
+     * @throws coding_exception
+     * @throws moodle_exception
+     */
     public function print_home_link($name = false) {
         $instanceid = required_param('instance', PARAM_INT);
         $params = array('g' => $instanceid);
@@ -290,18 +331,34 @@ class mod_goodhabits_renderer extends plugin_renderer_base {
         echo $this->print_link_as_form($url, $text);
     }
 
-    public function print_link_as_form(moodle_url $url, $text) {
+    /**
+     * Given a URL and text, returns a form with a submit button using the text.
+     *
+     * @param moodle_url $url
+     * @param $text
+     */
+    private function print_link_as_form(moodle_url $url, $text) {
         $url = $url->out();
         $submit = "<input type='submit' value='$text' />";
         $form = "<br /><form class='manage-breaks-form' method='post' action='$url'>$submit</form>";
         echo $form;
     }
 
+    /**
+     * Generates output when there have been no habits set up.
+     *
+     * @throws coding_exception
+     */
     public function print_no_habits() {
         $string = get_string('no_habits', 'mod_goodhabits');
         echo html_writer::div($string, 'no-habits');
     }
 
+    /**
+     * Generates HTML for the activity name and intro.
+     *
+     * @param $instance
+     */
     public function print_act_intro($instance) {
         $string = html_writer::div($instance->name, 'intro-name');
         $string .= html_writer::div($instance->intro, 'intro-intro');
