@@ -288,7 +288,7 @@ class mod_goodhabits_renderer extends plugin_renderer_base {
     /**
      * Generates the button for users to manage their habits.
      *
-     * @param $instanceid
+     * @param int $instanceid
      * @throws coding_exception
      * @throws moodle_exception
      */

@@ -24,14 +24,32 @@ namespace mod_goodhabits;
 
 defined('MOODLE_INTERNAL') || die();
 
+/**
+ * Handles the time
+ *
+ * Class FlexiCalendar
+ * @package mod_goodhabits
+ */
 class FlexiCalendar {
 
+    /**
+     * @var int - The number of days between each Habit Entry.
+     */
     private $periodduration;
 
+    /**
+     * @var \DateTime - The date we are starting from when defining our set of dates.
+     */
     private $basedate;
 
+    /**
+     * @var int - The number of Habit Entry dates.
+     */
     private $numentries;
 
+    /**
+     * @var array - An array of FlexiCalendarUnits. One for every Habit Entry date.
+     */
     private $displayset;
 
     const DEFAULT_NUM_ENTRIES = 8;

@@ -31,7 +31,6 @@ require_once('classes/Habit.php');
 require_once('classes/FlexiCalendar.php');
 require_once('classes/FlexiCalendarUnit.php');
 require_once('classes/Helper.php');
-require_once('classes/IndexHelper.php');
 require_once('classes/HabitItemsHelper.php');
 require_once('classes/BreaksHelper.php');
 

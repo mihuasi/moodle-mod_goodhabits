@@ -24,8 +24,21 @@ namespace mod_goodhabits;
 
 defined('MOODLE_INTERNAL') || die();
 
+/**
+ * Holds static methods used for the Breaks feature.
+ *
+ * Class BreaksHelper
+ * @package mod_goodhabits
+ */
 class BreaksHelper {
 
+    /**
+     * Insert a new break record if one does not exist already.
+     *
+     * @param $data
+     * @return null
+     * @throws \dml_exception
+     */
     public static function add_personal_break($data) {
         global $DB, $USER;
         $userid = $USER->id;
@@ -52,6 +65,13 @@ class BreaksHelper {
         $DB->insert_record('mod_goodhabits_break', $break);
     }
 
+    /**
+     * Gets a user's breaks.
+     *
+     * @param $instanceid
+     * @return array
+     * @throws \dml_exception
+     */
     public static function get_personal_breaks($instanceid) {
         global $DB, $USER;
         $userid = $USER->id;
@@ -63,6 +83,12 @@ class BreaksHelper {
         return $breaks;
     }
 
+    /**
+     * Deletes a break if that is the action specified by the URL var.
+     *
+     * @throws \coding_exception
+     * @throws \moodle_exception
+     */
     public static function check_delete_break() {
         global $PAGE;
         $action = optional_param('action', '', PARAM_TEXT);
@@ -75,11 +101,25 @@ class BreaksHelper {
         }
     }
 
+    /**
+     * Deletes a break with the ID provided.
+     *
+     * @param $breakid
+     * @throws \dml_exception
+     */
     public static function delete_break($breakid) {
         global $DB, $USER;
         $DB->delete_records('mod_goodhabits_break', array('id' => $breakid, 'createdby' => $USER->id));
     }
 
+    /**
+     * Given a timestamp, returns whether or not this falls within one of the user's breaks.
+     *
+     * @param $timestamp
+     * @return bool
+     * @throws \coding_exception
+     * @throws \dml_exception
+     */
     public static function is_in_a_break($timestamp) {
         $instanceid = Helper::get_instance_id_from_url();
         $breaks = static::get_personal_breaks($instanceid);
