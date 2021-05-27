@@ -116,7 +116,7 @@ function goodhabits_delete_instance($id) {
  */
 function goodhabits_get_completion_state($course, $cm, $userid, $type) {
     global $DB;
-    $goodhabits = $DB->get_record('goodhabits',array('id'=>$cm->instance));
+    $goodhabits = $DB->get_record('goodhabits', array('id' => $cm->instance));
     if (!$goodhabits) {
         throw new moodle_exception('Cannot find module instance');
     }

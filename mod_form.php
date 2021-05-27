@@ -92,14 +92,14 @@ class mod_goodhabits_mod_form extends moodleform_mod {
     public function add_completion_rules() {
         $mform =& $this->_form;
 
-        $group=array();
+        $group = array();
         $completionentries = get_string('completionentries', 'mod_goodhabits');
         $group[] =& $mform->createElement('checkbox', 'completionentriessenabled', '', $completionentries);
-        $group[] =& $mform->createElement('text', 'completionentries', '', array('size'=>3));
-        $mform->setType('completionentries',PARAM_INT);
+        $group[] =& $mform->createElement('text', 'completionentries', '', array('size' => 3));
+        $mform->setType('completionentries', PARAM_INT);
         $grouplabel = get_string('completionentriesgroup', 'mod_goodhabits');
         $mform->addGroup($group, 'completionentriesgroup', $grouplabel, array(' '), false);
-        $mform->disabledIf('completionentries','completionentriessenabled','notchecked');
+        $mform->disabledIf('completionentries', 'completionentriessenabled', 'notchecked');
 
         return array('completionentriesgroup');
     }
