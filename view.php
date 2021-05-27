@@ -33,6 +33,7 @@ require_once('classes/FlexiCalendarUnit.php');
 require_once('classes/Helper.php');
 require_once('classes/HabitItemsHelper.php');
 require_once('classes/BreaksHelper.php');
+require_once($CFG->dirroot . '/lib/completionlib.php');
 
 // Course module ID, or...
 $id = optional_param('id', 0, PARAM_INT);
@@ -68,6 +69,9 @@ $event->add_record_snapshot('course', $course);
 $event->add_record_snapshot('goodhabits', $moduleinstance);
 $event->trigger();
 
+$completion = new completion_info($course);
+$completion->set_module_viewed($cm);
+
 $PAGE->set_url('/mod/goodhabits/view.php', array('id' => $cm->id));
 $PAGE->set_title(format_string($moduleinstance->name));
 $PAGE->set_heading(format_string($course->fullname));
@@ -96,8 +100,7 @@ $basedate = gh\Helper::get_end_period_date_time($periodduration, $currentdate);
 
 $calendar = new gh\FlexiCalendar($periodduration, $basedate, $numentries);
 
-$habits = gh\HabitItemsHelper::get_activity_habits($instanceid, true);
-$habits += gh\HabitItemsHelper::get_habits($instanceid, true);
+$habits = gh\HabitItemsHelper::get_all_habits_for_user($instanceid, $USER->id);
 
 echo $OUTPUT->header();
 

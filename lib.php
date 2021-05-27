@@ -34,6 +34,12 @@ function goodhabits_supports($feature) {
     switch ($feature) {
         case FEATURE_MOD_INTRO:
             return true;
+        case FEATURE_COMPLETION_TRACKS_VIEWS:
+            return true;
+        case FEATURE_COMPLETION_HAS_RULES:
+            return true;
+        case FEATURE_COMPLETION_TRACKS_VIEWS:
+            return true;
         default:
             return null;
     }
@@ -96,4 +102,36 @@ function goodhabits_delete_instance($id) {
     $DB->delete_records('goodhabits', array('id' => $id));
 
     return true;
+}
+
+/**
+ * Obtains the automatic completion state for this Good Habits activity based on any conditions
+ * in activity settings.
+ *
+ * @param object $course Course
+ * @param object $cm Course-module
+ * @param int $userid User ID
+ * @param bool $type Type of comparison (or/and; can be used as return value if no conditions)
+ * @return bool
+ */
+function goodhabits_get_completion_state($course, $cm, $userid, $type) {
+    global $DB;
+    $goodhabits = $DB->get_record('goodhabits',array('id'=>$cm->instance));
+    if (!$goodhabits) {
+        throw new moodle_exception('Cannot find module instance');
+    }
+    $result = $type;
+
+    if ($numrequired = $goodhabits->completionentries) {
+        $num = \mod_goodhabits\HabitItemsHelper::get_total_num_entries($goodhabits->id, $userid);
+        $value = $num >= $numrequired;
+
+        if ($type == COMPLETION_AND) {
+            $result = $result && $value;
+        } else {
+            $result = $result || $value;
+        }
+    }
+
+    return $result;
 }

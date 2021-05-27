@@ -156,10 +156,35 @@ class Helper {
         }
         // Course module ID.
         $id = optional_param('id', 0, PARAM_INT);
-        $cm = get_coursemodule_from_id('goodhabits', $id, 0, false, MUST_EXIST);
+        $cm = static::get_coursemodule_from_cm_id($id);
         $instanceid = $cm->instance;
         static::$instanceid = $instanceid;
         return $instanceid;
+    }
+
+    /**
+     * Wrapper for Moodle method get_coursemodule_from_id().
+     *
+     * @param int $id
+     * @return \stdClass
+     * @throws \coding_exception
+     */
+    public static function get_coursemodule_from_cm_id($id) {
+        $cm = get_coursemodule_from_id('goodhabits', $id, 0, false, MUST_EXIST);
+        return $cm;
+    }
+
+    /**
+     * Wrapper for Moodle method get_coursemodule_from_instance().
+     *
+     * @param $instanceid
+     * @param $courseid
+     * @return \stdClass
+     * @throws \coding_exception
+     */
+    public static function get_coursemodule_from_instance($instanceid, $courseid) {
+        $cm = get_coursemodule_from_instance('goodhabits', $instanceid, $courseid, false, MUST_EXIST);
+        return $cm;
     }
 
 }

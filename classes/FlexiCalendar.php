@@ -56,7 +56,7 @@ class FlexiCalendar {
 
     /**
      * FlexiCalendar constructor.
-     * @param $periodduration
+     * @param int $periodduration
      * @param \DateTime $basedate
      * @param $numentries
      * @throws \moodle_exception

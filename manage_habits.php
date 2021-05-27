@@ -98,7 +98,7 @@ $habits = gh\HabitItemsHelper::get_activity_habits($instanceid, $showonlypublish
 $isactivity = !$ispersonal;
 
 if ($ispersonal) {
-    $habits += gh\HabitItemsHelper::get_habits($instanceid);
+    $habits += gh\HabitItemsHelper::get_personal_habits($instanceid, $USER->id);
 }
 
 foreach ($habits as $habit) {
@@ -108,7 +108,7 @@ foreach ($habits as $habit) {
 
     $row[] = $habitname;
     $row[] = format_text($habit->description);
-    $row[] = gh\HabitItemsHelper::get_num_entries($habit->id);
+    $row[] = gh\HabitItemsHelper::get_num_entries($habit->id, $USER->id);
 
     $actions = gh\HabitItemsHelper::table_actions_arr($habit, $isactivity, $level, $instanceid);
 

@@ -28,6 +28,8 @@ class Habit {
 
     public $id;
 
+    private $instancerecord;
+
     public function __construct($id) {
         $this->id = $id;
         $this->init();
@@ -35,7 +37,10 @@ class Habit {
 
     private function init() {
         global $DB;
+
         $habitrecord = $DB->get_record('mod_goodhabits_item', array('id' => $this->id), '*', MUST_EXIST);
+
+        $this->instancerecord = $DB->get_record('goodhabits', array('id' => $habitrecord->instanceid));
 
         foreach ($habitrecord as $k => $v) {
             $this->{$k} = $v;
@@ -84,6 +89,18 @@ class Habit {
         $this->description = $data->description;
         $this->published = $data->published;
         $DB->update_record('mod_goodhabits_item', $this);
+    }
+
+    public function get_cm() {
+        return Helper::get_coursemodule_from_instance($this->instancerecord->id, $this->instancerecord->course);
+    }
+
+    public function get_course_id() {
+        return $this->instancerecord->course;
+    }
+
+    public function get_instance_record() {
+        return $this->instancerecord;
     }
 
     private function delete_orphans() {

@@ -29,11 +29,26 @@ class HabitItemsHelper {
     const HABIT_NAME_MAXLENGTH = 24;
     const HABIT_DESC_MAXLENGTH = 62;
 
-    public static function get_habits($instanceid, $publishedonly = false) {
-        global $DB, $USER;
+    public static function get_total_num_entries($instanceid, $userid) {
+        $habits = static::get_all_habits_for_user($instanceid, $userid);
+        $total = 0;
+        foreach ($habits as $habit) {
+            $total += static::get_num_entries($habit->id, $userid);
+        }
+        return $total;
+    }
+
+    public static function get_all_habits_for_user($instanceid, $userid) {
+        $habits = static::get_activity_habits($instanceid, true);
+        $habits += static::get_personal_habits($instanceid, $userid, true);
+        return $habits;
+    }
+
+    public static function get_personal_habits($instanceid, $userid, $publishedonly = false) {
+        global $DB;
         $sql = 'SELECT * FROM {mod_goodhabits_item}
                     WHERE userid = :userid AND instanceid = :instanceid';
-        $params = array('userid' => $USER->id, 'instanceid' => $instanceid);
+        $params = array('userid' => $userid, 'instanceid' => $instanceid);
         if ($publishedonly) {
             $sql .= ' AND published = :published';
             $params['published'] = 1;
@@ -148,9 +163,9 @@ class HabitItemsHelper {
         $DB->delete_records('mod_goodhabits_break', array('id' => $breakid, 'createdby' => $USER->id));
     }
 
-    public static function get_num_entries($itemid) {
-        global $DB, $USER;
-        $entries = $DB->get_records('mod_goodhabits_entry', array('habit_id' => $itemid, 'userid' => $USER->id));
+    public static function get_num_entries($itemid, $userid) {
+        global $DB;
+        $entries = $DB->get_records('mod_goodhabits_entry', array('habit_id' => $itemid, 'userid' => $userid));
         return count($entries);
     }
 

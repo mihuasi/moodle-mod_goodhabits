@@ -134,3 +134,5 @@ $string['activity_title_text'] = 'This is an activity habit visible to everyone 
 $string['personal_title_text'] = 'This is one of your personal habits only being used by you';
 $string['showhide'] = 'Show';
 $string['habit_not_published_title'] = 'The habit {$a} is currently hidden.';
+$string['completionentriesgroup'] = 'Completion Entries';
+$string['completionentries'] = 'Student must make the following number of entries:';

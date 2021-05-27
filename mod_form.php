@@ -83,4 +83,34 @@ class mod_goodhabits_mod_form extends moodleform_mod {
         // Add standard buttons.
         $this->add_action_buttons();
     }
+
+    /**
+     * Add custom completion rules.
+     *
+     * @return array Array of string IDs of added items, empty array if none
+     */
+    public function add_completion_rules() {
+        $mform =& $this->_form;
+
+        $group=array();
+        $completionentries = get_string('completionentries', 'mod_goodhabits');
+        $group[] =& $mform->createElement('checkbox', 'completionentriessenabled', '', $completionentries);
+        $group[] =& $mform->createElement('text', 'completionentries', '', array('size'=>3));
+        $mform->setType('completionentries',PARAM_INT);
+        $grouplabel = get_string('completionentriesgroup', 'mod_goodhabits');
+        $mform->addGroup($group, 'completionentriesgroup', $grouplabel, array(' '), false);
+        $mform->disabledIf('completionentries','completionentriessenabled','notchecked');
+
+        return array('completionentriesgroup');
+    }
+
+    /**
+     * Called during validation. Indicates if a module-specific completion rule is selected.
+     *
+     * @param array $data
+     * @return bool True if one or more rules is enabled, false if none are.
+     */
+    public function completion_rule_enabled($data) {
+        return ($data['completionentries'] != 0);
+    }
 }
