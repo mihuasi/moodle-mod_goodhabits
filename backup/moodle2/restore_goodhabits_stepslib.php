@@ -1,6 +1,6 @@
 <?php
 /**
- * Structure step to restore one goodhabits activity
+ * Structure step to restore one goodhabits activity.
  *
  * @package   mod_goodhabits
  * @category  backup
