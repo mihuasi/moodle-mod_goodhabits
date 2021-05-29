@@ -40,6 +40,8 @@ function goodhabits_supports($feature) {
             return true;
         case FEATURE_COMPLETION_TRACKS_VIEWS:
             return true;
+        case FEATURE_BACKUP_MOODLE2:
+            return true;
         default:
             return null;
     }
@@ -97,6 +99,17 @@ function goodhabits_delete_instance($id) {
     $exists = $DB->get_record('goodhabits', array('id' => $id));
     if (!$exists) {
         return false;
+    }
+
+    $habits = \mod_goodhabits\HabitItemsHelper::get_all_activity_instance_habits($id);
+    foreach ($habits as $habit) {
+        $habit = new \mod_goodhabits\Habit($habit->id);
+        $habit->delete();
+    }
+
+    $breaks = \mod_goodhabits\BreaksHelper::get_all_activity_instance_breaks($id);
+    foreach ($breaks as $break) {
+        $DB->delete_records('mod_goodhabits_break', array('id' => $break->id));
     }
 
     $DB->delete_records('goodhabits', array('id' => $id));

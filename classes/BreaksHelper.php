@@ -66,6 +66,22 @@ class BreaksHelper {
     }
 
     /**
+     * Gets all breaks that have been set up in the activity.
+     *
+     * @param $instanceid
+     * @return array
+     * @throws \dml_exception
+     */
+    public static function get_all_activity_instance_breaks($instanceid) {
+        global $DB;
+        $params = array(
+            'instanceid' => $instanceid
+        );
+        $breaks = $DB->get_records('mod_goodhabits_break', $params);
+        return $breaks;
+    }
+
+    /**
      * Gets a user's breaks.
      *
      * @param int $instanceid

@@ -58,6 +58,11 @@ class HabitItemsHelper {
         return $habits;
     }
 
+    public static function get_all_activity_instance_habits($instanceid) {
+        global $DB;
+        return $DB->get_records('mod_goodhabits_item', array('instanceid' => $instanceid));
+    }
+
     public static function get_activity_habits($instanceid, $publishedonly = false) {
         global $DB;
         $sql = 'SELECT * FROM {mod_goodhabits_item} WHERE (userid IS NULL OR userid = 0) AND instanceid = :instanceid';
