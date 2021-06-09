@@ -24,10 +24,22 @@ namespace mod_goodhabits;
 
 defined('MOODLE_INTERNAL') || die();
 
+/**
+ * Models a single habit within an activity.
+ *
+ * Class Habit
+ * @package mod_goodhabits
+ */
 class Habit {
 
+    /**
+     * @var int - Habit ID.
+     */
     public $id;
 
+    /**
+     * @var \stdClass - the DB record for the activity the habit belongs to.
+     */
     private $instancerecord;
 
     public function __construct($id) {
@@ -35,6 +47,11 @@ class Habit {
         $this->init();
     }
 
+    /**
+     * Initialises the Habit object.
+     *
+     * @throws \dml_exception
+     */
     private function init() {
         global $DB;
 
@@ -47,17 +64,23 @@ class Habit {
         }
     }
 
-    public function is_global() {
-        if (!$this->userid) {
-            return true;
-        }
-        return false;
-    }
-
+    /**
+     * Returns whether the Habit is an 'activity habit' (applies to all users in the activity) or personal.
+     *
+     * @return bool
+     */
     public function is_activity_habit() {
         return $this->level == 'activity';
     }
 
+    /**
+     * Returns all of the entries for this Habit for a particular user, given their calendar setting.
+     *
+     * @param int $userid
+     * @param int $periodduration
+     * @return array
+     * @throws \dml_exception
+     */
     public function get_entries($userid, $periodduration) {
         global $DB;
         $params = array('habit_id' => $this->id, 'userid' => $userid, 'period_duration' => $periodduration);
@@ -69,6 +92,12 @@ class Habit {
         return $entriesbytime;
     }
 
+    /**
+     * Deletes this Habit and associated entries.
+     *
+     * @throws \dml_exception
+     * @throws \moodle_exception
+     */
     public function delete() {
         global $DB;
         $this->require_permission_to_edit();
@@ -76,12 +105,25 @@ class Habit {
         $this->delete_orphans();
     }
 
+    /**
+     * Deletes the current users entries.
+     *
+     * @throws \dml_exception
+     * @throws \moodle_exception
+     */
     public function delete_user_entries() {
         global $DB, $USER;
         $this->require_permission_to_edit_entries();
         $DB->delete_records('mod_goodhabits_entry', array('habit_id' => $this->id, 'userid' => $USER->id));
     }
 
+    /**
+     * Updates the DB for this Habit.
+     *
+     * @param \stdClass $data
+     * @throws \dml_exception
+     * @throws \moodle_exception
+     */
     public function update_from_form($data) {
         global $DB;
         $this->require_permission_to_edit_entries();
@@ -91,35 +133,72 @@ class Habit {
         $DB->update_record('mod_goodhabits_item', $this);
     }
 
+    /**
+     * Gets the course module related to this Habit.
+     *
+     * @return \stdClass
+     * @throws \coding_exception
+     */
     public function get_cm() {
         return Helper::get_coursemodule_from_instance($this->instancerecord->id, $this->instancerecord->course);
     }
 
+    /**
+     * Gets the course ID.
+     *
+     * @return mixed
+     */
     public function get_course_id() {
         return $this->instancerecord->course;
     }
 
+    /**
+     * Gets the DB record for the activity this Habit belongs to.
+     *
+     * @return \stdClass
+     */
     public function get_instance_record() {
         return $this->instancerecord;
     }
 
+    /**
+     * Deletes the entries for this Habit. Should only be called privately, when deleting the Habit.
+     *
+     * @throws \dml_exception
+     */
     private function delete_orphans() {
         global $DB;
         $DB->delete_records('mod_goodhabits_entry', array('habit_id' => $this->id));
     }
 
+    /**
+     * Ensures that $this->can_edit() returns true.
+     *
+     * @throws \moodle_exception
+     */
     private function require_permission_to_edit() {
         if (!$this->can_edit()) {
             throw new \moodle_exception('nopermissions');
         }
     }
 
+    /**
+     * Ensures that $this->can_edit_entries() returns true.
+     *
+     * @throws \moodle_exception
+     */
     private function require_permission_to_edit_entries() {
         if (!$this->can_edit_entries()) {
             throw new \moodle_exception('nopermissions');
         }
     }
 
+    /**
+     * Returns whether the user has permission to edit this Habit.
+     *
+     * @return bool
+     * @throws \coding_exception
+     */
     private function can_edit() {
         global $PAGE, $USER;
         $haspermission = true;
@@ -133,6 +212,12 @@ class Habit {
         return $haspermission;
     }
 
+    /**
+     * Returns whether the user has permission to edit this Habit's entries.
+     *
+     * @return bool
+     * @throws \coding_exception
+     */
     private function can_edit_entries() {
         global $PAGE;
         $haspermission = true;
