@@ -136,3 +136,4 @@ $string['showhide'] = 'Show';
 $string['habit_not_published_title'] = 'The habit {$a} is currently hidden.';
 $string['completionentriesgroup'] = 'Completion Entries';
 $string['completionentries'] = 'Student must make the following number of entries:';
+$string['completionentries'] = 'Student must make the following number of entries:';

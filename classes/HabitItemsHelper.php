@@ -24,11 +24,24 @@ namespace mod_goodhabits;
 
 defined('MOODLE_INTERNAL') || die();
 
+/**
+ * Helper class for managing user habits and activity habits.
+ *
+ * Class HabitItemsHelper
+ * @package mod_goodhabits
+ */
 class HabitItemsHelper {
 
     const HABIT_NAME_MAXLENGTH = 24;
     const HABIT_DESC_MAXLENGTH = 62;
 
+    /**
+     * Returns the number of entries for a user within an activity.
+     *
+     * @param int $instanceid - the ID for the activity.
+     * @param int $userid
+     * @return int
+     */
     public static function get_total_num_entries($instanceid, $userid) {
         $habits = static::get_all_habits_for_user($instanceid, $userid);
         $total = 0;
@@ -38,12 +51,28 @@ class HabitItemsHelper {
         return $total;
     }
 
+    /**
+     * Returns an array of Habit objects for a user within an activity.
+     *
+     * @param int $instanceid
+     * @param int $userid
+     * @return array
+     */
     public static function get_all_habits_for_user($instanceid, $userid) {
         $habits = static::get_activity_habits($instanceid, true);
         $habits += static::get_personal_habits($instanceid, $userid, true);
         return $habits;
     }
 
+    /**
+     * Like {@see get_all_habits_for_user} but only personal habits.
+     *
+     * @param int $instanceid
+     * @param int $userid
+     * @param bool $publishedonly
+     * @return array
+     * @throws \dml_exception
+     */
     public static function get_personal_habits($instanceid, $userid, $publishedonly = false) {
         global $DB;
         $sql = 'SELECT * FROM {mod_goodhabits_item}
@@ -58,11 +87,26 @@ class HabitItemsHelper {
         return $habits;
     }
 
+    /**
+     * Returns an array of DB records for habits within an activity.
+     *
+     * @param int $instanceid
+     * @return array
+     * @throws \dml_exception
+     */
     public static function get_all_activity_instance_habits($instanceid) {
         global $DB;
         return $DB->get_records('mod_goodhabits_item', array('instanceid' => $instanceid));
     }
 
+    /**
+     * Like {@see get_all_habits_for_user} but only activity habits.
+     *
+     * @param int $instanceid
+     * @param bool $publishedonly
+     * @return array
+     * @throws \dml_exception
+     */
     public static function get_activity_habits($instanceid, $publishedonly = false) {
         global $DB;
         $sql = 'SELECT * FROM {mod_goodhabits_item} WHERE (userid IS NULL OR userid = 0) AND instanceid = :instanceid';
@@ -76,6 +120,12 @@ class HabitItemsHelper {
         return $habits;
     }
 
+    /**
+     * Given an array of DB records corresponding to habits, returns an array of Habit objects.
+     *
+     * @param array $records
+     * @return array
+     */
     public static function records_to_habit_objects($records) {
         $arr = array();
         foreach ($records as $k => $habit) {
@@ -84,6 +134,14 @@ class HabitItemsHelper {
         return $arr;
     }
 
+    /**
+     * Creates a new habit.
+     *
+     * @param \stdClass $data
+     * @throws \dml_exception
+     * @throws \moodle_exception
+     * @throws \required_capability_exception
+     */
     public static function add_habit($data) {
         global $DB, $USER, $PAGE;
 
@@ -112,12 +170,29 @@ class HabitItemsHelper {
         $DB->insert_record('mod_goodhabits_item', $record);
     }
 
+    /**
+     * Updates a habit based on submitted form.
+     *
+     * @param \stdClass $data
+     * @throws \dml_exception
+     * @throws \moodle_exception
+     */
     public static function edit_habit($data) {
         $id = $data->habitid;
         $habit = new Habit($id);
         $habit->update_from_form($data);
     }
 
+    /**
+     * Processes the edit/add habit form.
+     *
+     * @param \stdClass $data
+     * @param string $action
+     * @throws \coding_exception
+     * @throws \dml_exception
+     * @throws \moodle_exception
+     * @throws \required_capability_exception
+     */
     public static function process_form($data, $action) {
         global $PAGE;
         $msglangid = 'habit_added';
@@ -133,6 +208,13 @@ class HabitItemsHelper {
         redirect($url, $msg);
     }
 
+    /**
+     * Deletes a habit if this is requested in the URL params.
+     *
+     * @throws \coding_exception
+     * @throws \dml_exception
+     * @throws \moodle_exception
+     */
     public static function check_delete_habit() {
         global $PAGE;
         $action = optional_param('action', '', PARAM_TEXT);
@@ -148,6 +230,13 @@ class HabitItemsHelper {
         }
     }
 
+    /**
+     * Deletes a user's habit entries if this is requested in the URL params.
+     *
+     * @throws \coding_exception
+     * @throws \dml_exception
+     * @throws \moodle_exception
+     */
     public static function check_delete_habit_entries() {
         global $PAGE;
         $action = optional_param('action', '', PARAM_TEXT);
@@ -163,17 +252,27 @@ class HabitItemsHelper {
         }
     }
 
-    public static function delete_break($breakid) {
-        global $DB, $USER;
-        $DB->delete_records('mod_goodhabits_break', array('id' => $breakid, 'createdby' => $USER->id));
-    }
-
+    /**
+     * Returns the number of entries for a user/habit.
+     *
+     * @param int $itemid
+     * @param int $userid
+     * @return int
+     * @throws \dml_exception
+     */
     public static function get_num_entries($itemid, $userid) {
         global $DB;
         $entries = $DB->get_records('mod_goodhabits_entry', array('habit_id' => $itemid, 'userid' => $userid));
         return count($entries);
     }
 
+    /**
+     * Gets the lang ID to use for the form submit button based on a the action (add/edit...) and level provided.
+     *
+     * @param string $action
+     * @param string $level
+     * @return string
+     */
     public static function get_form_submit_lang_id($action, $level) {
         $formlangid = 'addhabit_submit_text';
         if ($level == 'activity') {
@@ -188,7 +287,16 @@ class HabitItemsHelper {
         return $formlangid;
     }
 
-    public static function table_habit_name($habit, $ispersonal, $activityname) {
+    /**
+     * Returns habit name for use in the 'manage habits' table.
+     *
+     * @param Habit $habit
+     * @param boolean $ispersonal
+     * @param string $activityname
+     * @return string
+     * @throws \coding_exception
+     */
+    public static function table_habit_name(Habit $habit, $ispersonal, $activityname) {
         $habitname = format_string($habit->name);
         $titles = array();
         $classes = array();
@@ -209,6 +317,12 @@ class HabitItemsHelper {
         return $habitname;
     }
 
+    /**
+     * Sets the table column headers.
+     *
+     * @param \html_table $table
+     * @throws \coding_exception
+     */
     public static function set_table_head($table) {
         $fromtext = get_string('new_habit_name', 'mod_goodhabits');
         $totext = get_string('new_habit_desc', 'mod_goodhabits');
@@ -217,6 +331,17 @@ class HabitItemsHelper {
         $table->head = array($fromtext, $totext, $numentriestext, $actionstext);
     }
 
+    /**
+     * Returns the actions available for this Habit as an array of links.
+     *
+     * @param Habit $habit
+     * @param boolean $isactivity
+     * @param int $level
+     * @param int $instanceid
+     * @return array
+     * @throws \coding_exception
+     * @throws \moodle_exception
+     */
     public static function table_actions_arr($habit, $isactivity, $level, $instanceid) {
         $actions = array();
         $allowhabitedit = ($habit->level == 'personal') || $isactivity;

@@ -25,7 +25,7 @@ namespace mod_goodhabits;
 defined('MOODLE_INTERNAL') || die();
 
 /**
- * Models a single habit within an activity.
+ * Models a habit within an activity.
  *
  * Class Habit
  * @package mod_goodhabits
@@ -42,6 +42,11 @@ class Habit {
      */
     private $instancerecord;
 
+    /**
+     * Habit constructor.
+     * @param int $id
+     * @throws \dml_exception
+     */
     public function __construct($id) {
         $this->id = $id;
         $this->init();
@@ -172,7 +177,7 @@ class Habit {
     }
 
     /**
-     * Ensures that $this->can_edit() returns true.
+     * Ensures that {@see can_edit} returns true.
      *
      * @throws \moodle_exception
      */
@@ -183,7 +188,7 @@ class Habit {
     }
 
     /**
-     * Ensures that $this->can_edit_entries() returns true.
+     * Ensures that {@see can_edit_entries} returns true.
      *
      * @throws \moodle_exception
      */

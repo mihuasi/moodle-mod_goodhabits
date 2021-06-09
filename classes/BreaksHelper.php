@@ -25,7 +25,7 @@ namespace mod_goodhabits;
 defined('MOODLE_INTERNAL') || die();
 
 /**
- * Holds static methods used for the Breaks feature.
+ * Helper class for the Breaks feature.
  *
  * Class BreaksHelper
  * @package mod_goodhabits

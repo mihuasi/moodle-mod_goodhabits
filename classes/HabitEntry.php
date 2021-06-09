@@ -24,22 +24,53 @@ namespace mod_goodhabits;
 
 defined('MOODLE_INTERNAL') || die();
 
+/**
+ * Models a Habit Entry.
+ *
+ * Class HabitEntry
+ * @package mod_goodhabits
+ */
 abstract class HabitEntry {
 
+    /**
+     * @var Habit
+     */
     protected $habit;
 
+    /**
+     * @var int
+     */
     protected $userid;
 
+    /**
+     * @var int
+     */
     protected $endofperiodtimestamp;
 
+    /**
+     * @var int
+     */
     protected $periodduration;
 
+    /**
+     * @var string - the entry type of this Habit. Set by the child class.
+     */
     protected $entrytype;
 
+    /**
+     * @var \stdClass - the DB record for this entry.
+     */
     protected $existingrecord;
 
     const ENTRY_TYPE_TWO_DIMENSIONAL = 'two-dimensional';
 
+    /**
+     * HabitEntry constructor.
+     * @param Habit $habit
+     * @param int $userid
+     * @param int $endofperiodtimestamp
+     * @param int $periodduration
+     */
     public function __construct(Habit $habit, $userid, $endofperiodtimestamp, $periodduration) {
         $this->habit = $habit;
         $this->userid = $userid;
@@ -48,6 +79,11 @@ abstract class HabitEntry {
         $this->init_existing_record();
     }
 
+    /**
+     * Initialises the DB record for this entry, if it exists.
+     *
+     * @throws \dml_exception
+     */
     public function init_existing_record() {
         global $DB;
         $params = array(
@@ -59,11 +95,23 @@ abstract class HabitEntry {
         $this->existingrecord = $DB->get_record('mod_goodhabits_entry', $params);
     }
 
+    /**
+     * Returns whether there is currently a DB record for this entry.
+     *
+     * @return bool
+     */
     public function already_exists() {
 
         return (boolean) $this->existingrecord;
     }
 
+    /**
+     * @return null
+     */
     abstract public function save();
+
+    /**
+     * @return null
+     */
     abstract public function update();
 }

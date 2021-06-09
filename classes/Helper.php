@@ -24,25 +24,53 @@ namespace mod_goodhabits;
 
 defined('MOODLE_INTERNAL') || die();
 
+/**
+ * Helper class for general methods.
+ *
+ * Class Helper
+ * @package mod_goodhabits
+ */
 class Helper {
 
+    /**
+     * @var int - used to cache the instance ID and avoid repeated DB calls.
+     */
     public static $instanceid;
 
+    /**
+     * Returns whether the period duration is valid.
+     *
+     * @param int $periodduration
+     * @return bool
+     */
     public static function validate_period_duration($periodduration) {
         $possiblevals = array_keys(static::possible_period_durations());
-        return in_array($periodduration, $possiblevals) or 1;
+        return in_array($periodduration, $possiblevals);
     }
 
+    /**
+     * Returns an array of all of the allowable period durations.
+     *
+     * @return array
+     * @throws \coding_exception
+     */
     public static function possible_period_durations() {
         $vals = array(
             1 => get_string('by_day', 'mod_goodhabits'),
             3 => get_string('x_days', 'mod_goodhabits', 3),
             5 => get_string('x_days', 'mod_goodhabits', 5),
-            7 => get_string('by_week', 'mod_goodhabits', 3),
+            7 => get_string('by_week', 'mod_goodhabits'),
         );
         return $vals;
     }
 
+    /**
+     * Returns the timestamp at the end of the period currently being displayed.
+     *
+     * @param int $periodduration
+     * @param \DateTime $basedate
+     * @return int
+     */
     public static function get_end_period_timestamp($periodduration, \DateTime $basedate) {
         $timestamp = $basedate->getTimestamp();
         $days = static::unix_days($timestamp);
@@ -55,26 +83,59 @@ class Helper {
         return $endperiodtime;
     }
 
+    /**
+     * Same as {@see get_end_period_timestamp} but returns a \DateTime object.
+     *
+     * @param $periodduration
+     * @param \DateTime $basedate
+     * @return \DateTime
+     */
     public static function get_end_period_date_time($periodduration, \DateTime $basedate) {
         $timestamp = static::get_end_period_timestamp($periodduration, $basedate);
         return static::timestamp_to_date_time($timestamp);
     }
 
+    /**
+     * Converts timestamp into days.
+     *
+     * @param int $timestamp
+     * @return int
+     */
     private static function unix_days($timestamp) {
         $numdays = $timestamp / 60 / 60 / 24;
         return floor($numdays);
     }
 
+    /**
+     * Converts days into timestamp.
+     *
+     * @param int $days
+     * @return int
+     */
     public static function days_to_time($days) {
         return $days * 60 * 60 * 24;
     }
 
+    /**
+     * Converts timestamp into \DateTime object.
+     *
+     * @param int $timestamp
+     * @return \DateTime
+     * @throws \Exception
+     */
     public static function timestamp_to_date_time($timestamp) {
         $dt = new \DateTime();
         $dt->setTimestamp($timestamp);
         return $dt;
     }
 
+    /**
+     * Returns a new \DateTime, modified by the offset, if provided.
+     *
+     * @param \DateTime $dt
+     * @param null|string $offset
+     * @return \DateTime
+     */
     public static function new_date_time(\DateTime $dt, $offset = null) {
         $newdt = clone $dt;
         if ($offset) {
@@ -83,10 +144,22 @@ class Helper {
         return $newdt;
     }
 
+    /**
+     * Converts a \DateTime object into a MySQL date.
+     *
+     * @param \DateTime $dt
+     * @return string
+     */
     public static function date_time_to_mysql(\DateTime $dt) {
         return $dt->format('Y-m-d');
     }
 
+    /**
+     * Displays the year corresponding to the first date in the display set.
+     *
+     * @param array $displayset
+     * @return string
+     */
     public static function display_year($displayset) {
         $firstunit = reset($displayset);
 
@@ -96,6 +169,12 @@ class Helper {
         return '';
     }
 
+    /**
+     * Gets the period duration, based on the current activity instance.
+     *
+     * @param \stdClass $instance
+     * @return int
+     */
     public static function get_period_duration($instance) {
         $default = 1;
         $freq = (int) $instance->freq;
@@ -108,16 +187,35 @@ class Helper {
         return $duration;
     }
 
+    /**
+     * Deletes all entries for all users.
+     *
+     * @throws \dml_exception
+     */
     public static function delete_all_entries() {
         global $DB;
         $DB->delete_records('mod_goodhabits_entry', array());
     }
 
+    /**
+     * Deletes all entries for a user.
+     *
+     * @param $userid
+     * @throws \dml_exception
+     */
     public static function delete_entries($userid) {
         global $DB;
         $DB->delete_records('mod_goodhabits_entry', array('userid' => $userid));
     }
 
+    /**
+     * Returns a string of data attributes for the lang strings related to the IDs.
+     *
+     * @param array $ids
+     * @param string $module
+     * @return string
+     * @throws \coding_exception
+     */
     public static function lang_string_as_data($ids, $module = 'mod_goodhabits') {
         $data = '';
         foreach ($ids as $id) {
@@ -126,12 +224,26 @@ class Helper {
         return $data;
     }
 
+    /**
+     * Gets the module instance from the ID.
+     *
+     * @param int $id
+     * @return false|\stdClass
+     * @throws \dml_exception
+     */
     public static function get_module_instance($id) {
         global $DB;
         $moduleinstance = $DB->get_record('goodhabits', array('id' => $id), '*', MUST_EXIST);
         return $moduleinstance;
     }
 
+    /**
+     * Returns an array with the JS for a confirm box with the relevant text.
+     *
+     * @param $actiontext
+     * @return array
+     * @throws \coding_exception
+     */
     public static function js_confirm_text($actiontext) {
         $txt = get_string('js_confirm', 'mod_goodhabits', $actiontext);
         $action = 'return confirm(\''.$txt.'\')';

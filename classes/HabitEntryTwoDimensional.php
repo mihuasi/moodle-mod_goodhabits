@@ -24,12 +24,33 @@ namespace mod_goodhabits;
 
 defined('MOODLE_INTERNAL') || die();
 
+/**
+ * Models a "two-dimensional" Habit Entry (i.e. the entry takes place on a grid, with an X and a Y axis).
+ *
+ * Class HabitEntryTwoDimensional
+ * @package mod_goodhabits
+ */
 class HabitEntryTwoDimensional extends HabitEntry {
 
+    /**
+     * @var int the X value for this entry.
+     */
     protected $xval;
 
+    /**
+     * @var int the Y value for this entry.
+     */
     protected $yval;
 
+    /**
+     * HabitEntryTwoDimensional constructor.
+     * @param Habit $habit
+     * @param int $userid
+     * @param int $endofperiodtimestamp
+     * @param int $periodduration
+     * @param int $xval
+     * @param int $yval
+     */
     public function __construct(Habit $habit, $userid, $endofperiodtimestamp, $periodduration, $xval, $yval) {
         parent::__construct($habit, $userid, $endofperiodtimestamp, $periodduration);
         $this->xval = $xval;
@@ -37,6 +58,12 @@ class HabitEntryTwoDimensional extends HabitEntry {
         $this->entrytype = HabitEntry::ENTRY_TYPE_TWO_DIMENSIONAL;
     }
 
+    /**
+     * Inserts a habit entry record into the DB.
+     *
+     * @return void|null
+     * @throws \dml_exception
+     */
     public function save() {
         global $DB;
         $record = new \stdClass();
@@ -52,6 +79,13 @@ class HabitEntryTwoDimensional extends HabitEntry {
         $DB->insert_record('mod_goodhabits_entry', $record);
     }
 
+    /**
+     * Updates the habit entry record in the DB.
+     *
+     * @return void|null
+     * @throws \dml_exception
+     * @throws \moodle_exception
+     */
     public function update() {
         global $DB;
         if (!$this->existingrecord) {
