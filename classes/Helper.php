@@ -188,27 +188,6 @@ class Helper {
     }
 
     /**
-     * Deletes all entries for all users.
-     *
-     * @throws \dml_exception
-     */
-    public static function delete_all_entries() {
-        global $DB;
-        $DB->delete_records('mod_goodhabits_entry', array());
-    }
-
-    /**
-     * Deletes all entries for a user.
-     *
-     * @param $userid
-     * @throws \dml_exception
-     */
-    public static function delete_entries($userid) {
-        global $DB;
-        $DB->delete_records('mod_goodhabits_entry', array('userid' => $userid));
-    }
-
-    /**
      * Returns a string of data attributes for the lang strings related to the IDs.
      *
      * @param array $ids
