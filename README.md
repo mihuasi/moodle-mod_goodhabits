@@ -1,15 +1,23 @@
-# Good Habits #
+# Good Habits Activity Module (1.1) for Moodle #
 
 The intention of this plugin is to help track habits over time. Within an e-learning context this may help cultivate behaviours that improve learning outcomes.
 
 ## Overview of features
 
 - Habit tracking by day, custom range of days or by week.
-- Every calendar entry allows for rating by both dedication and outcome.
+- Every calendar entry allows for rating by both effort and outcome.
 - Granular access control: 3 capabilities for access to plugin, management of habits and management of habit entries.
 - Uses the Privacy API to allow for control over user data.
 - Create breaks for stretches of time in which you do not want to track habits.
 - Keyboard shortcut to save values quickly (number key when editing a habit entry).
+- Can track activity completion based on user entries.
+
+## Changes from 1.0
+
+- Add support for Backup/Restore.
+- Add support for Completion Tracking.
+- Fix issues with Privacy API implementation.
+- Improve code documentation and style to fit guidelines.
 
 ## License ##
 
