@@ -1,6 +1,6 @@
 /*
  * @package    Talent Grid jQuery plugin.
- * @copyright  2020 Joe Cape (http://chacana.co.uk)
+ * @copyright  2021 Joe Cape (http://chacana.co.uk)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 

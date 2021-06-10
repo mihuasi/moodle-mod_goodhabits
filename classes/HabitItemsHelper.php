@@ -16,7 +16,7 @@
 
 /**
  * @package   mod_goodhabits
- * @copyright 2020 Joe Cape
+ * @copyright 2021 Joe Cape
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
