@@ -26,6 +26,11 @@ defined('MOODLE_INTERNAL') || die;
 
 require_once($CFG->dirroot . '/mod/goodhabits/backup/moodle2/backup_goodhabits_stepslib.php');
 
+/**
+ * Provides the steps to perform one complete backup of the Good Habits instance
+ *
+ * Class backup_goodhabits_activity_task
+ */
 class backup_goodhabits_activity_task extends backup_activity_task {
 
     /**

@@ -73,6 +73,13 @@ class restore_goodhabits_activity_structure_step extends restore_activity_struct
         $this->apply_activity_instance($newitemid);
     }
 
+    /**
+     * Process a habit, preserving the link to the Good Habits activity.
+     *
+     * @param array $data
+     * @throws dml_exception
+     * @throws restore_step_exception
+     */
     protected function process_mod_goodhabits_item($data) {
         global $DB;
 
@@ -86,11 +93,17 @@ class restore_goodhabits_activity_structure_step extends restore_activity_struct
         $data->userid = $this->get_mappingid('user', $data->userid);
         $data->addedby = $this->get_mappingid('user', $data->addedby);
 
-        // Create the goodhabits instance.
         $newitemid = $DB->insert_record('mod_goodhabits_item', $data);
         $this->set_mapping('mod_goodhabits_item', $oldid, $newitemid, true);
     }
 
+    /**
+     * Process a habit entry, preserving the link to the habit.
+     *
+     * @param array $data
+     * @throws dml_exception
+     * @throws restore_step_exception
+     */
     protected function process_mod_goodhabits_entry($data) {
         global $DB;
 
@@ -104,11 +117,17 @@ class restore_goodhabits_activity_structure_step extends restore_activity_struct
 
         $data->endofperiod_timestamp = $this->apply_date_offset($data->endofperiod_timestamp);
 
-        // Create the goodhabits instance.
         $newitemid = $DB->insert_record('mod_goodhabits_entry', $data);
         $this->set_mapping('mod_goodhabits_entry', $oldid, $newitemid, true);
     }
 
+    /**
+     * Process a break, preserving the link to the Good Habits activity.
+     *
+     * @param array $data
+     * @throws dml_exception
+     * @throws restore_step_exception
+     */
     protected function process_mod_goodhabits_break($data) {
         global $DB;
         $data = (object)$data;
@@ -123,7 +142,6 @@ class restore_goodhabits_activity_structure_step extends restore_activity_struct
         $data->timestart = $this->apply_date_offset($data->timestart);
         $data->timeend = $this->apply_date_offset($data->timeend);
 
-        // Create the goodhabits instance.
         $newitemid = $DB->insert_record('mod_goodhabits_break', $data);
         $this->set_mapping('mod_goodhabits_break', $oldid, $newitemid, true);
     }

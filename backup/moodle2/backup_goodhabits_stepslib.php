@@ -23,6 +23,11 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+/**
+ * Define the complete Good Habits structure for backup.
+ *
+ * Class backup_goodhabits_activity_structure_step
+ */
 class backup_goodhabits_activity_structure_step extends backup_activity_structure_step {
 
     protected function define_structure() {

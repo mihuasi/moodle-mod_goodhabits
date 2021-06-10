@@ -17,8 +17,6 @@
 /**
  * Restore task for the goodhabits activity module.
  *
- * Provides all the settings and steps to perform complete restore of the activity.
- *
  * @package   mod_goodhabits
  * @category  backup
  * @copyright 2021 Joe Cape <joe.sc.cape@gmail.com>
@@ -29,6 +27,11 @@ defined('MOODLE_INTERNAL') || die();
 
 require_once($CFG->dirroot . '/mod/goodhabits/backup/moodle2/restore_goodhabits_stepslib.php');
 
+/**
+ * Provides all the settings and steps to perform complete restore of the activity.
+ *
+ * Class restore_goodhabits_activity_task
+ */
 class restore_goodhabits_activity_task extends restore_activity_task {
 
     /**
