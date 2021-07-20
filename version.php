@@ -25,7 +25,7 @@
 defined('MOODLE_INTERNAL') || die();
 
 $plugin->component = 'mod_goodhabits';
-$plugin->release = '1.1';
-$plugin->version = 2021061001;
+$plugin->release = '1.1.2';
+$plugin->version = 2021072001;
 $plugin->requires = 2019052002;
 $plugin->maturity = MATURITY_RC;
