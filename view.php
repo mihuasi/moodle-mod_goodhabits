@@ -26,13 +26,6 @@ use mod_goodhabits as gh;
 
 require(__DIR__.'/../../config.php');
 require_once(__DIR__.'/lib.php');
-
-require_once('classes/Habit.php');
-require_once('classes/FlexiCalendar.php');
-require_once('classes/FlexiCalendarUnit.php');
-require_once('classes/Helper.php');
-require_once('classes/HabitItemsHelper.php');
-require_once('classes/BreaksHelper.php');
 require_once($CFG->dirroot . '/lib/completionlib.php');
 
 // Course module ID, or...
@@ -85,21 +78,8 @@ $PAGE->requires->js('/mod/goodhabits/js/calendar.js', false);
 $PAGE->requires->css('/mod/goodhabits/talentgrid/talentgrid-style.css');
 
 $renderer = $PAGE->get_renderer('mod_goodhabits');
-$todate = optional_param('toDate', null, PARAM_TEXT);
 
-$periodduration = gh\Helper::get_period_duration($moduleinstance);
-$numentries = gh\FlexiCalendar::DEFAULT_NUM_ENTRIES;
-
-if ($todate) {
-    $currentdate = new DateTime($todate);
-} else {
-    $currentdate = new DateTime();
-}
-
-$basedate = gh\Helper::get_end_period_date_time($periodduration, $currentdate);
-
-$area = gh\FlexiCalendar::PLUGIN_AREA_VIEW;
-$calendar = new gh\FlexiCalendar($periodduration, $basedate, $numentries, $area);
+$calendar = gh\ViewHelper::get_flexi_calendar($moduleinstance);
 
 $habits = gh\HabitItemsHelper::get_all_habits_for_user($instanceid, $USER->id);
 
@@ -109,15 +89,7 @@ echo $renderer->print_hidden_data();
 
 $renderer->print_act_intro($moduleinstance);
 
-if ($habits) {
-    $calendarhtml = $renderer->print_calendar($calendar, $instanceid);
-
-    $habitshtml = $renderer->print_habits($calendar, $habits);
-
-    echo $renderer->print_module($calendarhtml, $habitshtml);
-} else {
-    echo $renderer->print_no_habits();
-}
+$renderer->print_calendar_area($calendar, $instanceid, $habits);
 
 $canmanagepersonal = has_capability('mod/goodhabits:manage_personal_habits', $PAGE->context);
 $canmanageactivityhabits = has_capability('mod/goodhabits:manage_activity_habits', $PAGE->context);
@@ -129,7 +101,7 @@ if ($canmanageactivityhabits) {
 }
 
 if ($canviewothersentries) {
-    $renderer->print_view_others_entries($instanceid);
+    $renderer->print_review_entries($instanceid);
 }
 
 if ($canmanagepersonal) {

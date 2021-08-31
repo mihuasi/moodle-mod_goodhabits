@@ -181,7 +181,7 @@ class mod_goodhabits_renderer extends plugin_renderer_base {
 
         $displayset = $calendar->get_display_set();
 
-        $isreview = (boolean) $userid;
+        $isreview = (int) $userid;
 
         $userid = ($userid) ? $userid : $USER->id;
         $entries = $habit->get_entries($userid, $calendar->get_period_duration());
@@ -233,10 +233,12 @@ class mod_goodhabits_renderer extends plugin_renderer_base {
      *
      * @param string $calendar
      * @param string $habits
+     * @param array $extraclasses
      * @return string
      */
-    public function print_module($calendar, $habits) {
-        $html = "<div class='goodhabits-container'>$calendar
+    public function print_module($calendar, $habits, $extraclasses = array()) {
+        $extraclasses = implode(' ', $extraclasses);
+        $html = "<div class='goodhabits-container $extraclasses'>$calendar
                        <div class=\"clear-both\"></div>
                  $habits
                  </div><br /><br /> ";
@@ -307,10 +309,10 @@ class mod_goodhabits_renderer extends plugin_renderer_base {
      * @throws coding_exception
      * @throws moodle_exception
      */
-    public function print_view_others_entries($instanceid) {
+    public function print_review_entries($instanceid) {
         $params = array('instance' => $instanceid);
         $url = new moodle_url('/mod/goodhabits/review.php', $params);
-        $text = get_string('view_others_entries', 'mod_goodhabits');
+        $text = get_string('review_entries', 'mod_goodhabits');
         echo $this->print_link_as_form($url, $text);
     }
 
@@ -392,5 +394,40 @@ class mod_goodhabits_renderer extends plugin_renderer_base {
         $string = html_writer::div($instance->name, 'intro-name');
         $string .= html_writer::div($instance->intro, 'intro-intro');
         echo html_writer::div($string, 'intro');
+    }
+
+    /**
+     * Generates HTML for the review intro.
+     *
+     * @param $fullname
+     * @throws coding_exception
+     */
+    public function print_review_intro($fullname) {
+        $string = get_string('review_entries_name', 'mod_goodhabits', $fullname);
+        $string = html_writer::div($string, 'intro-name');
+        echo html_writer::div($string, 'intro');
+    }
+
+    /**
+     * Generates the overall calendar area.
+     *
+     * @param $calendar
+     * @param $instanceid
+     * @param $habits
+     * @param array $extraclasses
+     * @param int $userid
+     * @throws coding_exception
+     * @throws moodle_exception
+     */
+    public function print_calendar_area($calendar, $instanceid, $habits, $extraclasses = array(), $userid = null) {
+        if ($habits) {
+            $calendarhtml = $this->print_calendar($calendar, $instanceid);
+
+            $habitshtml = $this->print_habits($calendar, $habits, $userid);
+
+            echo $this->print_module($calendarhtml, $habitshtml, $extraclasses);
+        } else {
+            echo $this->print_no_habits();
+        }
     }
 }

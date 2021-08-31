@@ -89,18 +89,5 @@ $capabilities = array(
             'student' => CAP_ALLOW,
             'user' => CAP_ALLOW
         )
-    ),
-
-    'mod/goodhabits:review_others' => array(
-
-        'captype' => 'read',
-        'riskbitmask' => RISK_PERSONAL,
-        'contextlevel' => CONTEXT_USER,
-        'archetypes' => array(
-            'student' => CAP_ALLOW,
-            'teacher' => CAP_ALLOW,
-            'editingteacher' => CAP_ALLOW,
-            'manager' => CAP_ALLOW
-        )
-    ),
+    )
 );

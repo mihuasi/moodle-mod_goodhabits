@@ -1,16 +1,7 @@
 .path-mod-goodhabits .habits,
 .path-mod-goodhabits .notes {
-    /*width: 640px;*/
     margin: auto;
-    /*background: #282C37;*/
 }
-
-/*header {
-    width: 640px;
-    padding-top: 10px;
-    margin: auto;
-    background: #282C37;
-}*/
 
 .path-mod-goodhabits header .main-menu {
     float: left;
@@ -23,12 +14,8 @@
 
 .path-mod-goodhabits .calendar {
     margin-left: 230px;
-    /*float: right;*/
     width: calc(100% - 205px);
     max-width: calc(50px * 8);
-    /*overflow-y: hidden;*/
-    /*overflow-x: scroll;*/
-    /*direction: rtl;*/
     margin-top: 50px;
 }
 
@@ -134,13 +121,11 @@
     background: #c8deff;
 }
 
-
 .path-mod-goodhabits .habits .habit,
 .path-mod-goodhabits .notes .habit {
     padding: 10px;
     margin: 2px 0;
     padding-left: 0;
-    /*background: #313543;*/
 }
 
 .path-mod-goodhabits .habits .habit .streak {
@@ -189,6 +174,10 @@
     border-radius: 20px;
     margin-right: 10px;
     cursor: pointer;
+}
+
+.path-mod-goodhabits .goodhabits-container.review .habits .habit .time-line .checkmark {
+    cursor: default;
 }
 
 .path-mod-goodhabits .habits .habit .time-line .checkmark.is-in-break,
@@ -257,12 +246,6 @@
 
 .path-mod-goodhabits .goodhabits-container .talentgrid-token {
     cursor: default;
-}
-
-.path-mod-goodhabits .streak.add-new-habit {
-    font-size: 40px;
-    cursor: pointer;
-    opacity: 0.3;
 }
 
 .path-mod-goodhabits .streak.add-new-habit.clicked {

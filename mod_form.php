@@ -75,6 +75,8 @@ class mod_goodhabits_mod_form extends moodleform_mod {
         $options = Helper::possible_period_durations();
         $text = get_string('freq', 'mod_goodhabits');
         $mform->addElement('select', 'freq', $text, $options);
+        $defaultvalue = get_config('goodhabits', 'freq');
+        $mform->setDefault('freq', $defaultvalue);
         $mform->addHelpButton('freq', 'freq', 'mod_goodhabits');
 
         // Add standard elements.

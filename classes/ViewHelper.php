@@ -25,12 +25,86 @@ namespace mod_goodhabits;
 defined('MOODLE_INTERNAL') || die();
 
 /**
- * Helper class for methods used by view and review.
+ * Helper class for methods in view and/or review.
  *
  * Class ViewHelper
  * @package mod_goodhabits
  */
 class ViewHelper {
 
+    const REVIEW_OPTION_DISABLE = 'disable';
 
+    const REVIEW_OPTION_NO_OPTING = 'enable';
+
+    const REVIEW_OPTION_OPT_IN = 'enable_opt_in';
+
+    const REVIEW_OPTION_OPT_OUT = 'enable_opt_out';
+
+
+    /**
+     * Gets the current date up to which the calendar will display (either today or supplied by the URL).
+     *
+     * @return \DateTime
+     * @throws \coding_exception
+     */
+    public static function get_current_date() {
+        $todate = optional_param('toDate', null, PARAM_TEXT);
+        if ($todate) {
+            $currentdate = new \DateTime($todate);
+        } else {
+            $currentdate = new \DateTime();
+        }
+        return $currentdate;
+    }
+
+    /**
+     * Gets an instance of the FlexiCalendar class.
+     *
+     * @param $moduleinstance
+     * @param null $userid
+     * @return FlexiCalendar
+     * @throws \coding_exception
+     * @throws \moodle_exception
+     */
+    public static function get_flexi_calendar($moduleinstance, $userid = null) {
+        $periodduration = Helper::get_period_duration($moduleinstance);
+        $numentries = FlexiCalendar::DEFAULT_NUM_ENTRIES;
+
+        $currentdate = static::get_current_date();
+
+        $basedate = Helper::get_end_period_date_time($periodduration, $currentdate);
+
+        if ($userid) {
+            $area = FlexiCalendar::PLUGIN_AREA_REVIEW;
+        } else {
+            $area = FlexiCalendar::PLUGIN_AREA_VIEW;
+        }
+
+        $calendar = new FlexiCalendar($periodduration, $basedate, $numentries, $area, $userid);
+
+        return $calendar;
+    }
+
+    /**
+     * Gets fullname given user ID.
+     *
+     * @param $userid
+     * @return string
+     * @throws \dml_exception
+     */
+    public static function get_name($userid) {
+        global $DB;
+        $user = $DB->get_record('user', array('id' => $userid));
+        return fullname($user);
+    }
+
+    public static function get_review_options() {
+        $vals = array(
+            static::REVIEW_OPTION_DISABLE => get_string('review_disable', 'mod_goodhabits'),
+            static::REVIEW_OPTION_NO_OPTING => get_string('review_enable_no_opting', 'mod_goodhabits'),
+            static::REVIEW_OPTION_OPT_IN => get_string('review_enable_opt_in', 'mod_goodhabits'),
+            static::REVIEW_OPTION_OPT_OUT => get_string('review_enable_opt_out', 'mod_goodhabits')
+        );
+        return $vals;
+    }
 }
