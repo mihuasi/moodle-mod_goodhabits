@@ -52,19 +52,37 @@ class FlexiCalendar {
      */
     private $displayset;
 
+    /**
+     * @var string - The area of the plugin this is being used in.
+     */
+    private $pluginarea;
+
+    /**
+     * @var int - User id of the user this calendar is being generated for.
+     */
+    private $userid;
+
     const DEFAULT_NUM_ENTRIES = 8;
+
+    const PLUGIN_AREA_VIEW = 'view';
+
+    const PLUGIN_AREA_REVIEW = 'review';
 
     /**
      * FlexiCalendar constructor.
      * @param int $periodduration
      * @param \DateTime $basedate
      * @param $numentries
+     * @param string $pluginarea
      * @throws \moodle_exception
      */
-    public function __construct($periodduration, \DateTime $basedate, $numentries) {
+    public function __construct($periodduration, \DateTime $basedate, $numentries, $pluginarea, $userid = null) {
+        global $USER;
         $this->init_period_duration($periodduration);
         $this->basedate = $basedate;
         $this->numentries = $numentries;
+        $this->pluginarea = $pluginarea;
+        $this->userid = ($userid) ? $userid : $USER->id;
         $this->generate_display_set();
     }
 
@@ -137,7 +155,13 @@ class FlexiCalendar {
         $backdate = Helper::new_date_time($this->basedate, '-' . $offset . ' day');
         $backdatemysql = Helper::date_time_to_mysql($backdate);
         $params = array('toDate' => $backdatemysql, 'g' => $instanceid);
-        $url = new \moodle_url('/mod/goodhabits/view.php', $params);
+        $url = '/mod/goodhabits/view.php';
+        if ($this->pluginarea == self::PLUGIN_AREA_REVIEW) {
+            $url = '/mod/goodhabits/review.php';
+            $params['instance'] = $instanceid;
+            $params['userid'] = $this->userid;
+        }
+        $url = new \moodle_url($url, $params);
         return $url;
     }
 
@@ -160,7 +184,13 @@ class FlexiCalendar {
         }
         $forwarddatemysql = Helper::date_time_to_mysql($forwarddate);
         $params = array('toDate' => $forwarddatemysql, 'g' => $instanceid);
-        $url = new \moodle_url('/mod/goodhabits/view.php', $params);
+        $url = '/mod/goodhabits/view.php';
+        if ($this->pluginarea == self::PLUGIN_AREA_REVIEW) {
+            $url = '/mod/goodhabits/review.php';
+            $params['instance'] = $instanceid;
+            $params['userid'] = $this->userid;
+        }
+        $url = new \moodle_url($url, $params);
         return $url;
     }
 

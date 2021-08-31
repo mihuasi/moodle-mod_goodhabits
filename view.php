@@ -88,7 +88,7 @@ $renderer = $PAGE->get_renderer('mod_goodhabits');
 $todate = optional_param('toDate', null, PARAM_TEXT);
 
 $periodduration = gh\Helper::get_period_duration($moduleinstance);
-$numentries = 8;
+$numentries = gh\FlexiCalendar::DEFAULT_NUM_ENTRIES;
 
 if ($todate) {
     $currentdate = new DateTime($todate);
@@ -98,7 +98,8 @@ if ($todate) {
 
 $basedate = gh\Helper::get_end_period_date_time($periodduration, $currentdate);
 
-$calendar = new gh\FlexiCalendar($periodduration, $basedate, $numentries);
+$area = gh\FlexiCalendar::PLUGIN_AREA_VIEW;
+$calendar = new gh\FlexiCalendar($periodduration, $basedate, $numentries, $area);
 
 $habits = gh\HabitItemsHelper::get_all_habits_for_user($instanceid, $USER->id);
 
@@ -120,10 +121,15 @@ if ($habits) {
 
 $canmanagepersonal = has_capability('mod/goodhabits:manage_personal_habits', $PAGE->context);
 $canmanageactivityhabits = has_capability('mod/goodhabits:manage_activity_habits', $PAGE->context);
+$canviewothersentries = has_capability('mod/goodhabits:review', $PAGE->context);
 $canmanagebreaks = has_capability('mod/goodhabits:manage_personal_breaks', $PAGE->context);
 
 if ($canmanageactivityhabits) {
     $renderer->print_manage_activity_habits($instanceid);
+}
+
+if ($canviewothersentries) {
+    $renderer->print_view_others_entries($instanceid);
 }
 
 if ($canmanagepersonal) {

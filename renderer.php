@@ -33,6 +33,7 @@ class mod_goodhabits_renderer extends plugin_renderer_base {
      * @param gh\FlexiCalendar $calendar
      * @param int $instanceid
      * @return string
+     * @throws moodle_exception
      */
     public function print_calendar(gh\FlexiCalendar $calendar, $instanceid) {
         $displayset = $calendar->get_display_set();
@@ -95,12 +96,14 @@ class mod_goodhabits_renderer extends plugin_renderer_base {
      *
      * @param gh\FlexiCalendar $calendar
      * @param array $habits
+     * @param null $userid
      * @return string
+     * @throws coding_exception
      */
-    public function print_habits(gh\FlexiCalendar $calendar, $habits) {
+    public function print_habits(gh\FlexiCalendar $calendar, $habits, $userid = null) {
         $arr = array();
         foreach ($habits as $habit) {
-            $arr[] = $this->print_habit($calendar, $habit);
+            $arr[] = $this->print_habit($calendar, $habit, $userid);
         }
 
         return '<div class="habits">' . implode('', $arr) . '</div>';
@@ -111,10 +114,12 @@ class mod_goodhabits_renderer extends plugin_renderer_base {
      *
      * @param gh\FlexiCalendar $calendar
      * @param gh\Habit $habit
+     * @param int $userid
      * @return string
      * @throws coding_exception
+     * @throws dml_exception
      */
-    public function print_habit(gh\FlexiCalendar $calendar, gh\Habit $habit) {
+    public function print_habit(gh\FlexiCalendar $calendar, gh\Habit $habit, $userid = null) {
         $html = "<div class='habit habit-".$habit->id."'>";
 
         $editglobal = has_capability('mod/goodhabits:manage_activity_habits', $this->page->context);
@@ -144,7 +149,7 @@ class mod_goodhabits_renderer extends plugin_renderer_base {
 
         $html .= '    <div class="time-line">';
 
-        $html .= $this->print_checkmarks($calendar, $habit);
+        $html .= $this->print_checkmarks($calendar, $habit, $userid);
 
         $html .= '        <div class="clear-both"></div>';
 
@@ -164,17 +169,22 @@ class mod_goodhabits_renderer extends plugin_renderer_base {
      *
      * @param gh\FlexiCalendar $calendar
      * @param gh\Habit $habit
+     * @param int $userid
      * @return string
      * @throws coding_exception
+     * @throws dml_exception
      */
-    private function print_checkmarks(gh\FlexiCalendar $calendar, gh\Habit $habit) {
+    private function print_checkmarks(gh\FlexiCalendar $calendar, gh\Habit $habit, $userid = null) {
         global $USER;
 
         $html = '';
 
         $displayset = $calendar->get_display_set();
 
-        $entries = $habit->get_entries($USER->id, $calendar->get_period_duration());
+        $isreview = (boolean) $userid;
+
+        $userid = ($userid) ? $userid : $USER->id;
+        $entries = $habit->get_entries($userid, $calendar->get_period_duration());
 
         $canmanageentries = has_capability('mod/goodhabits:manage_entries', $this->page->context);
 
@@ -186,14 +196,19 @@ class mod_goodhabits_renderer extends plugin_renderer_base {
             $timestamp = $unit->getTimestamp();
             $isinbreak = gh\BreaksHelper::is_in_a_break($timestamp);
             $classxy = 'noxy';
+            $title = get_string('checkmark_title_empty', 'mod_goodhabits');
             if (isset($entries[$timestamp])) {
                 $entry = $entries[$timestamp];
                 $xval = $entry->x_axis_val;
                 $yval = $entry->y_axis_val;
+                $title = get_string('checkmark_title', 'mod_goodhabits', $entry);
                 $dataxytxt = ' data-x="'. $xval .'" data-y="'. $yval .'" ';
                 $txt = $xval . ' / ' . $yval;
                 $classxy = 'x-val-' . $xval . ' y-val-' . $yval;
             }
+
+            // Only show title text if in review, as otherwise we will need it to update as entries are saved.
+            $titletxt = ($isreview) ? ' title="'.$title.'" ' : '';
 
             $caninteract = $canmanageentries AND !$isinbreak;
             $caninteractclass = ($caninteract) ? '' : ' no-interact ';
@@ -202,7 +217,7 @@ class mod_goodhabits_renderer extends plugin_renderer_base {
             if ($isinbreak) {
                 $classes .= ' is-in-break';
             }
-            $html .= '<div class="' . $classes . '" data-timestamp="'. $timestamp .'" '.$dataxytxt.'>';
+            $html .= '<div ' . $titletxt . ' class="' . $classes . '" data-timestamp="'. $timestamp .'" '.$dataxytxt.'>';
             $html .= $txt . '</div>';
         }
         $classes = 'checkmarks';
@@ -282,6 +297,20 @@ class mod_goodhabits_renderer extends plugin_renderer_base {
         $params = array('instance' => $instanceid, 'level' => 'activity');
         $url = new moodle_url('/mod/goodhabits/manage_habits.php', $params);
         $text = get_string('manage_activity_habits', 'mod_goodhabits');
+        echo $this->print_link_as_form($url, $text);
+    }
+
+    /**
+     * Generates the button for admin to view others' entries.
+     *
+     * @param int $instanceid
+     * @throws coding_exception
+     * @throws moodle_exception
+     */
+    public function print_view_others_entries($instanceid) {
+        $params = array('instance' => $instanceid);
+        $url = new moodle_url('/mod/goodhabits/review.php', $params);
+        $text = get_string('view_others_entries', 'mod_goodhabits');
         echo $this->print_link_as_form($url, $text);
     }
 

@@ -61,6 +61,16 @@ $capabilities = array(
         )
     ),
 
+    'mod/goodhabits:review' => array(
+        'riskbitmask' => RISK_PERSONAL,
+        'contextlevel' => CONTEXT_MODULE,
+        'captype' => 'read',
+        'archetypes' => array(
+            'editingteacher' => CAP_ALLOW,
+            'teacher' => CAP_ALLOW,
+        )
+    ),
+
     'mod/goodhabits:manage_personal_habits' => array(
         'riskbitmask' => RISK_SPAM,
         'contextlevel' => CONTEXT_MODULE,
@@ -78,6 +88,19 @@ $capabilities = array(
         'archetypes' => array(
             'student' => CAP_ALLOW,
             'user' => CAP_ALLOW
+        )
+    ),
+
+    'mod/goodhabits:review_others' => array(
+
+        'captype' => 'read',
+        'riskbitmask' => RISK_PERSONAL,
+        'contextlevel' => CONTEXT_USER,
+        'archetypes' => array(
+            'student' => CAP_ALLOW,
+            'teacher' => CAP_ALLOW,
+            'editingteacher' => CAP_ALLOW,
+            'manager' => CAP_ALLOW
         )
     ),
 );

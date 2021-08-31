@@ -242,6 +242,10 @@ class Helper {
         if ($g) {
             return $g;
         }
+        $instanceid = optional_param('instance', 0, PARAM_INT);
+        if ($instanceid) {
+            return $instanceid;
+        }
         if (!empty(static::$instanceid)) {
             return static::$instanceid;
         }

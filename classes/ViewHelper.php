@@ -1,5 +1,5 @@
 <?php
-// This file is part of Moodle - https://moodle.org/
+// This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -12,20 +12,25 @@
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Plugin version and other meta-data are defined here.
- *
- * @package     mod_goodhabits
- * @copyright   2021 Joe Cape <joe.sc.cape@gmail.com>
- * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @package   mod_goodhabits
+ * @copyright 2021 Joe Cape
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+
+namespace mod_goodhabits;
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->component = 'mod_goodhabits';
-$plugin->release = '1.1.3';
-$plugin->version = 2021083003;
-$plugin->requires = 2019052002;
-$plugin->maturity = MATURITY_RC;
+/**
+ * Helper class for methods used by view and review.
+ *
+ * Class ViewHelper
+ * @package mod_goodhabits
+ */
+class ViewHelper {
+
+
+}
