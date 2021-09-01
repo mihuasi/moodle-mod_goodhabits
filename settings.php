@@ -35,7 +35,7 @@ if ($ADMIN->fulltree) {
             'goodhabits/review',
             get_string('review', 'mod_goodhabits'),
             get_string('review_help', 'mod_goodhabits'),
-            \mod_goodhabits\ViewHelper::REVIEW_OPTION_OPT_OUT,
+            \mod_goodhabits\ViewHelper::REVIEW_OPTION_NO_OPTING,
             $options
         )
     );

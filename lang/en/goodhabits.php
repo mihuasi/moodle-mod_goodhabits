@@ -134,6 +134,7 @@ $string['review_select_submit'] = 'Review User Entries';
 $string['checkmark_title'] = 'Effort: {$a->x_axis_val}
 Outcome: {$a->y_axis_val}';
 $string['checkmark_title_empty'] = 'No entry for this date';
+$string['accessing_review_when_disabled'] = 'Reviews are disabled';
 
 $string['activity'] = 'Activity';
 $string['personal'] = 'Personal';

@@ -174,6 +174,8 @@
     border-radius: 20px;
     margin-right: 10px;
     cursor: pointer;
+    font-size: 16px;
+    /*letter-spacing: -0.1em;*/
 }
 
 .path-mod-goodhabits .goodhabits-container.review .habits .habit .time-line .checkmark {
@@ -188,6 +190,11 @@
 
 .path-mod-goodhabits .checkmark.noxy {
     background-color: #dcd0aa;
+}
+
+.path-mod-goodhabits .checkmark .bar {
+    font-size: 28px;
+    font-weight: 700;
 }
 
 .path-mod-goodhabits .activity .noxy {

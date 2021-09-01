@@ -146,8 +146,8 @@ jQuery(window).on('load',function($) {
         selectedCheckmark.addClass('x-val-' + x);
         selectedCheckmark.addClass('y-val-' + y);
 
-        var displayVals = x + ' / ' + y;
-        selectedCheckmark.text(displayVals);
+        var displayVals = "<sup class='x-val'>" + x + "</sup> <span class='bar'>/</span> <sub class='y-val'>" + y + "</sub>";
+        selectedCheckmark.html(displayVals);
     };
 
     var closeEntry = function(habitId) {
@@ -187,14 +187,43 @@ jQuery(window).on('load',function($) {
         var habitId = el.parent().data('id');
         $('.habit-grid-container-' + habitId).hide();
 
+        var keyDownCount = 0;
+
         $(document).keydown(function (e) {
+
             var keyval = e.key;
             if (parseInt(keyval) && keyval > 0 && keyval <= 9) {
-                saveEntry(keyval, keyval, el);
-                setByKey = true;
-                closeEntry(habitId);
+                keyDownCount ++;
+                var tgResponse = $('.talentgrid-hidden-response');
+                var storedResponse = tgResponse.val();
+                var xSel = $('.x-axis-selector');
+                var xVal = parseInt(xSel.val());
+                var ySel = $('.y-axis-selector');
+                var yVal = parseInt(ySel.val());
+
+                var preLoadedVals = yVal && !storedResponse;
+                if (!xVal || preLoadedVals) {
+                    xSel.val(keyval);
+                    xSel.trigger("change");
+                } else {
+                    ySel.val(keyval);
+                    ySel.trigger("change");
+                }
             }
-            $(document).unbind('keydown');
+            if(e.which == 13) {
+                // Enter key pressed.
+                var tgResponse = $('.talentgrid-hidden-response');
+                var storedResponse = tgResponse.val();
+                if (storedResponse) {
+                    var vals = JSON.parse(storedResponse);
+                    saveEntry(vals.x, vals.y, el);
+                    setByKey = true;
+                    closeEntry(habitId);
+                }
+            }
+            if (keyDownCount > 2) {
+                $(document).unbind('keydown');
+            }
         });
 
         x = parseInt(el.attr("data-x"));

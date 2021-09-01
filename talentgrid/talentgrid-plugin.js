@@ -169,6 +169,13 @@ $.fn.talentgriddle = function(options) {
 
         });
     }
+    $('.path-mod-goodhabits table.band-table td').click(function (event) {
+        alert(event.pageX);
+        var pos = $(this).offset();
+        var top = pos['top'];
+        var left = pos['left'];
+        alert("top: " + top + " left: " + left);
+    });
 }
 
     function addControls(container, talentGridToken, selectControls, arrowIndicator, showExternalToken, prePlaceCoordinates) {

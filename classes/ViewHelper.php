@@ -36,11 +36,6 @@ class ViewHelper {
 
     const REVIEW_OPTION_NO_OPTING = 'enable';
 
-    const REVIEW_OPTION_OPT_IN = 'enable_opt_in';
-
-    const REVIEW_OPTION_OPT_OUT = 'enable_opt_out';
-
-
     /**
      * Gets the current date up to which the calendar will display (either today or supplied by the URL).
      *
@@ -98,12 +93,16 @@ class ViewHelper {
         return fullname($user);
     }
 
+    /**
+     * Returns an array of all of the allowable review options.
+     *
+     * @return array
+     * @throws \coding_exception
+     */
     public static function get_review_options() {
         $vals = array(
             static::REVIEW_OPTION_DISABLE => get_string('review_disable', 'mod_goodhabits'),
-            static::REVIEW_OPTION_NO_OPTING => get_string('review_enable_no_opting', 'mod_goodhabits'),
-            static::REVIEW_OPTION_OPT_IN => get_string('review_enable_opt_in', 'mod_goodhabits'),
-            static::REVIEW_OPTION_OPT_OUT => get_string('review_enable_opt_out', 'mod_goodhabits')
+            static::REVIEW_OPTION_NO_OPTING => get_string('review_enable_no_opting', 'mod_goodhabits')
         );
         return $vals;
     }

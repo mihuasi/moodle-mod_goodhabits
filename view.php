@@ -93,14 +93,19 @@ $renderer->print_calendar_area($calendar, $instanceid, $habits);
 
 $canmanagepersonal = has_capability('mod/goodhabits:manage_personal_habits', $PAGE->context);
 $canmanageactivityhabits = has_capability('mod/goodhabits:manage_activity_habits', $PAGE->context);
-$canviewothersentries = has_capability('mod/goodhabits:review', $PAGE->context);
+$canreview = has_capability('mod/goodhabits:review', $PAGE->context);
 $canmanagebreaks = has_capability('mod/goodhabits:manage_personal_breaks', $PAGE->context);
 
 if ($canmanageactivityhabits) {
     $renderer->print_manage_activity_habits($instanceid);
 }
 
-if ($canviewothersentries) {
+$reviewconf = get_config('goodhabits', 'review');
+if ($reviewconf == gh\ViewHelper::REVIEW_OPTION_DISABLE) {
+    $canreview = false;
+}
+
+if ($canreview) {
     $renderer->print_review_entries($instanceid);
 }
 
