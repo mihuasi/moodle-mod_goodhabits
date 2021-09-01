@@ -146,8 +146,8 @@ jQuery(window).on('load',function($) {
         selectedCheckmark.addClass('x-val-' + x);
         selectedCheckmark.addClass('y-val-' + y);
 
-        var displayVals = "<sup class='x-val'>" + x + "</sup> <span class='bar'>/</span> <sub class='y-val'>" + y + "</sub>";
-        selectedCheckmark.html(displayVals);
+        var displayVals = x + ' / ' + y;
+        selectedCheckmark.text(displayVals);
     };
 
     var closeEntry = function(habitId) {

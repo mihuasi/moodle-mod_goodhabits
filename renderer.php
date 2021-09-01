@@ -203,7 +203,7 @@ class mod_goodhabits_renderer extends plugin_renderer_base {
                 $yval = $entry->y_axis_val;
                 $title = get_string('checkmark_title', 'mod_goodhabits', $entry);
                 $dataxytxt = ' data-x="'. $xval .'" data-y="'. $yval .'" ';
-                $txt = "<sup class='x-val'>$xval</sup><span class='bar'>/</span><sub class='y-val'>$yval</sub>";
+                $txt = $xval . ' / ' . $yval;
                 $classxy = 'x-val-' . $xval . ' y-val-' . $yval;
             }
 
