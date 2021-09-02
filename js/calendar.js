@@ -111,9 +111,9 @@ jQuery(window).on('load',function($) {
 
     function resetCheckmarkVals(selectedCheckmark) {
         var text = emptyDisplayVals();
-        if (selectedCheckmark.attr('data-x') && selectedCheckmark.attr('data-y')) {
-            var x = selectedCheckmark.data('x');
-            var y = selectedCheckmark.data('y');
+        var x = selectedCheckmark.attr('data-x');
+        var y = selectedCheckmark.attr('data-y');
+        if (parseInt(x) && parseInt(y)) {
             text = displayValues(x, y);
         }
         selectedCheckmark.html(text);
@@ -181,7 +181,6 @@ jQuery(window).on('load',function($) {
         }
 
         var el = $(this);
-        var setByKey = false;
         var habitId = el.parent().data('id');
         $('.habit-grid-container-' + habitId).hide();
 
@@ -210,14 +209,7 @@ jQuery(window).on('load',function($) {
             }
             if(e.which == 13) {
                 // Enter key pressed.
-                var tgResponse = $('.talentgrid-hidden-response');
-                var storedResponse = tgResponse.val();
-                if (storedResponse) {
-                    var vals = JSON.parse(storedResponse);
-                    saveEntry(vals.x, vals.y, el);
-                    setByKey = true;
-                    closeEntry(habitId);
-                }
+                simulateSavePress(el);
             }
             if (keyDownCount > 2) {
                 $(document).unbind('keydown');
@@ -249,8 +241,25 @@ jQuery(window).on('load',function($) {
 
         initGrid(x,y);
         showGrid(habitId);
+        listenForCurrentCheckMarkClick(this);
     });
 
+    function listenForCurrentCheckMarkClick(el) {
+        $(el).click(function () {
+            var bandTable = $('.band-table');
+            if (!bandTable.length) {
+                // If Grid has not fully loaded, then
+                return null;
+            }
+            var el = $(this);
+            var saved = simulateSavePress(el);
+            if (!saved) {
+                resetCheckmarkVals(el);
+                var habitId = el.parent().data('id');
+                closeEntry(habitId);
+            }
+        });
+    }
 
     $('.goodhabits-container').on('click', '.grid-buttons button', function() {
         var JSONvalues = $('.talentgrid-hidden-response').val();
@@ -305,5 +314,20 @@ jQuery(window).on('load',function($) {
 
     function emptyDisplayVals() {
         return displayValues("", "");
+    }
+
+    function simulateSavePress(el) {
+        var habitId = el.parent().data('id');
+        var tgResponse = $('.talentgrid-hidden-response');
+        var storedResponse = tgResponse.val();
+        if (storedResponse) {
+            var vals = JSON.parse(storedResponse);
+            if (parseInt(vals.x) && parseInt(vals.y)) {
+                saveEntry(vals.x, vals.y, el);
+                closeEntry(habitId);
+                return true;
+            }
+        }
+        return false;
     }
 });

@@ -21,6 +21,7 @@
 
 .path-mod-goodhabits .calendar .dates {
     position: relative;
+    min-width: 400px;
 }
 
 .path-mod-goodhabits .calendar .time-unit {
@@ -286,8 +287,9 @@
     margin-right: 10px;
 }
 
-.path-mod-goodhabits .checkmark.is-selected {
+.path-mod-goodhabits .grid-is-open .habits .habit .time-line .checkmark.is-selected {
     border: 1px solid black;
+    cursor: pointer;
 }
 
 .path-mod-goodhabits .habits .habit .streak.add-new-habit {
@@ -405,4 +407,70 @@
 .path-mod-goodhabits .habit_is_hidden {
     text-decoration: line-through;
     cursor: context-menu;
+}
+
+.path-mod-goodhabits .goodhabits-container {
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+.path-mod-goodhabits .viewport-too-small {
+    display: none;
+}
+
+@media only screen and (max-width: 831px) {
+    .path-mod-goodhabits .talentgrid-controls {
+        max-width: 66px;
+    }
+}
+
+@media only screen and (max-width: 712px) {
+    .path-mod-goodhabits .calendar {
+        margin-left: 185px;
+    }
+
+    .path-mod-goodhabits .habits .habit .title, .path-mod-goodhabits .notes .habit .title {
+        width: 135px;
+    }
+
+    .path-mod-goodhabits .habits .habit, .path-mod-goodhabits .notes .habit {
+        padding-bottom: 36px;
+    }
+
+    .path-mod-goodhabits .arrow-left-container {
+        left: -25px;
+    }
+
+    .path-mod-goodhabits .arrow-right-container {
+        left: 395px;
+    }
+}
+
+@media only screen and (max-width: 665px) {
+    .path-mod-goodhabits .calendar {
+        margin-left: 160px;
+    }
+
+    .path-mod-goodhabits .habits .habit .title, .path-mod-goodhabits .notes .habit .title {
+        width: 110px;
+    }
+
+    .path-mod-goodhabits .habits .habit, .path-mod-goodhabits .notes .habit {
+        padding-bottom: 50px;
+    }
+
+}
+
+@media only screen and (max-width: 639px) {
+    .path-mod-goodhabits .viewport-too-small {
+        display: block;
+        background-color: #faabab;
+        margin: 20px;
+        margin-top: 50px;
+        padding: 10px;
+    }
+
+    .path-mod-goodhabits .goodhabits-container {
+        display: none;
+    }
 }

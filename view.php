@@ -87,6 +87,8 @@ echo $OUTPUT->header();
 
 echo $renderer->print_hidden_data();
 
+echo $renderer->print_viewport_too_small_message();
+
 $renderer->print_act_intro($moduleinstance);
 
 $renderer->print_calendar_area($calendar, $instanceid, $habits);

@@ -170,11 +170,46 @@ $.fn.talentgriddle = function(options) {
         });
     }
     $('.path-mod-goodhabits table.band-table td').click(function (event) {
-        alert(event.pageX);
+        var pointerX = event.pageX;
+        var pointerY = event.pageY;
+        var xBand = $(this).data('x-band');
+        var yBand = $(this).data('y-band');
+        var refCellX = xBand * 3;
+        var refCellY = yBand * 3;
+        var xCell = 0;
+        var yCell = 0;
+
         var pos = $(this).offset();
         var top = pos['top'];
         var left = pos['left'];
-        alert("top: " + top + " left: " + left);
+        if (pointerX < left || pointerY < top) {
+            return null;
+        }
+
+        var baseX = pointerX - left;
+        var whichLeft = baseX / tokenWidth;
+        if (whichLeft < 1) {
+            xCell = refCellX - 2;
+        } else if (whichLeft < 2) {
+            xCell = refCellX - 1;
+        } else {
+            xCell = refCellX;
+        }
+
+        var baseY = pointerY - top;
+        var whichTop = baseY / (tokenWidth + 2);
+        if (whichTop < 1) {
+            yCell = refCellY;
+        } else if (whichTop < 2) {
+            yCell = refCellY - 1;
+        } else {
+            yCell = refCellY - 2;
+        }
+
+        $("select.x-axis-selector").val(xCell);
+        $("select.x-axis-selector").trigger("change");
+        $("select.y-axis-selector").val(yCell);
+        $("select.y-axis-selector").trigger("change");
     });
 }
 
@@ -343,6 +378,7 @@ $.fn.talentgriddle = function(options) {
     function generateOverlays(gridSize, cellSize, overlayTexts) {
         if (!overlayTexts) return '';
         var bandSize = cellSize * 3;
+        bandSize += 4;
         tableClass = 'band-table';
         var html = '<table class="' + tableClass + '">';
         for (i = 1; i <= 3; i++) {
@@ -352,7 +388,7 @@ $.fn.talentgriddle = function(options) {
                 var text = overlayTexts[i][j];
                 innerContent += 'top:0;bottom: 0;left: 0;right: 0;margin: auto;background-color:white;text-align: center;vertical-align: middle;">'+text+'</div>';
                 content = '<div style="position:relative;height: ' + bandSize + 'px; width: ' + bandSize + 'px; overflow:hidden;">'+innerContent+'</div>';
-                html += '<td class="talentgrid-band talentgrid-band-'+j+'">'+content+'</td>';
+                html += '<td class="talentgrid-band talentgrid-band-'+j+'" data-x-band="'+j+'" data-y-band="'+(4 - i)+'">'+content+'</td>';
             }
             html += '</tr>';
         }

@@ -432,4 +432,10 @@ class mod_goodhabits_renderer extends plugin_renderer_base {
             echo $this->print_no_habits();
         }
     }
+
+    public function print_viewport_too_small_message() {
+        $msg = get_string('small_viewport_message', 'mod_goodhabits');
+        $out = html_writer::div($msg, 'viewport-too-small');
+        return $out;
+    }
 }
