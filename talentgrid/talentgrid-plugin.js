@@ -262,15 +262,16 @@ $.fn.talentgriddle = function(options) {
 
         if (axis === 'x') {
             var yVal = $( "select.y-axis-selector").val();
-            if (yVal && validateSelectOption(yVal)) {
-                var xVal = value;
-                var coordinates = {
-                    y: yVal,
-                    x: xVal
-                };
+            var xVal = value;
+            var coordinates = {
+                y: yVal,
+                x: xVal
+            };
 
-                $('.talentgrid-hidden-response').val(JSON.stringify(coordinates));
-                $('.talentgrid-hidden-response').trigger("change");
+            $('.talentgrid-hidden-response').val(JSON.stringify(coordinates));
+            $('.talentgrid-hidden-response').trigger("change");
+            if (yVal && validateSelectOption(yVal)) {
+
                 var yRowRef = 9 - (yVal - 1);
                 var yReferenceEl = $('td.talentgrid-cell-' + yRowRef + ":first");
                 var yOffset = yReferenceEl.offset();
@@ -279,14 +280,14 @@ $.fn.talentgriddle = function(options) {
             }
         } else {
             var xVal = $( "select.x-axis-selector").val();
+            var yVal = value;
+            var coordinates = {
+                y: yVal,
+                x: xVal
+            };
+            $('.talentgrid-hidden-response').val(JSON.stringify(coordinates));
+            $('.talentgrid-hidden-response').trigger("change");
             if (xVal && validateSelectOption(xVal)) {
-                var yVal = value;
-                var coordinates = {
-                    y: yVal,
-                    x: xVal
-                };
-                $('.talentgrid-hidden-response').val(JSON.stringify(coordinates));
-                $('.talentgrid-hidden-response').trigger("change");
                 var xReferenceEl = $('table.talentgrid-table').find("[data-x-val='" + xVal + "']:first");
                 var xOffset = xReferenceEl.offset();
                 talentGridToken.offset({top: offset.top, left: xOffset.left});

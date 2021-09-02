@@ -110,18 +110,14 @@ jQuery(window).on('load',function($) {
     }
 
     function resetCheckmarkVals(selectedCheckmark) {
-        var text = '';
+        var text = emptyDisplayVals();
         if (selectedCheckmark.attr('data-x') && selectedCheckmark.attr('data-y')) {
             var x = selectedCheckmark.data('x');
             var y = selectedCheckmark.data('y');
-            var text = displayVals(x, y);
+            text = displayValues(x, y);
         }
-        selectedCheckmark.text(text);
+        selectedCheckmark.html(text);
     }
-
-    var displayVals = function (x,y) {
-        return x + ' / ' + y;
-    };
 
     var saveEntry = function(x, y, selectedCheckmark) {
         var wwwroot = getHiddenData('wwwroot');
@@ -146,8 +142,8 @@ jQuery(window).on('load',function($) {
         selectedCheckmark.addClass('x-val-' + x);
         selectedCheckmark.addClass('y-val-' + y);
 
-        var displayVals = x + ' / ' + y;
-        selectedCheckmark.text(displayVals);
+        var displayVals = displayValues(x, y);
+        selectedCheckmark.html(displayVals);
     };
 
     var closeEntry = function(habitId) {
@@ -156,6 +152,8 @@ jQuery(window).on('load',function($) {
         $('.goodhabits-container').removeClass('grid-is-open');
 
         $('.checkmark').removeClass('is-selected');
+
+        $('.checkmark').removeClass('values-changed');
 
         $(document).unbind('keydown');
     };
@@ -226,8 +224,8 @@ jQuery(window).on('load',function($) {
             }
         });
 
-        x = parseInt(el.attr("data-x"));
-        y = parseInt(el.attr("data-y"));
+        var x = parseInt(el.attr("data-x"));
+        var y = parseInt(el.attr("data-y"));
 
         el.addClass('is-selected');
         $('.goodhabits-container').addClass('grid-is-open');
@@ -272,26 +270,14 @@ jQuery(window).on('load',function($) {
     });
 
     $('.goodhabits-container').on('change', '.talentgrid-hidden-response', function() {
-        // alert($('.talentgrid-hidden-response').val());
         var values = JSON.parse($(this).val());
-        var displayVals = values.x + ' / ' + values.y;
-        // var displayVals = displayVals(values.x,values.y);
+        var x = values.x;
+        var y = values.y;
+        var displayVals = displayValues(x, y);
         var selectedCheckmark = $('.checkmark.is-selected');
-        // selectedCheckmark.data('newX', values.x);
-        selectedCheckmark.text(displayVals);
+        selectedCheckmark.addClass('values-changed');
+        selectedCheckmark.html(displayVals);
         $('.grid-buttons .save-button').removeAttr('disabled');
-    });
-
-
-    $('.streak.add-new-habit').click(function () {
-        var isGlobal = $(this).hasClass('global');
-        var formClass = '.add-new-habit-form.personal';
-        if (isGlobal) {
-            formClass = '.add-new-habit-form.global';
-        }
-        $(formClass).show();
-        $(this).addClass('clicked');
-        $(this).text('');
     });
 
     function getLangString(id) {
@@ -302,4 +288,22 @@ jQuery(window).on('load',function($) {
         return $('.goodhabits-hidden-data').data(id);
     }
 
+    function displayValues(x,y) {
+        var xClass = 'x-val';
+        var yClass = 'y-val';
+        if (parseInt(x) === 0) {
+            x = ' ';
+            xClass += ' empty';
+        }
+        if (parseInt(y) === 0) {
+            y = ' ';
+            yClass += ' empty';
+        }
+
+        return "<span class='"+xClass+"'>"+x+"</span> <span class='xy-separator'>/</span> <span class='"+yClass+"'>"+y+"</span>";
+    }
+
+    function emptyDisplayVals() {
+        return displayValues("", "");
+    }
 });

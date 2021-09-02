@@ -204,6 +204,8 @@ class mod_goodhabits_renderer extends plugin_renderer_base {
                 $title = get_string('checkmark_title', 'mod_goodhabits', $entry);
                 $dataxytxt = ' data-x="'. $xval .'" data-y="'. $yval .'" ';
                 $txt = $xval . ' / ' . $yval;
+                $separator = "<span class='xy-separator'>/</span>";
+                $txt = "<span class='x-val'>$xval</span> $separator <span class='y-val'>$yval</span>";
                 $classxy = 'x-val-' . $xval . ' y-val-' . $yval;
             }
 

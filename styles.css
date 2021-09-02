@@ -190,6 +190,18 @@
     background-color: #dcd0aa;
 }
 
+.path-mod-goodhabits .checkmark.noxy .xy-separator {
+    display: none;
+}
+
+.path-mod-goodhabits .checkmark.noxy.values-changed .xy-separator {
+    display: inline;
+}
+
+.path-mod-goodhabits .checkmark.noxy.values-changed .empty {
+    padding-left: 10px;
+}
+
 .path-mod-goodhabits .activity .noxy {
     background-color: #c1afd0;
 }
