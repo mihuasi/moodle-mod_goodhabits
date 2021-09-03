@@ -240,7 +240,7 @@ class mod_goodhabits_renderer extends plugin_renderer_base {
      */
     public function print_module($calendar, $habits, $extraclasses = array()) {
         $extraclasses = implode(' ', $extraclasses);
-        $html = "<div class='goodhabits-container $extraclasses'>$calendar
+        $html = "<div class='goodhabits-container $extraclasses' id='goodhabits-container'>$calendar
                        <div class=\"clear-both\"></div>
                  $habits
                  </div><br /><br /> ";
@@ -393,7 +393,7 @@ class mod_goodhabits_renderer extends plugin_renderer_base {
      * @param object $instance
      */
     public function print_act_intro($instance) {
-        $string = html_writer::div($instance->name, 'intro-name');
+        $string = html_writer::div($instance->name, 'intro-name', array('id' => 'intro-name'));
         $string .= html_writer::div($instance->intro, 'intro-intro');
         echo html_writer::div($string, 'intro');
     }
@@ -406,7 +406,7 @@ class mod_goodhabits_renderer extends plugin_renderer_base {
      */
     public function print_review_intro($fullname) {
         $string = get_string('review_entries_name', 'mod_goodhabits', $fullname);
-        $string = html_writer::div($string, 'intro-name');
+        $string = html_writer::div($string, 'intro-name', array('id' => 'intro-name'));
         echo html_writer::div($string, 'intro');
     }
 

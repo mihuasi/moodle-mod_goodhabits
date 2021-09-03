@@ -161,7 +161,7 @@ class FlexiCalendar {
             $params['instance'] = $instanceid;
             $params['userid'] = $this->userid;
         }
-        $url = new \moodle_url($url, $params);
+        $url = new \moodle_url($url, $params, 'intro-name');
         return $url;
     }
 
@@ -190,7 +190,7 @@ class FlexiCalendar {
             $params['instance'] = $instanceid;
             $params['userid'] = $this->userid;
         }
-        $url = new \moodle_url($url, $params);
+        $url = new \moodle_url($url, $params, 'intro-name');
         return $url;
     }
 

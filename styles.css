@@ -165,8 +165,7 @@
     width: calc(50px * 32);
 }
 
-.path-mod-goodhabits .habits .habit .time-line .checkmark,
-.path-mod-goodhabits .habits .habit .time-line .bubble-up {
+.path-mod-goodhabits .habits .habit .time-line .checkmark {
     float: left;
     height: 40px;
     width: 40px;
@@ -205,16 +204,6 @@
 
 .path-mod-goodhabits .activity .noxy {
     background-color: #c1afd0;
-}
-
-.path-mod-goodhabits .habits .habit .time-line .bubble-up {
-    background-color: transparent;
-    border: solid black 1px;
-}
-
-.path-mod-goodhabits .habits .habit .time-line .bubble-up-sign {
-    font-size: 25px;
-    line-height: 33px;
 }
 
 .path-mod-goodhabits .habits .habit .time-line .checkmark.no-interact {
@@ -410,7 +399,7 @@
 }
 
 .path-mod-goodhabits .goodhabits-container {
-    max-width: 100%;
+    width: 100%;
     overflow-x: hidden;
 }
 
@@ -418,19 +407,27 @@
     display: none;
 }
 
-@media only screen and (max-width: 831px) {
+.path-mod-goodhabits .table-plus-axis {
+    width: 366px;
+}
+
+.path-mod-goodhabits .talentgrid .grid-buttons {
+    left: 390px;
+}
+
+@media only screen and (max-width: 927px) {
     .path-mod-goodhabits .talentgrid-controls {
         max-width: 66px;
     }
 }
 
-@media only screen and (max-width: 712px) {
+@media only screen and (max-width: 818px) {
     .path-mod-goodhabits .calendar {
-        margin-left: 185px;
+        margin-left: 155px;
     }
 
     .path-mod-goodhabits .habits .habit .title, .path-mod-goodhabits .notes .habit .title {
-        width: 135px;
+        width: 125px;
     }
 
     .path-mod-goodhabits .habits .habit, .path-mod-goodhabits .notes .habit {
@@ -444,21 +441,64 @@
     .path-mod-goodhabits .arrow-right-container {
         left: 395px;
     }
+
+    .path-mod-goodhabits .talentgrid-controls select.axis-selector {
+        width: 100%;
+    }
+
+    .path-mod-goodhabits .table-plus-axis .talentgrid-y-axis.large-label.small-labels-also-used {
+        left: -100px;
+    }
+
+    .path-mod-goodhabits .table-plus-axis .talentgrid-x-axis.large-label {
+        bottom: -75px;
+    }
+
+    .path-mod-goodhabits .habit-grid-container .talentgrid {
+        margin-left: 60px;
+    }
+
+    .path-mod-goodhabits .habits .habit .streak {
+        width: 20px;
+    }
 }
 
-@media only screen and (max-width: 665px) {
+@media only screen and (max-width: 683px) {
     .path-mod-goodhabits .calendar {
-        margin-left: 160px;
+        margin-left: 130px;
     }
 
     .path-mod-goodhabits .habits .habit .title, .path-mod-goodhabits .notes .habit .title {
-        width: 110px;
+        width: 100px;
     }
 
     .path-mod-goodhabits .habits .habit, .path-mod-goodhabits .notes .habit {
         padding-bottom: 50px;
     }
 
+    .path-mod-goodhabits .talentgrid .grid-buttons {
+        left: 372px;
+    }
+
+    .path-mod-goodhabits .talentgrid .talentgrid-controls {
+        position: absolute;
+        left: 372px;
+    }
+
+    .path-mod-goodhabits .grid-heading {
+        margin-top: -30px;
+    }
+}
+
+@media only screen and (max-width: 657px) {
+    .path-mod-goodhabits .arrow-right-container {
+        left: 375px;
+    }
+
+    .path-mod-goodhabits .habits .habit .time-line .checkmark,
+    .path-mod-goodhabits .calendar .time-unit {
+        margin-right: 7px;
+    }
 }
 
 @media only screen and (max-width: 639px) {
