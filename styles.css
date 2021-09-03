@@ -426,11 +426,13 @@
         margin-left: 155px;
     }
 
-    .path-mod-goodhabits .habits .habit .title, .path-mod-goodhabits .notes .habit .title {
+    .path-mod-goodhabits .habits .habit .title,
+    .path-mod-goodhabits .notes .habit .title {
         width: 125px;
     }
 
-    .path-mod-goodhabits .habits .habit, .path-mod-goodhabits .notes .habit {
+    .path-mod-goodhabits .habits .habit,
+    .path-mod-goodhabits .notes .habit {
         padding-bottom: 36px;
     }
 
@@ -468,11 +470,13 @@
         margin-left: 130px;
     }
 
-    .path-mod-goodhabits .habits .habit .title, .path-mod-goodhabits .notes .habit .title {
+    .path-mod-goodhabits .habits .habit .title,
+    .path-mod-goodhabits .notes .habit .title {
         width: 100px;
     }
 
-    .path-mod-goodhabits .habits .habit, .path-mod-goodhabits .notes .habit {
+    .path-mod-goodhabits .habits .habit,
+    .path-mod-goodhabits .notes .habit {
         padding-bottom: 50px;
     }
 
