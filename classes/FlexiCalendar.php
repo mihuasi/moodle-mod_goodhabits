@@ -194,5 +194,4 @@ class FlexiCalendar {
         return $url;
     }
 
-
 }
