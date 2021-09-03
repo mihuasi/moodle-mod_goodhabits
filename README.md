@@ -1,4 +1,4 @@
-# Good Habits Activity Module (1.2.1) for Moodle #
+# Good Habits Activity Module (1.2.2) for Moodle #
 
 The intention of this plugin is to help track habits over time. Within an e-learning context this may help cultivate behaviours that improve learning outcomes.
 
@@ -11,6 +11,9 @@ The intention of this plugin is to help track habits over time. Within an e-lear
 - Create breaks for stretches of time in which you do not want to track habits.
 - Keyboard shortcuts (number keys to set values, enter key to save).
 - Can track activity completion based on user entries.
+
+## 1.2.2 Notes
+- Minor code style updates.
 
 ## 1.2.1 Notes
 - Add *review* feature. If enabled, allows admin to review the habit calendars of others on the course.
