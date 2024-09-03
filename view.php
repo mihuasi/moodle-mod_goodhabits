@@ -91,7 +91,8 @@ echo $renderer->print_viewport_too_small_message();
 
 $renderer->print_act_intro($moduleinstance);
 
-$renderer->print_calendar_area($calendar, $instanceid, $habits);
+$renderer->print_templated_calendar_area($calendar, $instanceid, $habits);
+//$renderer->print_calendar_area($calendar, $instanceid, $habits);
 
 $canmanagepersonal = has_capability('mod/goodhabits:manage_personal_habits', $PAGE->context);
 $canmanageactivityhabits = has_capability('mod/goodhabits:manage_activity_habits', $PAGE->context);

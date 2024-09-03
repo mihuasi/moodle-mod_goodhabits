@@ -35,7 +35,7 @@ class mod_goodhabits_renderer extends plugin_renderer_base {
      * @return string
      * @throws moodle_exception
      */
-    public function print_calendar(gh\FlexiCalendar $calendar, $instanceid) {
+    protected function print_calendar(gh\FlexiCalendar $calendar, $instanceid) {
         $displayset = $calendar->get_display_set();
 
         $periodduration = $calendar->get_period_duration();
@@ -91,6 +91,57 @@ class mod_goodhabits_renderer extends plugin_renderer_base {
         return $html;
     }
 
+    protected function get_calendar_data(gh\FlexiCalendar $calendar, $instanceid) {
+        $data = [];
+        $displayset = $calendar->get_display_set();
+
+        $periodduration = $calendar->get_period_duration();
+
+        $data['periodduration'] = $periodduration;
+
+        $year = gh\Helper::display_year($displayset);
+
+        $backurl = $calendar->get_back_url($instanceid);
+        $forwardurl = $calendar->get_forward_url($instanceid);
+
+        $data['year'] = $year;
+        $data['backurl'] = $backurl;
+        $data['forwardurl'] = $forwardurl;
+        $data['flexi_cal_units'] = [];
+
+        foreach ($displayset as $k => $unit) {
+            $display = $unit->display_unit();
+
+            $month = $unit->display_month();
+
+            $imploded_classes = implode(' ', $unit->get_classes());
+
+//            $display = $unit->display_unit();
+//            $topline = $display['topLine'];
+//
+//            $singlelinedisplay = $topline . ' ' . $display['bottomLine'];
+//
+//            $unitcontents = '<div class="top-line">'.$topline.'</div>';
+//            $unitcontents .= '<div class="bottom-line">'.$display['bottomLine'].'</div>';
+//
+//            $monthhtml = ($month) ? '<div class="month">'.$month.'</div>' : '';
+//            $imploded_classes = implode(' ', $unit->get_classes());
+//            $day = '<div data-text="'.$singlelinedisplay.'" class="time-unit '. $imploded_classes .'">';
+//            $day .= $monthhtml . $unitcontents.'</div>';
+//            $days[] = $day;
+
+            $flexi_cal_unit = [];
+            $flexi_cal_unit['top_line'] = $display['topLine'];
+            $flexi_cal_unit['bottom_line'] = $display['bottomLine'];
+            $flexi_cal_unit['month'] = $month;
+            $flexi_cal_unit['class'] = $imploded_classes;
+
+            $data['flexi_cal_units'][] = $flexi_cal_unit;
+        }
+
+        return $data;
+    }
+
     /**
      * Generates the list of habits.
      *
@@ -100,13 +151,69 @@ class mod_goodhabits_renderer extends plugin_renderer_base {
      * @return string
      * @throws coding_exception
      */
-    public function print_habits(gh\FlexiCalendar $calendar, $habits, $userid = null) {
+    protected function print_habits(gh\FlexiCalendar $calendar, $habits, $userid = null) {
         $arr = array();
         foreach ($habits as $habit) {
             $arr[] = $this->print_habit($calendar, $habit, $userid);
         }
 
         return '<div class="habits">' . implode('', $arr) . '</div>';
+    }
+
+    protected function get_habits_data(gh\FlexiCalendar $calendar, $habits, $userid = null) {
+        $data = [];
+        foreach ($habits as $habit) {
+            $data[] = $this->get_habit_data($calendar, $habit, $userid);
+        }
+
+        return $data;
+    }
+
+    public function get_habit_data(gh\FlexiCalendar $calendar, gh\Habit $habit, $userid = null) {
+        $habit_data = [];
+        $habit_data['id'] = $habit->id;
+//        $html = "<div class='habit habit-".$habit->id."'>";
+
+        $editglobal = has_capability('mod/goodhabits:manage_activity_habits', $this->page->context);
+        $editpersonal = has_capability('mod/goodhabits:manage_personal_habits', $this->page->context);
+        $isactivitylevel = $habit->is_activity_habit();
+
+        $habit_data['is_activity_level'] = $isactivitylevel;
+
+        $canmanage = false;
+        if ($isactivitylevel AND $editglobal) {
+            $canmanage = true;
+        }
+        if (!$isactivitylevel AND $editpersonal) {
+            $canmanage = true;
+        }
+
+        $canmanageclass = ($canmanage) ? ' can-edit ' : '';
+
+//        $data = ' data-habit-id="'.$habit->id.'" data-is-global="'.$isactivitylevel.'" ';
+        $activityclass = ($isactivitylevel) ? 'activity' : 'personal';
+
+        $habit_data['can_manage_class'] = $canmanageclass;
+        $habit_data['activity_class'] = $activityclass;
+        $titletextid = $activityclass . '_title_text';
+
+        $titletext = get_string($titletextid, 'mod_goodhabits');
+        $habit_data['title_text'] = $titletext;
+        $habit_data['habit_name'] = format_text($habit->name);
+        $habit_data['habit_desc'] = format_text($habit->description);
+
+//        $html .= '<div '.$title.' class="streak ' . $canmanageclass . ' ' . $activityclass . '" ' . $data . '></div>';
+
+//        $html .= '<div class="title"><div class="habit-name">'.format_text($habit->name).'</div>';
+//        $html .= '    <div class="description">'.format_text($habit->description).'</div></div>';
+//
+//        $html .= '    <div class="time-line">';
+        $checkmarks = $this->get_checkmarks_data($calendar, $habit, $userid);
+        $habit_data['checkmarks'] = $checkmarks;
+
+//        $html .= $this->print_checkmarks($calendar, $habit, $userid);
+
+        return $habit_data;
     }
 
     /**
@@ -164,6 +271,81 @@ class mod_goodhabits_renderer extends plugin_renderer_base {
         return $html;
     }
 
+    protected function get_checkmarks_data(gh\FlexiCalendar $calendar, gh\Habit $habit, $userid = null) {
+        global $USER;
+
+        $data = [];
+
+        $data['units'] = [];
+
+        $displayset = $calendar->get_display_set();
+
+        $isreview = (int) $userid;
+
+        $userid = ($userid) ? $userid : $USER->id;
+        $entries = $habit->get_entries($userid, $calendar->get_period_duration());
+
+        $canmanageentries = has_capability('mod/goodhabits:manage_entries', $this->page->context);
+
+        $isactivitylevel = $habit->is_activity_habit();
+
+        foreach ($displayset as $unit) {
+            $data_checkmark = [];
+//            $dataxytxt = '';
+//            $txt = '<div class="empty-day">  </div>';
+            $timestamp = $unit->getTimestamp();
+            $isinbreak = gh\BreaksHelper::is_in_a_break($timestamp);
+            $classxy = 'noxy';
+            $title = get_string('checkmark_title_empty', 'mod_goodhabits');
+            $is_filled = false;
+            if (isset($entries[$timestamp])) {
+                $is_filled = true;
+                $entry = $entries[$timestamp];
+                $xval = $entry->x_axis_val;
+                $yval = $entry->y_axis_val;
+                $title = get_string('checkmark_title', 'mod_goodhabits', $entry);
+//                $dataxytxt = ' data-x="'. $xval .'" data-y="'. $yval .'" ';
+//                $txt = $xval . ' / ' . $yval;
+//                $separator = "<span class='xy-separator'>/</span>";
+//                $txt = "<span class='x-val'>$xval</span> $separator <span class='y-val'>$yval</span>";
+                $classxy = 'x-val-' . $xval . ' y-val-' . $yval;
+            }
+
+            // Only show title text if in review, as otherwise we will need it to update as entries are saved.
+//            $titletxt = ($isreview) ? ' title="'.$title.'" ' : '';
+
+            $caninteract = $canmanageentries AND !$isinbreak;
+            $caninteractclass = ($caninteract) ? '' : ' no-interact ';
+
+            $classes = 'checkmark ' . $caninteractclass . ' ' . $classxy;
+            if ($isinbreak) {
+                $classes .= ' is-in-break';
+            }
+//            $html .= '<div ' . $titletxt . ' class="' . $classes . '" data-timestamp="'. $timestamp .'" '.$dataxytxt.'>';
+//            $html .= $txt . '</div>';
+
+            $data_checkmark['is_filled'] = $is_filled;
+            $data_checkmark['is_review'] = $isreview;
+            $data_checkmark['title'] = $title;
+            $data_checkmark['x'] = $xval ?? null;
+            $data_checkmark['y'] = $yval ?? null;
+            $data_checkmark['timestamp'] = $timestamp;
+            $data_checkmark['class'] = $classes;
+
+            $data['units'][] = $data_checkmark;
+        }
+        $classes = 'checkmarks';
+        if ($isactivitylevel) {
+            $classes .= ' activity';
+        }
+
+        $data['class'] = $classes;
+
+//        return "<div class='$classes' data-id='".$habit->id."'>$html</div>";
+
+        return $data;
+    }
+
     /**
      * 'Checkmarks' here are the circular entities used to manage habit entries.
      *
@@ -174,7 +356,7 @@ class mod_goodhabits_renderer extends plugin_renderer_base {
      * @throws coding_exception
      * @throws dml_exception
      */
-    private function print_checkmarks(gh\FlexiCalendar $calendar, gh\Habit $habit, $userid = null) {
+    protected function print_checkmarks(gh\FlexiCalendar $calendar, gh\Habit $habit, $userid = null) {
         global $USER;
 
         $html = '';
@@ -238,7 +420,7 @@ class mod_goodhabits_renderer extends plugin_renderer_base {
      * @param array $extraclasses
      * @return string
      */
-    public function print_module($calendar, $habits, $extraclasses = array()) {
+    protected function print_module($calendar, $habits, $extraclasses = array()) {
         $extraclasses = implode(' ', $extraclasses);
         $html = "<div class='goodhabits-container $extraclasses' id='goodhabits-container'>$calendar
                        <div class=\"clear-both\"></div>
@@ -382,7 +564,7 @@ class mod_goodhabits_renderer extends plugin_renderer_base {
      *
      * @throws coding_exception
      */
-    public function print_no_habits() {
+    protected function print_no_habits() {
         $string = get_string('no_habits', 'mod_goodhabits');
         echo html_writer::div($string, 'no-habits');
     }
@@ -429,8 +611,22 @@ class mod_goodhabits_renderer extends plugin_renderer_base {
 
             echo $this->print_module($calendarhtml, $habitshtml, $extraclasses);
         } else {
-            echo $this->print_no_habits();
+            $this->print_no_habits();
         }
+    }
+
+    public function print_templated_calendar_area($calendar, $instanceid, $habits, $extraclasses = array(), $userid = null)
+    {
+        global $OUTPUT;
+        //TODO: Get all data ready for display, then display via template.
+        $template_data = [];
+
+        $template_data['calendar'] = $this->get_calendar_data($calendar, $instanceid);
+
+        $template_data['habits'] = $this->get_habits_data($calendar, $habits, $userid);
+        $template_data['extra_classes'] = $extraclasses;
+
+        echo $OUTPUT->render_from_template('mod_goodhabits/calendar_area', $template_data);
     }
 
     public function print_viewport_too_small_message() {
