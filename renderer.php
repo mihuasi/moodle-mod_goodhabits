@@ -500,6 +500,21 @@ class mod_goodhabits_renderer extends plugin_renderer_base {
         echo $this->print_link_as_form($url, $text);
     }
 
+    public function print_exit_mobile_view($instanceid) {
+        $params = array('g' => $instanceid);
+        $url = new moodle_url('/mod/goodhabits/view.php', $params);
+        $text = get_string('exit_mobile_view', 'mod_goodhabits');
+        echo $this->print_link_as_form($url, $text, 'exit-mobile-view');
+    }
+
+    public function print_mobile_view($instanceid) {
+        $params = array('g' => $instanceid);
+        $params['layout'] = gh\Helper::LAYOUT_BASIC_MOBILE;
+        $url = new moodle_url('/mod/goodhabits/view.php', $params);
+        $text = get_string('mobile_view', 'mod_goodhabits');
+        echo $this->print_link_as_form($url, $text, 'mobile-view');
+    }
+
     /**
      * Generates the button for users to manage their habits.
      *
@@ -552,10 +567,10 @@ class mod_goodhabits_renderer extends plugin_renderer_base {
      * @param moodle_url $url
      * @param string $text
      */
-    private function print_link_as_form(moodle_url $url, $text) {
+    private function print_link_as_form(moodle_url $url, $text, $class = 'manage-breaks-form') {
         $url = $url->out();
         $submit = "<input type='submit' value='$text' />";
-        $form = "<br /><form class='manage-breaks-form' method='post' action='$url'>$submit</form>";
+        $form = "<br /><form class='$class' method='post' action='$url'>$submit</form>";
         echo $form;
     }
 

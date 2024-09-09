@@ -150,6 +150,10 @@
     background: #c1afd0;
 }
 
+.path-mod-goodhabits .activity {
+    border-top: none;
+}
+
 .path-mod-goodhabits .streak.can-edit.hovering {
     cursor: pointer;
 }
@@ -518,3 +522,15 @@
         display: none;
     }
 }
+
+.path-mod-goodhabits .exit-mobile-view {
+    margin-left: 10px;
+}
+
+/*.path-mod-goodhabits .mobile-view {*/
+/*    display: none;*/
+/*}*/
+
+/*.path-mod-goodhabits form.mobile-view {*/
+/*    display: block;*/
+/*}*/

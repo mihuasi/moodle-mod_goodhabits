@@ -34,6 +34,9 @@ $id = optional_param('id', 0, PARAM_INT);
 // ... module instance id.
 $g  = optional_param('g', 0, PARAM_INT);
 
+$layout = optional_param('layout', '', PARAM_TEXT);
+$is_basic_mobile = ($layout == gh\Helper::LAYOUT_BASIC_MOBILE);
+
 if ($id) {
     $cm             = get_coursemodule_from_id('goodhabits', $id, 0, false, MUST_EXIST);
     $course         = $DB->get_record('course', array('id' => $cm->course), '*', MUST_EXIST);
@@ -77,6 +80,10 @@ $PAGE->requires->js('/mod/goodhabits/js/calendar.js', false);
 
 $PAGE->requires->css('/mod/goodhabits/talentgrid/talentgrid-style.css');
 
+if ($is_basic_mobile) {
+    $PAGE->set_pagelayout('embedded');
+}
+
 $renderer = $PAGE->get_renderer('mod_goodhabits');
 
 $calendar = gh\ViewHelper::get_flexi_calendar($moduleinstance);
@@ -89,10 +96,17 @@ echo $renderer->print_hidden_data();
 
 echo $renderer->print_viewport_too_small_message();
 
-$renderer->print_act_intro($moduleinstance);
+if (!$is_basic_mobile) {
+    $renderer->print_act_intro($moduleinstance);
+}
 
 $renderer->print_templated_calendar_area($calendar, $instanceid, $habits);
-//$renderer->print_calendar_area($calendar, $instanceid, $habits);
+
+if ($is_basic_mobile) {
+    $renderer->print_exit_mobile_view($instanceid);
+    echo $OUTPUT->footer();
+    exit;
+}
 
 $canmanagepersonal = has_capability('mod/goodhabits:manage_personal_habits', $PAGE->context);
 $canmanageactivityhabits = has_capability('mod/goodhabits:manage_activity_habits', $PAGE->context);
@@ -119,5 +133,7 @@ if ($canmanagepersonal) {
 if ($canmanagebreaks) {
     $renderer->print_manage_personal_breaks($instanceid);
 }
+
+$renderer->print_mobile_view($instanceid);
 
 echo $OUTPUT->footer();

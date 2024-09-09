@@ -93,6 +93,14 @@ class FlexiCalendar {
         return $this->displayset;
     }
 
+    public function get_latest()
+    {
+        $reverse = array_reverse($this->displayset);
+        $latest = reset($reverse);
+
+        return $latest;
+    }
+
     /**
      * @return int
      */
@@ -161,6 +169,10 @@ class FlexiCalendar {
             $params['instance'] = $instanceid;
             $params['userid'] = $this->userid;
         }
+        $layout = optional_param('layout', '', PARAM_TEXT);
+        if ($layout) {
+            $params['layout'] = $layout;
+        }
         $url = new \moodle_url($url, $params, 'intro-name');
         return $url;
     }
@@ -189,6 +201,10 @@ class FlexiCalendar {
             $url = '/mod/goodhabits/review.php';
             $params['instance'] = $instanceid;
             $params['userid'] = $this->userid;
+        }
+        $layout = optional_param('layout', '', PARAM_TEXT);
+        if ($layout) {
+            $params['layout'] = $layout;
         }
         $url = new \moodle_url($url, $params, 'intro-name');
         return $url;

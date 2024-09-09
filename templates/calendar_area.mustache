@@ -1,0 +1,82 @@
+<div class='goodhabits-container {{extraclasses}}' id='goodhabits-container'>
+
+    <div class='calendar' data-period-duration='{{calendar.periodduration}}'>
+        <div class='dates'>
+            <div class='year'>{{calendar.year}}</div>
+            <div class='arrow-left-container'>
+                <div class='arrow-left'>
+                    <a href='{{{calendar.backurl}}}'>
+                        <span class='link-spanner'></span>
+                    </a>
+                </div>
+            </div>
+            {{#calendar.flexi_cal_units}}
+                <div data-text="{{top_line}} {{bottom_line}}" class="time-unit {{class}}">
+                    {{#month}}
+                        <div class="month">{{month}}</div>
+                    {{/month}}
+                    <div class="top-line">
+                        {{top_line}}
+                    </div>
+                    <div class="bottom-line">
+                        {{bottom_line}}
+                    </div>
+                </div>
+            {{/calendar.flexi_cal_units}}
+
+            {{#calendar.forwardurl}}
+            <div class='arrow-right-container'>
+                <div class='arrow-right'>
+                    <a href='{{{calendar.forwardurl}}}'>
+                        <span class='link-spanner'></span>
+                    </a>
+                </div>
+            </div>
+           {{/calendar.forwardurl}}
+        </div>
+    </div>
+
+    <div class="clear-both"></div>
+
+    <div class="habits">
+        {{#habits}}
+            <div class='habit habit-{{id}}'>
+                <div title="{{title_text}}" class="streak {{can_manage_class}} {{activity_class}}"
+                     data-habit-id="{{id}}" data-is-global="{{is_activity_level}}"></div>
+                    <div class="title">
+                        <div class="habit-name">{{{habit_name}}}</div>
+                        <div class="description">{{{habit_desc}}}</div>
+                    </div>
+                    <div class="time-line">
+                        <div class='{{checkmarks.class}}' data-id='{{id}}'>
+                            {{#checkmarks.units}}
+
+                                    {{#is_filled}}
+                                        <div class="{{class}}" data-timestamp="{{timestamp}}"
+                                             data-x="{{x}}" data-y="{{y}}">
+                                            <span class="x-val">{{x}}</span>
+                                            <span class="xy-separator">/</span>
+                                            <span class="y-val">{{y}}</span>
+                                        </div>
+                                    {{/is_filled}}
+                                    {{^is_filled}}
+                                        <div class="{{class}}" data-timestamp="{{timestamp}}">
+                                            <div class="empty-day">  </div>
+                                        </div>
+                                    {{/is_filled}}
+
+
+                            {{/checkmarks.units}}
+                        </div>
+                        <div class="clear-both"></div>
+                    </div>
+
+
+                <div class="clear-both"></div>
+            </div>
+            <div class="habit-grid-container habit-grid-container-{{id}}"></div>
+        {{/habits}}
+    </div>
+
+
+</div><br /><br />

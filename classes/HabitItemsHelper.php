@@ -64,6 +64,30 @@ class HabitItemsHelper {
         return $habits;
     }
 
+    public static function get_next_incomplete_for_user_date($instanceid, $userid, FlexiCalendarUnit $calendar_unit)
+    {
+        $incomplete = static::get_incomplete_for_user_date($instanceid, $userid, $calendar_unit);
+        $next = reset($incomplete);
+
+        return $next;
+    }
+
+    public static function get_incomplete_for_user_date($instanceid, $userid, FlexiCalendarUnit $calendar_unit)
+    {
+        global $DB;
+        $timestamp = $calendar_unit->getTimestamp();
+        $sql = 'SELECT h.* FROM {mod_goodhabits_item} h
+	LEFT JOIN {mod_goodhabits_entry} e ON (e.`habit_id` = h.id AND e.`userid` = :userid AND e.`endofperiod_timestamp` = :timestamp)
+	WHERE e.id IS NULL AND h.instanceid = :instanceid';
+
+        $recs = $DB->get_records_sql($sql, [
+            'instanceid' => $instanceid,
+            'userid' => $userid,
+            'timestamp' => $timestamp]
+        );
+        return $recs;
+    }
+
     /**
      * Like {@see get_all_habits_for_user} but only personal habits.
      *

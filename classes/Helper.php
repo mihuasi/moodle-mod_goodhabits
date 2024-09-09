@@ -33,6 +33,11 @@ defined('MOODLE_INTERNAL') || die();
 class Helper {
 
     /**
+     * @const string - used for showing a basic mobile layout.
+     */
+    public const LAYOUT_BASIC_MOBILE = 'basic_mobile';
+
+    /**
      * @var int - used to cache the instance ID and avoid repeated DB calls.
      */
     public static $instanceid;

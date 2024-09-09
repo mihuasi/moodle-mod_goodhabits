@@ -156,3 +156,5 @@ $string['review_enable_opt_out'] = 'Enable reviews - students can opt out';
 $string['review'] = 'Reviews';
 $string['review_help'] = 'Controls whether admin with appropriate capabilities can look at student\'s habit calendars';
 $string['small_viewport_message'] = 'The minimum viewport width to use this activity is 640px. If you are using a phone, you can try tilting it horizontally to view it in landscape mode.';
+$string['mobile_view'] = 'Mobile view';
+$string['exit_mobile_view'] = 'Exit mobile view';
