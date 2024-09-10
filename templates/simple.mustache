@@ -1,4 +1,21 @@
 <div class="simple-view">
-    <h1 class="simple-heading">{{heading}}</h1>
-    <input type="range" id="discreteSlider" name="discreteSlider" min="1" max="10" step="1" value="5">
+    <form action="{{view-url}}" method="post" class="habit-form">
+        <div class="simple-main">
+            <h1 class="simple-heading">{{heading}}, starting {{date}}</h1>
+            <span class="prev-habit">←</span>
+            <div class="habits-wrapper">
+                {{#habits}}
+                    <div class="sliders habit">
+                        <h2 class="habit-heading">{{name}}</h2>
+                        <h3>Effort:</h3>
+                        <input type="range" class="discrete-slider effort" id="discreteSlider" name="habit-{{id}}-effort" min="1" max="10" step="1" value="5">
+                        <h3>Outcome:</h3>
+                        <input type="range" class="discrete-slider outcome" name="habit-{{id}}-outcome" min="1" max="10" step="1" value="5">
+                    </div>
+                {{/habits}}
+            </div>
+            <span class="next-habit">→</span>
+            <button type="submit" class="submit-button">Back</button>
+        </div>
+    </form>
 </div>

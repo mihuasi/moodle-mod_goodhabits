@@ -93,6 +93,9 @@ class FlexiCalendar {
         return $this->displayset;
     }
 
+    /**
+     * @return false|FlexiCalendarUnit
+     */
     public function get_latest()
     {
         $reverse = array_reverse($this->displayset);

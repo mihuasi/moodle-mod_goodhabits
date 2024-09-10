@@ -534,3 +534,131 @@
 /*.path-mod-goodhabits form.mobile-view {*/
 /*    display: block;*/
 /*}*/
+.path-mod-goodhabits h1.simple-heading {
+    margin-bottom: 60px;
+    font-size: 24px;
+}
+
+.path-mod-goodhabits .simple-main {
+    margin-top: 40px;
+    margin-left: 180px;
+    position: relative; /* Ensure positioning context for arrows */
+    padding: 0 50px;
+    width: 600px;
+}
+
+.path-mod-goodhabits .sliders {
+    width: 400px;
+    margin-bottom: 30px;
+}
+
+.path-mod-goodhabits .habit-heading {
+    text-align: center;
+    font-size: 18px;
+}
+
+.path-mod-goodhabits .discrete-slider {
+    width: 100%;
+}
+
+.path-mod-goodhabits input.outcome[type=range] {
+    -webkit-appearance: none; /* Remove default style */
+    height: 8px; /* Slider track height */
+    background: #f0ad4e; /* Default track color */
+    border-radius: 5px; /* Rounded track */
+    outline: none; /* Remove outline */
+    opacity: 0.7; /* Transparency */
+    transition: opacity 0.2s; /* Smooth transition */
+}
+
+.path-mod-goodhabits input[type=range]:hover {
+    opacity: 1; /* Full opacity on hover */
+}
+
+/* Customizing the slider thumb (knob) */
+.path-mod-goodhabits input.outcome[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none; /* Remove default appearance */
+    appearance: none;
+    width: 20px; /* Thumb width */
+    height: 20px; /* Thumb height */
+    background: orangered; /* Thumb color */
+    border-radius: 50%; /* Round thumb */
+    cursor: pointer; /* Change cursor on hover */
+}
+
+/* For Firefox */
+.path-mod-goodhabits input.outcome[type=range]::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    background: orangered;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.path-mod-goodhabits .simple-view .habit {
+    display: none; /* Hide all habits by default */
+}
+
+.path-mod-goodhabits .simple-view .habit.active {
+    display: block; /* Show the active habit */
+}
+
+.path-mod-goodhabits .simple-view {
+    position: relative;
+    width: 100%;
+}
+
+.path-mod-goodhabits .prev-habit, .path-mod-goodhabits .next-habit {
+    position: absolute;
+    top: 50%; /* Vertically center the arrows */
+    transform: translateY(-50%); /* Center adjustment */
+    font-size: 2rem; /* Size of the arrows */
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    color: white; /* Arrow color */
+    padding: 10px 20px;
+    cursor: pointer;
+    z-index: 1000;
+    border-radius: 50%;
+    text-align: center;
+}
+
+/* Left arrow positioning */
+.path-mod-goodhabits .prev-habit {
+    left: -120px;; /* Position on the left */
+}
+
+/* Right arrow positioning */
+.path-mod-goodhabits .next-habit {
+    right: 10px; /* Position on the right */
+}
+
+/* Optional: Hover effect */
+.path-mod-goodhabits .prev-habit:hover, .path-mod-goodhabits .next-habit:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+.path-mod-goodhabits .submit-button {
+    /*position: fixed; !* Fixed position relative to the viewport *!*/
+    /*bottom: 20px; !* Distance from the bottom of the viewport *!*/
+    margin-top: 60px;
+    margin-left: 140px;
+    align-self: center; /* Center button horizontally within its container */
+    padding: 15px 30px; /* Size of the button */
+    font-size: 1.2rem; /* Font size for better visibility */
+    background-color: #007bff; /* Button background color */
+    color: white; /* Button text color */
+    border: none; /* Remove default border */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+    z-index: 1000; /* Ensure button is above other elements */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Optional shadow effect */
+}
+
+/* Optional: Hover effect */
+.path-mod-goodhabits .submit-button:hover {
+    background-color: #0056b3; /* Darker background on hover */
+}
+
+.path-mod-goodhabits .sliders.habit h3 {
+    margin-top:20px;
+}

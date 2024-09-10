@@ -28,69 +28,13 @@ defined('MOODLE_INTERNAL') || die();
 class mod_goodhabits_renderer extends plugin_renderer_base {
 
     /**
-     * Generates the top 'ribbon' in the activity, showing a series of days or weeks.
+     * Gets template data for the top 'ribbon' in the activity, showing a series of days or weeks.
      *
      * @param gh\FlexiCalendar $calendar
-     * @param int $instanceid
-     * @return string
+     * @param $instanceid
+     * @return array
      * @throws moodle_exception
      */
-    protected function print_calendar(gh\FlexiCalendar $calendar, $instanceid) {
-        $displayset = $calendar->get_display_set();
-
-        $periodduration = $calendar->get_period_duration();
-
-        $html = "<div class='calendar' data-period-duration='$periodduration'>";
-        $html .= "    <div class='dates'>";
-
-        $year = gh\Helper::display_year($displayset);
-
-        $html .= "        <div class='year'>$year</div>";
-
-        $days = array();
-
-        $backurl = $calendar->get_back_url($instanceid);
-        $forwardurl = $calendar->get_forward_url($instanceid);
-
-        $html .= "<div class='arrow-left-container'><div class=\"arrow-left\">
-<a href=\"$backurl\">
-        <span class=\"link-spanner\"></span>
-    </a>
-</div></div>";
-
-        foreach ($displayset as $k => $unit) {
-            $month = $unit->display_month();
-
-            $display = $unit->display_unit();
-            $topline = $display['topLine'];
-
-            $singlelinedisplay = $topline . ' ' . $display['bottomLine'];
-
-            $unitcontents = '<div class="top-line">'.$topline.'</div>';
-            $unitcontents .= '<div class="bottom-line">'.$display['bottomLine'].'</div>';
-
-            $monthhtml = ($month) ? '<div class="month">'.$month.'</div>' : '';
-            $implode = implode(' ', $unit->get_classes());
-            $day = '<div data-text="'.$singlelinedisplay.'" class="time-unit '. $implode .'">';
-            $day .= $monthhtml . $unitcontents.'</div>';
-            $days[] = $day;
-        }
-
-        $html .= implode('', $days);
-
-        if ($forwardurl) {
-            $html .= "<div class='arrow-right-container'><div class=\"arrow-right\">
-<a href=\"$forwardurl\">
-        <span class=\"link-spanner right\"></span>
-    </a>
-</div></div>";
-        }
-
-        $html .= "    </div>";
-        $html .= "</div>";
-        return $html;
-    }
-
     protected function get_calendar_data(gh\FlexiCalendar $calendar, $instanceid) {
         $data = [];
         $displayset = $calendar->get_display_set();
@@ -116,20 +60,6 @@ class mod_goodhabits_renderer extends plugin_renderer_base {
 
             $imploded_classes = implode(' ', $unit->get_classes());
 
-//            $display = $unit->display_unit();
-//            $topline = $display['topLine'];
-//
-//            $singlelinedisplay = $topline . ' ' . $display['bottomLine'];
-//
-//            $unitcontents = '<div class="top-line">'.$topline.'</div>';
-//            $unitcontents .= '<div class="bottom-line">'.$display['bottomLine'].'</div>';
-//
-//            $monthhtml = ($month) ? '<div class="month">'.$month.'</div>' : '';
-//            $imploded_classes = implode(' ', $unit->get_classes());
-//            $day = '<div data-text="'.$singlelinedisplay.'" class="time-unit '. $imploded_classes .'">';
-//            $day .= $monthhtml . $unitcontents.'</div>';
-//            $days[] = $day;
-
             $flexi_cal_unit = [];
             $flexi_cal_unit['top_line'] = $display['topLine'];
             $flexi_cal_unit['bottom_line'] = $display['bottomLine'];
@@ -142,24 +72,14 @@ class mod_goodhabits_renderer extends plugin_renderer_base {
         return $data;
     }
 
+
     /**
-     * Generates the list of habits.
-     *
+     * Gets template data for the list of habits.
      * @param gh\FlexiCalendar $calendar
-     * @param array $habits
-     * @param null $userid
-     * @return string
-     * @throws coding_exception
+     * @param $habits
+     * @param $userid
+     * @return array
      */
-    protected function print_habits(gh\FlexiCalendar $calendar, $habits, $userid = null) {
-        $arr = array();
-        foreach ($habits as $habit) {
-            $arr[] = $this->print_habit($calendar, $habit, $userid);
-        }
-
-        return '<div class="habits">' . implode('', $arr) . '</div>';
-    }
-
     protected function get_habits_data(gh\FlexiCalendar $calendar, $habits, $userid = null) {
         $data = [];
         foreach ($habits as $habit) {
@@ -169,10 +89,18 @@ class mod_goodhabits_renderer extends plugin_renderer_base {
         return $data;
     }
 
+    /**
+     * Gets template data for a single habit - the name on the LHS and the "habit entries" on the RHS.
+     *
+     * @param gh\FlexiCalendar $calendar
+     * @param gh\Habit $habit
+     * @param $userid
+     * @return array
+     * @throws coding_exception
+     */
     public function get_habit_data(gh\FlexiCalendar $calendar, gh\Habit $habit, $userid = null) {
         $habit_data = [];
         $habit_data['id'] = $habit->id;
-//        $html = "<div class='habit habit-".$habit->id."'>";
 
         $editglobal = has_capability('mod/goodhabits:manage_activity_habits', $this->page->context);
         $editpersonal = has_capability('mod/goodhabits:manage_personal_habits', $this->page->context);
@@ -190,7 +118,6 @@ class mod_goodhabits_renderer extends plugin_renderer_base {
 
         $canmanageclass = ($canmanage) ? ' can-edit ' : '';
 
-//        $data = ' data-habit-id="'.$habit->id.'" data-is-global="'.$isactivitylevel.'" ';
         $activityclass = ($isactivitylevel) ? 'activity' : 'personal';
 
         $habit_data['can_manage_class'] = $canmanageclass;
@@ -202,75 +129,22 @@ class mod_goodhabits_renderer extends plugin_renderer_base {
         $habit_data['habit_name'] = format_text($habit->name);
         $habit_data['habit_desc'] = format_text($habit->description);
 
-//        $html .= '<div '.$title.' class="streak ' . $canmanageclass . ' ' . $activityclass . '" ' . $data . '></div>';
-
-//        $html .= '<div class="title"><div class="habit-name">'.format_text($habit->name).'</div>';
-//        $html .= '    <div class="description">'.format_text($habit->description).'</div></div>';
-//
-//        $html .= '    <div class="time-line">';
         $checkmarks = $this->get_checkmarks_data($calendar, $habit, $userid);
         $habit_data['checkmarks'] = $checkmarks;
-
-//        $html .= $this->print_checkmarks($calendar, $habit, $userid);
 
         return $habit_data;
     }
 
     /**
-     * Generates a single habit - the name on the LHS and the "habit entries" on the RHS.
+     * 'Checkmarks' here are the circular entities used to manage habit entries.
      *
      * @param gh\FlexiCalendar $calendar
      * @param gh\Habit $habit
-     * @param int $userid
-     * @return string
+     * @param $userid
+     * @return array
      * @throws coding_exception
      * @throws dml_exception
      */
-    public function print_habit(gh\FlexiCalendar $calendar, gh\Habit $habit, $userid = null) {
-        $html = "<div class='habit habit-".$habit->id."'>";
-
-        $editglobal = has_capability('mod/goodhabits:manage_activity_habits', $this->page->context);
-        $editpersonal = has_capability('mod/goodhabits:manage_personal_habits', $this->page->context);
-        $isactivitylevel = $habit->is_activity_habit();
-
-        $canmanage = false;
-        if ($isactivitylevel AND $editglobal) {
-            $canmanage = true;
-        }
-        if (!$isactivitylevel AND $editpersonal) {
-            $canmanage = true;
-        }
-
-        $canmanageclass = ($canmanage) ? ' can-edit ' : '';
-
-        $data = ' data-habit-id="'.$habit->id.'" data-is-global="'.$isactivitylevel.'" ';
-        $activityclass = ($isactivitylevel) ? 'activity' : 'personal';
-        $titletextid = $activityclass . '_title_text';
-        $titletext = get_string($titletextid, 'mod_goodhabits');
-        $title = " title='$titletext' ";
-
-        $html .= '<div '.$title.' class="streak ' . $canmanageclass . ' ' . $activityclass . '" ' . $data . '></div>';
-
-        $html .= '<div class="title"><div class="habit-name">'.format_text($habit->name).'</div>';
-        $html .= '    <div class="description">'.format_text($habit->description).'</div></div>';
-
-        $html .= '    <div class="time-line">';
-
-        $html .= $this->print_checkmarks($calendar, $habit, $userid);
-
-        $html .= '        <div class="clear-both"></div>';
-
-        $html .= '    </div>';
-
-        $html .= '    <div class="clear-both"></div>';
-
-        $html .= "</div>";
-
-        $html .= '<div class="habit-grid-container habit-grid-container-'.$habit->id.'"></div>';
-
-        return $html;
-    }
-
     protected function get_checkmarks_data(gh\FlexiCalendar $calendar, gh\Habit $habit, $userid = null) {
         global $USER;
 
@@ -291,8 +165,6 @@ class mod_goodhabits_renderer extends plugin_renderer_base {
 
         foreach ($displayset as $unit) {
             $data_checkmark = [];
-//            $dataxytxt = '';
-//            $txt = '<div class="empty-day">  </div>';
             $timestamp = $unit->getTimestamp();
             $isinbreak = gh\BreaksHelper::is_in_a_break($timestamp);
             $classxy = 'noxy';
@@ -304,15 +176,9 @@ class mod_goodhabits_renderer extends plugin_renderer_base {
                 $xval = $entry->x_axis_val;
                 $yval = $entry->y_axis_val;
                 $title = get_string('checkmark_title', 'mod_goodhabits', $entry);
-//                $dataxytxt = ' data-x="'. $xval .'" data-y="'. $yval .'" ';
-//                $txt = $xval . ' / ' . $yval;
-//                $separator = "<span class='xy-separator'>/</span>";
-//                $txt = "<span class='x-val'>$xval</span> $separator <span class='y-val'>$yval</span>";
+
                 $classxy = 'x-val-' . $xval . ' y-val-' . $yval;
             }
-
-            // Only show title text if in review, as otherwise we will need it to update as entries are saved.
-//            $titletxt = ($isreview) ? ' title="'.$title.'" ' : '';
 
             $caninteract = $canmanageentries AND !$isinbreak;
             $caninteractclass = ($caninteract) ? '' : ' no-interact ';
@@ -321,8 +187,6 @@ class mod_goodhabits_renderer extends plugin_renderer_base {
             if ($isinbreak) {
                 $classes .= ' is-in-break';
             }
-//            $html .= '<div ' . $titletxt . ' class="' . $classes . '" data-timestamp="'. $timestamp .'" '.$dataxytxt.'>';
-//            $html .= $txt . '</div>';
 
             $data_checkmark['is_filled'] = $is_filled;
             $data_checkmark['is_review'] = $isreview;
@@ -341,92 +205,7 @@ class mod_goodhabits_renderer extends plugin_renderer_base {
 
         $data['class'] = $classes;
 
-//        return "<div class='$classes' data-id='".$habit->id."'>$html</div>";
-
         return $data;
-    }
-
-    /**
-     * 'Checkmarks' here are the circular entities used to manage habit entries.
-     *
-     * @param gh\FlexiCalendar $calendar
-     * @param gh\Habit $habit
-     * @param int $userid
-     * @return string
-     * @throws coding_exception
-     * @throws dml_exception
-     */
-    protected function print_checkmarks(gh\FlexiCalendar $calendar, gh\Habit $habit, $userid = null) {
-        global $USER;
-
-        $html = '';
-
-        $displayset = $calendar->get_display_set();
-
-        $isreview = (int) $userid;
-
-        $userid = ($userid) ? $userid : $USER->id;
-        $entries = $habit->get_entries($userid, $calendar->get_period_duration());
-
-        $canmanageentries = has_capability('mod/goodhabits:manage_entries', $this->page->context);
-
-        $isactivitylevel = $habit->is_activity_habit();
-
-        foreach ($displayset as $unit) {
-            $dataxytxt = '';
-            $txt = '<div class="empty-day">  </div>';
-            $timestamp = $unit->getTimestamp();
-            $isinbreak = gh\BreaksHelper::is_in_a_break($timestamp);
-            $classxy = 'noxy';
-            $title = get_string('checkmark_title_empty', 'mod_goodhabits');
-            if (isset($entries[$timestamp])) {
-                $entry = $entries[$timestamp];
-                $xval = $entry->x_axis_val;
-                $yval = $entry->y_axis_val;
-                $title = get_string('checkmark_title', 'mod_goodhabits', $entry);
-                $dataxytxt = ' data-x="'. $xval .'" data-y="'. $yval .'" ';
-                $txt = $xval . ' / ' . $yval;
-                $separator = "<span class='xy-separator'>/</span>";
-                $txt = "<span class='x-val'>$xval</span> $separator <span class='y-val'>$yval</span>";
-                $classxy = 'x-val-' . $xval . ' y-val-' . $yval;
-            }
-
-            // Only show title text if in review, as otherwise we will need it to update as entries are saved.
-            $titletxt = ($isreview) ? ' title="'.$title.'" ' : '';
-
-            $caninteract = $canmanageentries AND !$isinbreak;
-            $caninteractclass = ($caninteract) ? '' : ' no-interact ';
-
-            $classes = 'checkmark ' . $caninteractclass . ' ' . $classxy;
-            if ($isinbreak) {
-                $classes .= ' is-in-break';
-            }
-            $html .= '<div ' . $titletxt . ' class="' . $classes . '" data-timestamp="'. $timestamp .'" '.$dataxytxt.'>';
-            $html .= $txt . '</div>';
-        }
-        $classes = 'checkmarks';
-        if ($isactivitylevel) {
-            $classes .= ' activity';
-        }
-
-        return "<div class='$classes' data-id='".$habit->id."'>$html</div>";
-    }
-
-    /**
-     * Used to arrange the calendar and the habits html.
-     *
-     * @param string $calendar
-     * @param string $habits
-     * @param array $extraclasses
-     * @return string
-     */
-    protected function print_module($calendar, $habits, $extraclasses = array()) {
-        $extraclasses = implode(' ', $extraclasses);
-        $html = "<div class='goodhabits-container $extraclasses' id='goodhabits-container'>$calendar
-                       <div class=\"clear-both\"></div>
-                 $habits
-                 </div><br /><br /> ";
-        return $html;
     }
 
     /**
@@ -608,32 +387,25 @@ class mod_goodhabits_renderer extends plugin_renderer_base {
     }
 
     /**
-     * Generates the overall calendar area.
+     * Generates the overall calendar area using a mustache template.
      *
      * @param $calendar
      * @param $instanceid
      * @param $habits
-     * @param array $extraclasses
-     * @param int $userid
+     * @param $extraclasses
+     * @param $userid
+     * @return void|null
      * @throws coding_exception
      * @throws moodle_exception
      */
-    public function print_calendar_area($calendar, $instanceid, $habits, $extraclasses = array(), $userid = null) {
-        if ($habits) {
-            $calendarhtml = $this->print_calendar($calendar, $instanceid);
-
-            $habitshtml = $this->print_habits($calendar, $habits, $userid);
-
-            echo $this->print_module($calendarhtml, $habitshtml, $extraclasses);
-        } else {
-            $this->print_no_habits();
-        }
-    }
-
     public function print_templated_calendar_area($calendar, $instanceid, $habits, $extraclasses = array(), $userid = null)
     {
         global $OUTPUT;
-        //TODO: Get all data ready for display, then display via template.
+        if (empty($habits)) {
+            $this->print_no_habits();
+            return null;
+        }
+
         $template_data = [];
 
         $template_data['calendar'] = $this->get_calendar_data($calendar, $instanceid);

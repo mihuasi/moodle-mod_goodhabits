@@ -65,7 +65,7 @@ $PAGE->set_context($modulecontext);
 $PAGE->requires->jquery_plugin('ui');
 
 $PAGE->requires->js('/mod/goodhabits/talentgrid/talentgrid-plugin.js', true);
-$PAGE->requires->js('/mod/goodhabits/js/calendar.js', false);
+$PAGE->requires->js('/mod/goodhabits/js/simple.js', false);
 
 $PAGE->requires->css('/mod/goodhabits/talentgrid/talentgrid-style.css');
 
@@ -74,15 +74,33 @@ $renderer = $PAGE->get_renderer('mod_goodhabits');
 $calendar = gh\ViewHelper::get_flexi_calendar($moduleinstance);
 
 $calendar_unit = $calendar->get_latest();
+$display_unit_inline = $calendar_unit->display_unit_inline();
+//$interval = new DateInterval('P7D'); //For week TODO: change for others.
+//$date = $calendar_unit->add($interval)->format('Y-m-d');
 
-$habits = gh\HabitItemsHelper::get_incomplete_for_user_date($instanceid, $USER->id, $calendar_unit);
+$date = $calendar_unit->format('Y-m-d');
+
+$habits_objs = gh\HabitItemsHelper::get_incomplete_for_user_date($instanceid, $USER->id, $calendar_unit);
+$habits = [];
+
+foreach ($habits_objs as $habits_obj) {
+    $arr = [];
+    $arr['name'] = $habits_obj->name;
+    $arr['id'] = $habits_obj->id;
+    $habits[] = $arr;
+}
 
 echo $OUTPUT->header();
 
 echo $renderer->print_hidden_data();
 
+$view_url = new moodle_url('/mod/goodhabits/view.php', array('id' => $cm->id));
+
 $template_data = [
-    'heading' => 'Week commencing...'
+    'heading' => $display_unit_inline,
+    'date' => $date,
+    'habits' => $habits,
+    'view-url' => $view_url->out(),
 ];
 
 echo $OUTPUT->render_from_template('mod_goodhabits/simple', $template_data);

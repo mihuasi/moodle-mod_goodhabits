@@ -82,6 +82,12 @@ class FlexiCalendarUnit extends \DateTime {
         return $display;
     }
 
+    public function display_unit_inline()
+    {
+        $displayunit = $this->display_unit();
+        return $displayunit['topLine'] . ' ' . $displayunit['bottomLine'];
+    }
+
     /**
      * Returns a string of the current month if this Calendar Unit occurs in a new month.
      *
