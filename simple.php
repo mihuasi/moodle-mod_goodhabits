@@ -79,6 +79,7 @@ $display_unit_inline = $calendar_unit->display_unit_inline();
 //$date = $calendar_unit->add($interval)->format('Y-m-d');
 
 $date = $calendar_unit->format('Y-m-d');
+$timestamp = $calendar_unit->getTimestamp();
 
 $habits_objs = gh\HabitItemsHelper::get_incomplete_for_user_date($instanceid, $USER->id, $calendar_unit);
 $habits = [];
@@ -99,6 +100,7 @@ $view_url = new moodle_url('/mod/goodhabits/view.php', array('id' => $cm->id));
 $template_data = [
     'heading' => $display_unit_inline,
     'date' => $date,
+    'timestamp' => $timestamp,
     'habits' => $habits,
     'view-url' => $view_url->out(),
 ];

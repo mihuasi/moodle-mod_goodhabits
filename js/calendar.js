@@ -25,6 +25,110 @@
 jQuery(window).on('load',function($) {
 
     var $ = jQuery;
+
+    function timeUnitOptions() {
+
+        // Event handler for clicks on elements with class 'time-unit'
+        $('.time-unit').click(function() {
+
+            if ($('.time-unit-options').length > 0) {
+                return; // Do nothing if any time-unit is currently open.
+            }
+
+
+            $(this).addClass('time-unit-options');
+
+            const allTimeUnits = $(this).parent().children('.time-unit'); // Get all sibling elements with class 'time-unit'
+            const index = allTimeUnits.index(this); // Get the index of the clicked element among its '.time-unit' siblings
+            const totalUnits = allTimeUnits.length; // Get total number of '.time-unit' siblings
+
+            // If clicked element is the furthest to the left (index 0), hide visibility of next 3 siblings
+            if (index === 0) {
+                allTimeUnits.eq(index + 1).hide();
+                allTimeUnits.eq(index + 2).hide();
+                allTimeUnits.eq(index + 3).hide();
+            }
+            // If clicked element is the furthest to the right, hide visibility of previous 3 siblings
+            else if (index === totalUnits - 1) {
+                allTimeUnits.eq(index - 1).hide();
+                allTimeUnits.eq(index - 2).hide();
+                allTimeUnits.eq(index - 3).hide();
+            }
+            // If clicked element is second-to-last, hide 1 to the right, 2 to the left
+            else if (index === totalUnits - 2) {
+                allTimeUnits.eq(index + 1).hide(); // Hide 1 to the right
+                allTimeUnits.eq(index - 1).hide(); // Hide 2 to the left
+                allTimeUnits.eq(index - 2).hide();
+            }
+            // If clicked element is third-to-last, hide 2 to the right, 1 to the left
+            else if (index === totalUnits - 3) {
+                allTimeUnits.eq(index + 1).hide(); // Hide 2 to the right
+                allTimeUnits.eq(index + 2).hide();
+                allTimeUnits.eq(index - 1).hide(); // Hide 1 to the left
+            }
+            // Otherwise, for middle elements, hide visibility of a combination of preceding and subsequent siblings
+            else {
+                const precedingCount = Math.min(index, 3); // How many previous elements to hide
+                const subsequentCount = 3 - precedingCount; // Remaining number of subsequent elements to hide
+
+                // Hide visibility of previous '.time-unit' siblings (up to 3)
+                for (let i = 1; i <= precedingCount; i++) {
+                    allTimeUnits.eq(index - i).hide();
+                }
+
+                // Hide visibility of subsequent '.time-unit' siblings (remaining)
+                for (let i = 1; i <= subsequentCount; i++) {
+                    allTimeUnits.eq(index + i).hide();
+                }
+            }
+
+            // Create the large [X] option
+            const closeOption = $('<div class="tuo-close-option" style="font-size: 24px; cursor: pointer;">[X]</div>');
+
+            $(this).append(closeOption);
+
+            closeOption.css({
+                position: 'absolute',
+                top: '6px',
+                right: '12px',
+                opacity: '75%'
+            });
+
+            const className = $(this).attr('class'); // Get the class name
+            const numberPart = className.match(/time-unit-(\d+)/); // Extract the number part using regex
+
+            if (numberPart && numberPart[1]) {
+                let timestamp = numberPart[1];
+
+                $('.checkmark').filter(function() {
+                    return $(this).data('timestamp') != timestamp;
+                }).addClass('non-selected-time-unit');
+            }
+
+            $('.time-unit').not(this).addClass('unselected');
+        });
+
+        $(document).on('click', '.tuo-close-option', function() {
+            // Show all .time-unit elements
+            let $time = $('.time-unit');
+
+            $time.show();
+
+            $time.removeClass('time-unit-options');
+
+            $time.removeClass('unselected');
+
+            // Remove the .non-selected-time-unit class from all .checkmark elements
+            $('.checkmark').removeClass('non-selected-time-unit');
+
+            // Remove the [X] option itself
+            $('.tuo-close-option').remove();
+        });
+
+    }
+
+    timeUnitOptions();
+
     
     function initGrid(x, y) {
 
@@ -163,6 +267,10 @@ jQuery(window).on('load',function($) {
     };
 
     $('.checkmark').click(function () {
+
+        if ($(this).hasClass('non-selected-time-unit')) {
+            return; // Do nothing if another time unit is selected.
+        }
 
         var gridOpen = $('.goodhabits-container').hasClass('grid-is-open');
 

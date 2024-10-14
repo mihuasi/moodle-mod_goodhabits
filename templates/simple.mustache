@@ -8,9 +8,13 @@
                     <div class="sliders habit">
                         <h2 class="habit-heading">{{name}}</h2>
                         <h3>Effort:</h3>
-                        <input type="range" class="discrete-slider effort" id="discreteSlider" name="habit-{{id}}-effort" min="1" max="10" step="1" value="5">
+                        <input type="range" class="discrete-slider effort" id="discreteSlider"
+                               name="habit-{{id}}-effort" min="1" max="10" step="1"
+                               value="5" data-habit-id="{{id}}" data-timestamp="{{timestamp}}">
                         <h3>Outcome:</h3>
-                        <input type="range" class="discrete-slider outcome" name="habit-{{id}}-outcome" min="1" max="10" step="1" value="5">
+                        <input type="range" class="discrete-slider outcome"
+                               name="habit-{{id}}-outcome" min="1" max="10" step="1"
+                               value="5" data-habit-id="{{id}}" data-timestamp="{{timestamp}}">
                     </div>
                 {{/habits}}
             </div>

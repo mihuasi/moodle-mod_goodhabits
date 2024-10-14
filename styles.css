@@ -40,6 +40,8 @@
     position: relative;
     border-radius: 40px;
     background: #282c37;
+    /*transition: height 0.3s ease;*/
+    cursor: pointer;
 }
 
 .path-mod-goodhabits .calendar .time-unit:last-child {
@@ -661,4 +663,27 @@
 
 .path-mod-goodhabits .sliders.habit h3 {
     margin-top:20px;
+}
+
+.path-mod-goodhabits .calendar .time-unit.time-unit-options {
+    width: 190px;
+    height: 90px;
+    transition: height 0.3s ease;
+    border-radius: 5px;
+    margin-top: -35px;
+    cursor: auto;
+}
+
+.path-mod-goodhabits .calendar .time-unit.unselected {
+    cursor: auto;
+}
+
+.path-mod-goodhabits .calendar .time-unit.time-unit-options .month,
+.path-mod-goodhabits .calendar .time-unit.time-unit-options .year {
+    display: none;
+}
+
+.path-mod-goodhabits .habits .habit .time-line .checkmark.non-selected-time-unit {
+    opacity: 20%;
+    cursor: not-allowed;
 }
