@@ -27,9 +27,16 @@ $(document).ready(function() {
 
     // Function to show a specific habit based on index
     function showHabit(index) {
-        $habits.removeClass('active'); // Hide all habits
-        $habits.eq(index).addClass('active'); // Show the specific habit
-        updateButtons(); // Update the visibility of the buttons
+        // Fade out all habits, remove the 'active' class after fade-out completes
+        $habits.filter('.active').fadeOut(400, function() {
+            $(this).removeClass('active'); // Remove 'active' class after fade out
+
+            // Fade in the new habit and add the 'active' class
+            $habits.eq(index).fadeIn(400).addClass('active');
+
+            // After the transition, update the buttons
+            updateButtons();
+        });
     }
 
     // Next habit
@@ -51,15 +58,15 @@ $(document).ready(function() {
 
 
     // Function to get values from both sliders and send an AJAX request
-    function updateSliders() {
+    function updateSliders(habitId) {
         // Get values of both sliders
-        let $effort = $('.discrete-slider.effort');
+        let $effort = $('.discrete-slider.effort.habit-' + habitId);
         var val_effort = $effort.val();
-        let $outcome = $('.discrete-slider.outcome');
+        let $outcome = $('.discrete-slider.outcome.habit-' + habitId);
         var val_outcome = $outcome.val();
 
         // Get additional data (habit IDs and timestamps)
-        var habitId = $effort.data('habit-id');
+        // var habitId = $effort.data('habit-id');
         var timestamp = $effort.data('timestamp');
         let $simple = $('.simple-view');
         var periodDuration = $simple.data('period-duration');
@@ -96,6 +103,7 @@ $(document).ready(function() {
 
     // Attach event listeners to both sliders
     $('.discrete-slider.effort, .discrete-slider.outcome').on('change', function() {
-        updateSliders(); // Call the update function whenever a slider changes
+        let habitId = $(this).data('habit-id');
+        updateSliders(habitId); // Call the update function whenever a slider changes
     });
 });
