@@ -722,3 +722,9 @@
 .path-mod-goodhabits .close-btn:hover {
     background-color: darkred;
 }
+
+.path-mod-goodhabits .habits-wrapper .is-saved {
+    display: none;
+    color: #039103;
+    margin-left: 12px;
+}

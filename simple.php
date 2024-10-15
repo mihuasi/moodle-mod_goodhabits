@@ -104,11 +104,13 @@ echo $renderer->print_hidden_data();
 $view_url = new moodle_url('/mod/goodhabits/view.php', array('id' => $cm->id));
 
 $template_data = [
+    'periodduration' => $calendar->get_period_duration(),
     'heading' => $display_unit_inline,
     'date' => $date,
     'timestamp' => $timestamp,
     'habits' => $habits,
     'view-url' => $view_url->out(),
+    'sesskey' => sesskey()
 ];
 
 echo $OUTPUT->render_from_template('mod_goodhabits/simple', $template_data);

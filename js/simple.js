@@ -47,4 +47,55 @@ $(document).ready(function() {
             showHabit(currentIndex); // Show the new habit
         }
     });
+
+
+
+    // Function to get values from both sliders and send an AJAX request
+    function updateSliders() {
+        // Get values of both sliders
+        let $effort = $('.discrete-slider.effort');
+        var val_effort = $effort.val();
+        let $outcome = $('.discrete-slider.outcome');
+        var val_outcome = $outcome.val();
+
+        // Get additional data (habit IDs and timestamps)
+        var habitId = $effort.data('habit-id');
+        var timestamp = $effort.data('timestamp');
+        let $simple = $('.simple-view');
+        var periodDuration = $simple.data('period-duration');
+        var sessKey = $simple.data('sesskey');
+        var wwwroot = $simple.data('wwwroot');
+
+        // Prepare data to be sent to the server
+        var postData = {
+            x: val_effort,
+            y: val_outcome,
+            habitId: habitId,
+            timestamp: timestamp,
+            periodDuration: periodDuration,
+            sesskey: sessKey
+        };
+
+        var URL = wwwroot + '/mod/goodhabits/ajax_save_entry.php';
+
+        // AJAX call to send the data to the server
+        $.ajax({
+            url: URL, // Replace with your server endpoint
+            type: 'POST',
+            data: postData,
+            success: function(response) {
+                // Handle the success response
+                $('.habits-wrapper .saved-' + habitId).fadeIn();
+            },
+            error: function(xhr, status, error) {
+                // Handle any errors
+                console.error('Error saving data:', error);
+            }
+        });
+    }
+
+    // Attach event listeners to both sliders
+    $('.discrete-slider.effort, .discrete-slider.outcome').on('change', function() {
+        updateSliders(); // Call the update function whenever a slider changes
+    });
 });

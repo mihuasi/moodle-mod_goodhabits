@@ -1,4 +1,8 @@
-<div class="simple-view">
+<div class="simple-view"
+     data-period-duration="{{periodduration}}"
+     data-sesskey="{{{sesskey}}}"
+     data-wwwroot="{{{config.wwwroot}}}"
+>
     <form action="{{view-url}}" method="post" class="habit-form">
         <div class="simple-main">
             <h1 class="simple-heading">{{heading}}, starting {{date}}</h1>
@@ -6,7 +10,12 @@
             <div class="habits-wrapper">
                 {{#habits}}
                     <div class="sliders habit">
-                        <h2 class="habit-heading">{{name}}</h2>
+                        <h2 class="habit-heading">
+                            {{name}}
+                            <span class="is-saved saved-{{id}}">
+                                ✔ {{#str}} saved, mod_goodhabits {{/str}}
+                            </span>
+                        </h2>
                         <h3>Effort:</h3>
                         <input type="range" class="discrete-slider effort" id="discreteSlider"
                                name="habit-{{id}}-effort" min="1" max="10" step="1"

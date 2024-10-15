@@ -161,3 +161,4 @@ $string['exit_mobile_view'] = 'Exit mobile view';
 $string['notification_skip_added'] = 'This has been skipped. To undo, go to "Manage breaks".';
 $string['answer_questions'] = 'Answer questions';
 $string['skip'] = 'Skip';
+$string['saved'] = 'Saved';
