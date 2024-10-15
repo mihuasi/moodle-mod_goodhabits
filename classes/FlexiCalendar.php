@@ -162,9 +162,10 @@ class FlexiCalendar {
      * @throws \moodle_exception
      */
     public function get_back_url($instanceid) {
-        $offset = $this->current_span() - 1;
-        $backdate = Helper::new_date_time($this->basedate, '-' . $offset . ' day');
-        $backdatemysql = Helper::date_time_to_mysql($backdate);
+//        $offset = $this->current_span() - 1;
+//        $backdate = Helper::new_date_time($this->basedate, '-' . $offset . ' day');
+//        $backdatemysql = Helper::date_time_to_mysql($backdate);
+        $backdatemysql = $this->get_back_date();
         $params = array('toDate' => $backdatemysql, 'g' => $instanceid);
         $url = '/mod/goodhabits/view.php';
         if ($this->pluginarea == self::PLUGIN_AREA_REVIEW) {
@@ -178,6 +179,22 @@ class FlexiCalendar {
         }
         $url = new \moodle_url($url, $params, 'intro-name');
         return $url;
+    }
+
+    public function get_back_date()
+    {
+        $offset = $this->current_span() - 1;
+        $backdate = Helper::new_date_time($this->basedate, '-' . $offset . ' day');
+        $backdatemysql = Helper::date_time_to_mysql($backdate);
+
+        return $backdatemysql;
+    }
+
+    public function get_to_date()
+    {
+        $to_date = Helper::date_time_to_mysql($this->basedate);
+
+        return $to_date;
     }
 
     /**

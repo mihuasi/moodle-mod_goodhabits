@@ -35,6 +35,7 @@ $id = optional_param('id', 0, PARAM_INT);
 $g  = optional_param('g', 0, PARAM_INT);
 
 $layout = optional_param('layout', '', PARAM_TEXT);
+$skip = optional_param('skip', 0, PARAM_INT);
 $is_basic_mobile = ($layout == gh\Helper::LAYOUT_BASIC_MOBILE);
 
 if ($id) {
@@ -67,6 +68,11 @@ $event->trigger();
 
 $completion = new completion_info($course);
 $completion->set_module_viewed($cm);
+
+if ($skip) {
+    gh\BreaksHelper::process_skip($instanceid, $skip);
+}
+
 
 $PAGE->set_url('/mod/goodhabits/view.php', array('id' => $cm->id));
 $PAGE->set_title(format_string($moduleinstance->name));

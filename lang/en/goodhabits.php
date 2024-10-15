@@ -158,3 +158,4 @@ $string['review_help'] = 'Controls whether admin with appropriate capabilities c
 $string['small_viewport_message'] = 'The minimum viewport width to use this activity is 640px. If you are using a phone, you can try tilting it horizontally to view it in landscape mode.';
 $string['mobile_view'] = 'Mobile view';
 $string['exit_mobile_view'] = 'Exit mobile view';
+$string['notification_skip_added'] = 'This has been skipped. To undo, go to "Manage breaks".';

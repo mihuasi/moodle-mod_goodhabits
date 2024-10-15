@@ -148,4 +148,18 @@ class BreaksHelper {
         }
         return false;
     }
+
+    public static function process_skip($instanceid, $skip_timestamp)
+    {
+        global $OUTPUT;
+        $data = new \stdClass();
+        $data->fromdate = $skip_timestamp;
+        $data->todate = $skip_timestamp;
+        $data->instance = $instanceid;
+
+        static::add_personal_break($data);
+
+        $break_added = Helper::get_string('notification_skip_added');
+        \core\notification::success($break_added);
+    }
 }

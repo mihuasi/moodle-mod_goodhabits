@@ -30,6 +30,7 @@ require_once($CFG->dirroot . '/lib/completionlib.php');
 
 // ... module instance id.
 $g  = optional_param('g', 0, PARAM_INT);
+$timestamp  = optional_param('timestamp', 0, PARAM_INT);
 
 $moduleinstance = gh\Helper::get_module_instance($g);
 $course         = $DB->get_record('course', array('id' => $moduleinstance->course), '*', MUST_EXIST);
@@ -73,7 +74,12 @@ $renderer = $PAGE->get_renderer('mod_goodhabits');
 
 $calendar = gh\ViewHelper::get_flexi_calendar($moduleinstance);
 
-$calendar_unit = $calendar->get_latest();
+if ($timestamp) {
+    $calendar_unit = gh\Helper::get_flexi_cal_unit_from_timestamp($timestamp);
+} else {
+    $calendar_unit = $calendar->get_latest();
+}
+
 $display_unit_inline = $calendar_unit->display_unit_inline();
 //$interval = new DateInterval('P7D'); //For week TODO: change for others.
 //$date = $calendar_unit->add($interval)->format('Y-m-d');

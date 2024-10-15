@@ -45,6 +45,8 @@ class mod_goodhabits_renderer extends plugin_renderer_base {
 
         $year = gh\Helper::display_year($displayset);
 
+        $to_date = $calendar->get_to_date();
+
         $backurl = $calendar->get_back_url($instanceid);
         $forwardurl = $calendar->get_forward_url($instanceid);
 
@@ -65,6 +67,7 @@ class mod_goodhabits_renderer extends plugin_renderer_base {
             $flexi_cal_unit['bottom_line'] = $display['bottomLine'];
             $flexi_cal_unit['month'] = $month;
             $flexi_cal_unit['class'] = $imploded_classes;
+            $flexi_cal_unit['skip_url'] = $unit->skip_url($instanceid, $to_date);
 
             $data['flexi_cal_units'][] = $flexi_cal_unit;
         }

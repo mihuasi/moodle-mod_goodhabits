@@ -35,8 +35,13 @@ jQuery(window).on('load',function($) {
                 return; // Do nothing if any time-unit is currently open.
             }
 
+            if ($(this).hasClass('is-in-break')) {
+                return; // Do nothing if part of a break.
+            }
 
             $(this).addClass('time-unit-options');
+
+            $(this).children('.tuo-options').show();
 
             const allTimeUnits = $(this).parent().children('.time-unit'); // Get all sibling elements with class 'time-unit'
             const index = allTimeUnits.index(this); // Get the index of the clicked element among its '.time-unit' siblings
@@ -83,7 +88,7 @@ jQuery(window).on('load',function($) {
             }
 
             // Create the large [X] option
-            const closeOption = $('<div class="tuo-close-option" style="font-size: 24px; cursor: pointer;">[X]</div>');
+            const closeOption = $('<div class="tuo-close-option close-btn">X</div>');
 
             $(this).append(closeOption);
 
@@ -123,6 +128,8 @@ jQuery(window).on('load',function($) {
 
             // Remove the [X] option itself
             $('.tuo-close-option').remove();
+
+            $('.tuo-options').hide();
         });
 
     }

@@ -88,6 +88,20 @@ class FlexiCalendarUnit extends \DateTime {
         return $displayunit['topLine'] . ' ' . $displayunit['bottomLine'];
     }
 
+    public function skip_url($instanceid, $to_date)
+    {
+        $params = array('toDate' => $to_date, 'g' => $instanceid, 'skip' => $this->getTimestamp());
+        $url = new \moodle_url('/mod/goodhabits/view.php', $params);
+        Helper::add_layout_url_param($url);
+
+        return $url->out();
+    }
+
+    public function answer_questions_url($instanceid)
+    {
+
+    }
+
     /**
      * Returns a string of the current month if this Calendar Unit occurs in a new month.
      *

@@ -44,6 +44,11 @@
     cursor: pointer;
 }
 
+.path-mod-goodhabits .calendar .time-unit .tuo-options {
+    margin-top: 3px;
+    display: none;
+}
+
 .path-mod-goodhabits .calendar .time-unit:last-child {
     margin-right: 0;
 }
@@ -51,12 +56,17 @@
 .path-mod-goodhabits .calendar .time-unit .top-line {
     text-transform: uppercase;
     font-size: 8px;
-    color: #9baec8;
+    color: #616f84;
 }
 
 .path-mod-goodhabits .calendar .time-unit .bottom-line {
     font-size: 15px;
     line-height: 15px;
+    color: #616f84;
+}
+
+.path-mod-goodhabits .calendar .time-unit.unselected .top-line,
+.path-mod-goodhabits .calendar .time-unit.unselected .bottom-line {
     color: #9baec8;
 }
 
@@ -686,4 +696,29 @@
 .path-mod-goodhabits .habits .habit .time-line .checkmark.non-selected-time-unit {
     opacity: 20%;
     cursor: not-allowed;
+}
+
+.path-mod-goodhabits .calendar .time-unit .tuo-options p {
+    margin-bottom: 0;
+    font-size: 90%;
+}
+
+.path-mod-goodhabits .close-btn {
+    width: 24px;
+    height: 24px;
+    background-color: red;
+    color: white;
+    font-size: 18px;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    line-height: 24px;
+    border: 2px solid white;
+    border-radius: 3px;
+    cursor: pointer;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    user-select: none; /* Prevent text selection */
+}
+
+.path-mod-goodhabits .close-btn:hover {
+    background-color: darkred;
 }

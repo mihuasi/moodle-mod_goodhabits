@@ -287,4 +287,24 @@ class Helper {
         return $cm;
     }
 
+    public static function add_layout_url_param(\moodle_url $url)
+    {
+        $layout = optional_param('layout', '', PARAM_TEXT);
+        $is_basic_mobile = ($layout == static::LAYOUT_BASIC_MOBILE);
+        if ($layout == $is_basic_mobile) {
+            $url->param('layout', $layout);
+        }
+    }
+
+    public static function get_string($string, $a = null) {
+        return get_string($string, 'mod_goodhabits', $a);
+    }
+
+    public static function get_flexi_cal_unit_from_timestamp($time)
+    {
+        $unit = new FlexiCalendarUnit();
+        $unit->setTimestamp($time);
+        return $unit;
+    }
+
 }
