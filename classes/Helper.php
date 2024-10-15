@@ -300,10 +300,11 @@ class Helper {
         return get_string($string, 'mod_goodhabits', $a);
     }
 
-    public static function get_flexi_cal_unit_from_timestamp($time)
+    public static function get_flexi_cal_unit_from_timestamp($time, $periodduration)
     {
         $unit = new FlexiCalendarUnit();
         $unit->setTimestamp($time);
+        $unit->set_period_duration($periodduration);
         return $unit;
     }
 

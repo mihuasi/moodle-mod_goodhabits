@@ -694,7 +694,7 @@
 }
 
 .path-mod-goodhabits .habits .habit .time-line .checkmark.non-selected-time-unit {
-    opacity: 20%;
+    opacity: 15%;
     cursor: not-allowed;
 }
 

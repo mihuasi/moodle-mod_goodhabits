@@ -75,7 +75,7 @@ $renderer = $PAGE->get_renderer('mod_goodhabits');
 $calendar = gh\ViewHelper::get_flexi_calendar($moduleinstance);
 
 if ($timestamp) {
-    $calendar_unit = gh\Helper::get_flexi_cal_unit_from_timestamp($timestamp);
+    $calendar_unit = gh\Helper::get_flexi_cal_unit_from_timestamp($timestamp, $calendar->get_period_duration());
 } else {
     $calendar_unit = $calendar->get_latest();
 }

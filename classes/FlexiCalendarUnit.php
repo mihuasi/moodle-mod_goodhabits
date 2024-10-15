@@ -99,7 +99,11 @@ class FlexiCalendarUnit extends \DateTime {
 
     public function answer_questions_url($instanceid)
     {
+        $params = array('g' => $instanceid, 'timestamp' => $this->getTimestamp());
+        $url = new \moodle_url('/mod/goodhabits/simple.php', $params);
+        Helper::add_layout_url_param($url);
 
+        return $url->out();
     }
 
     /**
