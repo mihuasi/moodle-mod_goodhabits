@@ -703,6 +703,10 @@
     font-size: 90%;
 }
 
+.path-mod-goodhabits .calendar .all-complete {
+    margin-top: 12px;
+}
+
 .path-mod-goodhabits .close-btn {
     width: 24px;
     height: 24px;

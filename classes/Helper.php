@@ -308,4 +308,26 @@ class Helper {
         return $unit;
     }
 
+    public static function get_missing_entries($instanceid, $userid, $endofperiod_timestamp)
+    {
+        global $DB;
+
+        $sql = "SELECT i.*, e.* 
+FROM {mod_goodhabits_item} i
+LEFT JOIN {mod_goodhabits_entry} e ON e.habit_id = i.id 
+    AND e.userid = :userid 
+    AND e.endofperiod_timestamp = :timestamp
+WHERE e.id IS NULL 
+    AND i.instanceid = :instanceid ";
+
+        $params = [
+            'instanceid' => $instanceid,
+            'userid' => $userid,
+            'timestamp' => $endofperiod_timestamp,
+        ];
+        $recs = $DB->get_records_sql($sql, $params);
+
+        return $recs;
+    }
+
 }

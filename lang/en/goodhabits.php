@@ -162,3 +162,4 @@ $string['notification_skip_added'] = 'This has been skipped. To undo, go to "Man
 $string['answer_questions'] = 'Answer questions';
 $string['skip'] = 'Skip';
 $string['saved'] = 'Saved';
+$string['all_complete'] = 'Complete';

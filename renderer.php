@@ -35,7 +35,10 @@ class mod_goodhabits_renderer extends plugin_renderer_base {
      * @return array
      * @throws moodle_exception
      */
-    protected function get_calendar_data(gh\FlexiCalendar $calendar, $instanceid) {
+    protected function get_calendar_data(gh\FlexiCalendar $calendar, $instanceid, $userid) {
+        global $USER;
+        $userid = ($userid) ? $userid : $USER->id;
+
         $data = [];
         $displayset = $calendar->get_display_set();
 
@@ -58,6 +61,10 @@ class mod_goodhabits_renderer extends plugin_renderer_base {
         foreach ($displayset as $k => $unit) {
             $display = $unit->display_unit();
 
+            $endofperiod_timestamp = $unit->getTimestamp();
+            $missing = gh\Helper::get_missing_entries($instanceid, $userid, $endofperiod_timestamp);
+            $all_complete = (empty($missing));
+
             $month = $unit->display_month();
 
             $imploded_classes = implode(' ', $unit->get_classes());
@@ -69,6 +76,7 @@ class mod_goodhabits_renderer extends plugin_renderer_base {
             $flexi_cal_unit['class'] = $imploded_classes;
             $flexi_cal_unit['skip_url'] = $unit->skip_url($instanceid, $to_date);
             $flexi_cal_unit['answer_questions_url'] = $unit->answer_questions_url($instanceid);
+            $flexi_cal_unit['all_complete'] = $all_complete;
 
             $data['flexi_cal_units'][] = $flexi_cal_unit;
         }
@@ -412,7 +420,7 @@ class mod_goodhabits_renderer extends plugin_renderer_base {
 
         $template_data = [];
 
-        $template_data['calendar'] = $this->get_calendar_data($calendar, $instanceid);
+        $template_data['calendar'] = $this->get_calendar_data($calendar, $instanceid, $userid);
 
         $template_data['habits'] = $this->get_habits_data($calendar, $habits, $userid);
         $template_data['extra_classes'] = $extraclasses;

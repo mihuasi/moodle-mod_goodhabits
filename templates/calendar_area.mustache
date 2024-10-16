@@ -22,12 +22,21 @@
                         {{bottom_line}}
                     </div>
                     <div class="tuo-options">
-                        <p>
-                            <a href="{{{answer_questions_url}}}" >{{#str}} answer_questions, mod_goodhabits {{/str}}</a>
-                        </p>
-                        <p>
-                            <a href="{{{skip_url}}}" >{{#str}} skip, mod_goodhabits {{/str}}</a>
-                        </p>
+                        {{#all_complete}}
+                            <p class="all-complete">{{#str}} all_complete, mod_goodhabits {{/str}}</p>
+                        {{/all_complete}}
+                        {{^all_complete}}
+                            <p>
+                                <a href="{{{answer_questions_url}}}" >
+                                    {{#str}} answer_questions, mod_goodhabits {{/str}}
+                                </a>
+                            </p>
+                            <p>
+                                <a href="{{{skip_url}}}" >
+                                    {{#str}} skip, mod_goodhabits {{/str}}
+                                </a>
+                            </p>
+                        {{/all_complete}}
                     </div>
                 </div>
             {{/calendar.flexi_cal_units}}
