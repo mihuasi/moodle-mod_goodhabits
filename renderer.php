@@ -420,6 +420,8 @@ class mod_goodhabits_renderer extends plugin_renderer_base {
 
         $template_data = [];
 
+        $template_data['completion'] = $this->get_completion_data($calendar, $instanceid, $userid);
+
         $template_data['calendar'] = $this->get_calendar_data($calendar, $instanceid, $userid);
 
         $template_data['habits'] = $this->get_habits_data($calendar, $habits, $userid);
@@ -432,5 +434,36 @@ class mod_goodhabits_renderer extends plugin_renderer_base {
         $msg = get_string('small_viewport_message', 'mod_goodhabits');
         $out = html_writer::div($msg, 'viewport-too-small');
         return $out;
+    }
+
+    public function get_completion_data(gh\FlexiCalendar $calendar, $instanceid, $userid)
+    {
+        global $DB, $USER;
+
+        $userid = ($userid) ? $userid : $USER->id;
+        $compl_data = [];
+        $period_duration_string = $calendar->get_period_duration_string();
+        $completed = gh\Helper::get_cal_units_with_all_complete($instanceid, $userid);
+//        $str_obj = new stdClass();
+//        $str_obj->period_duration = $period_duration_string;
+        $num_complete = count($completed);
+//        $str_obj->completed = $num_complete;
+
+        $compl_data['label_num_completed'] = gh\Helper::get_string('label_num_completed', $period_duration_string);
+        $compl_data['val_num_completed'] = $num_complete;
+
+        $goodhabits = $DB->get_record('goodhabits', array('id' => $instanceid));
+
+        $to_complete = $goodhabits->completioncalendarunits;
+        if ($to_complete) {
+            $compl_data['show_remaining'] = 1;
+            $num_remaining = $to_complete - $num_complete;
+            if ($num_remaining < 0) {
+                $num_remaining = 0;
+            }
+            $compl_data['val_remaining'] = $num_remaining;
+        }
+
+        return $compl_data;
     }
 }

@@ -73,7 +73,7 @@ if ($entry->already_exists()) {
 
 $completion = new completion_info($course);
 
-if ($completion->is_enabled($cm) && $instance->completionentries) {
+if ($completion->is_enabled($cm) && ($instance->completionentries || $instance->completioncalendarunits)) {
     $iscomplete = goodhabits_get_completion_state($course, $cm, $userid, COMPLETION_AND);
     if ($iscomplete) {
         $completion->update_state($cm, COMPLETION_COMPLETE);

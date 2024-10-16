@@ -111,6 +111,18 @@ class FlexiCalendar {
         return $this->periodduration;
     }
 
+    public function get_period_duration_string()
+    {
+        switch ($this->periodduration) {
+            case 1:
+                return Helper::get_string('days');
+            case 7:
+                return Helper::get_string('weeks');
+            default:
+                return Helper::get_string('blocks_of_days');
+        }
+    }
+
     /**
      * Validates and sets the period duration.
      *

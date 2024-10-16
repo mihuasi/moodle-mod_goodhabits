@@ -43,5 +43,27 @@ function xmldb_goodhabits_upgrade($oldversion) {
     // Documentation for the XMLDB Editor can be found at:
     // https://docs.moodle.org/dev/XMLDB_editor.
 
+    if ($oldversion < 2024101603) {
+        $table = new xmldb_table('goodhabits');
+
+        $field = new xmldb_field('completionentriessenabled', XMLDB_TYPE_INTEGER, 1, null, XMLDB_NOTNULL,
+            null, 0, 'freq');
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+
+        $field = new xmldb_field('completioncalendarunits', XMLDB_TYPE_INTEGER, 10, null, XMLDB_NOTNULL,
+            null, 0, 'completionentries');
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+
+        $field = new xmldb_field('completioncalendarenabled', XMLDB_TYPE_INTEGER, 1, null, XMLDB_NOTNULL,
+            null, 0, 'completionentries');
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+    }
+
     return true;
 }

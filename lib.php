@@ -38,8 +38,6 @@ function goodhabits_supports($feature) {
             return true;
         case FEATURE_COMPLETION_HAS_RULES:
             return true;
-        case FEATURE_COMPLETION_TRACKS_VIEWS:
-            return true;
         case FEATURE_BACKUP_MOODLE2:
             return true;
         default:
@@ -138,6 +136,17 @@ function goodhabits_get_completion_state($course, $cm, $userid, $type) {
     if ($numrequired = $goodhabits->completionentries) {
         $num = \mod_goodhabits\HabitItemsHelper::get_total_num_entries($goodhabits->id, $userid);
         $value = $num >= $numrequired;
+
+        if ($type == COMPLETION_AND) {
+            $result = $result && $value;
+        } else {
+            $result = $result || $value;
+        }
+    }
+
+    if ($num_cal_rqd = $goodhabits->completioncalendarunits) {
+        $complete = \mod_goodhabits\Helper::get_cal_units_with_all_complete($goodhabits->id, $userid);
+        $value = (count($complete) >= $num_cal_rqd);
 
         if ($type == COMPLETION_AND) {
             $result = $result && $value;

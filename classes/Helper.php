@@ -330,4 +330,38 @@ WHERE e.id IS NULL
         return $recs;
     }
 
+    public static function get_cal_units_with_all_complete($instanceid, $userid)
+    {
+        global $DB;
+
+        $sql = "SELECT e.endofperiod_timestamp, COUNT(DISTINCT e.habit_id) AS num_complete
+FROM {mod_goodhabits_entry} e
+JOIN {mod_goodhabits_item} i ON e.habit_id = i.id
+WHERE e.userid = :userid
+  AND i.instanceid = :instanceid
+  AND NOT EXISTS (
+      SELECT 1
+      FROM {mod_goodhabits_break} b
+      WHERE b.timestart <= e.endofperiod_timestamp 
+        AND b.timeend >= e.endofperiod_timestamp
+  )
+GROUP BY e.endofperiod_timestamp
+HAVING COUNT(DISTINCT e.habit_id) >= (
+    SELECT COUNT(i2.id) 
+    FROM {mod_goodhabits_item} i2
+    WHERE i2.instanceid = :instanceid2 
+      AND (i2.level = 'activity' OR i2.userid = :userid2)
+)";
+        $params = [
+            'instanceid' => $instanceid,
+            'instanceid2' => $instanceid,
+            'userid' => $userid,
+            'userid2' => $userid,
+        ];
+
+        $results = $DB->get_records_sql($sql, $params);
+
+        return $results;
+    }
+
 }

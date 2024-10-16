@@ -95,13 +95,25 @@ class mod_goodhabits_mod_form extends moodleform_mod {
         $mform =& $this->_form;
 
         $group = array();
-        $completionentries = get_string('completionentries', 'mod_goodhabits');
+
+        $this->get_suffixed_name();
+
+        $completionentries = Helper::get_string('completionentries');
+        $completioncalendar = Helper::get_string('completion_calendar');
         $group[] =& $mform->createElement('checkbox', 'completionentriessenabled', '', $completionentries);
         $group[] =& $mform->createElement('text', 'completionentries', '', array('size' => 3));
+
+        $group[] =& $mform->createElement('checkbox', 'completioncalendarenabled', '', $completioncalendar);
+        $group[] =& $mform->createElement('text', 'completioncalendarunits', '', array('size' => 3));
+
         $mform->setType('completionentries', PARAM_INT);
-        $grouplabel = get_string('completionentriesgroup', 'mod_goodhabits');
+        $mform->setType('completioncalendarunits', PARAM_INT);
+
+        $grouplabel = Helper::get_string('completionentriesgroup');
+
         $mform->addGroup($group, 'completionentriesgroup', $grouplabel, array(' '), false);
         $mform->disabledIf('completionentries', 'completionentriessenabled', 'notchecked');
+        $mform->disabledIf('completioncalendarunits', 'completioncalendarenabled', 'notchecked');
 
         return array('completionentriesgroup');
     }
@@ -113,6 +125,6 @@ class mod_goodhabits_mod_form extends moodleform_mod {
      * @return bool True if one or more rules is enabled, false if none are.
      */
     public function completion_rule_enabled($data) {
-        return ($data['completionentries'] != 0);
+        return ($data['completionentries'] != 0 OR $data['completioncalendarunits'] != 0);
     }
 }

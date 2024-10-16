@@ -732,3 +732,62 @@
     color: #039103;
     margin-left: 12px;
 }
+
+
+
+
+.completion {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 8px; /* Reduced padding for compactness */
+    border: 1px solid #777777; /* Light grey border for separation */
+    border-radius: 8px; /* Rounded corners */
+    background-color: #000000;
+    width: 300px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    margin-top:15px;
+}
+
+.complete, .remaining {
+    display: flex;
+    align-items: center; /* Align items vertically centered */
+    margin: 4px 0; /* Reduced space between rows */
+    padding: 6px 10px; /* Compact padding */
+    border-radius: 5px; /* Rounded corners for button effect */
+    color: #ffffff; /* White text color for contrast */
+    font-size: 14px; /* Slightly smaller text for compactness */
+}
+
+.label-num-completed, .label-remaining {
+    font-weight: bold; /* Make labels bold */
+    margin-right: 5px; /* Space between label and number */
+}
+
+.num-completed, .num-remaining {
+    padding: 4px 8px; /* Reduced padding for number display */
+    border-radius: 4px; /* Rounded corners */
+    font-weight: bold; /* Make numbers bold */
+}
+
+.num-completed {
+    background-color: #28a745; /* Green for completed */
+}
+
+.num-remaining {
+    background-color: #de8200; /* Red for remaining */
+}
+
+/* Optional hover effect for interaction */
+.complete:hover, .remaining:hover {
+    cursor: auto; /* Change cursor to pointer */
+    opacity: 0.9; /* Slight opacity change on hover */
+}
+
+/* Responsive styling for smaller screens */
+@media (max-width: 600px) {
+    .completion {
+        width: 100%; /* Full width on smaller screens */
+    }
+}
+
