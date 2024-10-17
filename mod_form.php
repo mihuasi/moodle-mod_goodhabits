@@ -154,9 +154,14 @@ class mod_goodhabits_mod_form extends moodleform_mod {
      * @return bool True if one or more rules is enabled, false if none are.
      */
     public function completion_rule_enabled($data) {
+        $completion_entries_enabled = $this->get_suffixed_name('completionentriessenabled');
         $completion_entries = $this->get_suffixed_name('completionentries');
+        $completion_entries_condition = ($data[$completion_entries] != 0 AND $completion_entries_enabled);
+        
+        $completion_cu_enabled = $this->get_suffixed_name('completioncalendarenabled');
         $completion_calendar_units = $this->get_suffixed_name('completioncalendarunits');
+        $completion_calendar_units_condition = ($data[$completion_calendar_units] != 0 AND $completion_cu_enabled);
         return (
-            $data[$completion_entries] != 0 OR $data[$completion_calendar_units] != 0);
+            $completion_entries_condition OR $completion_calendar_units_condition);
     }
 }
