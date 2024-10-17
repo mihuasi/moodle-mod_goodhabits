@@ -32,9 +32,12 @@ require_once($CFG->dirroot . '/lib/completionlib.php');
 $g  = optional_param('g', 0, PARAM_INT);
 $timestamp  = optional_param('timestamp', 0, PARAM_INT);
 
+$layout = optional_param('layout', '', PARAM_TEXT);
 $moduleinstance = gh\Helper::get_module_instance($g);
 $course         = $DB->get_record('course', array('id' => $moduleinstance->course), '*', MUST_EXIST);
 $cm             = get_coursemodule_from_instance('goodhabits', $moduleinstance->id, $course->id, false, MUST_EXIST);
+
+$is_basic_mobile = ($layout == gh\Helper::LAYOUT_BASIC_MOBILE);
 
 require_login($course, true, $cm);
 
@@ -70,6 +73,10 @@ $PAGE->requires->js('/mod/goodhabits/js/simple.js', false);
 
 $PAGE->requires->css('/mod/goodhabits/talentgrid/talentgrid-style.css');
 
+if ($is_basic_mobile) {
+    $PAGE->set_pagelayout('embedded');
+}
+
 $renderer = $PAGE->get_renderer('mod_goodhabits');
 
 $calendar = gh\ViewHelper::get_flexi_calendar($moduleinstance);
@@ -102,6 +109,8 @@ echo $OUTPUT->header();
 echo $renderer->print_hidden_data();
 
 $view_url = new moodle_url('/mod/goodhabits/view.php', array('id' => $cm->id));
+
+gh\Helper::add_layout_url_param($view_url);
 
 $template_data = [
     'periodduration' => $calendar->get_period_duration(),

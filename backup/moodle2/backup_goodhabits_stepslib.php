@@ -36,7 +36,8 @@ class backup_goodhabits_activity_structure_step extends backup_activity_structur
 
         // Define the root element describing the goodhabits instance.
         $goodhabits = new backup_nested_element('goodhabits', array('id'), array(
-            'course', 'name', 'freq', 'completionentries', 'timecreated', 'timemodified', 'intro', 'introformat'));
+            'course', 'name', 'freq', 'completionentriessenabled', 'completionentries', 'completioncalendarenabled',
+            'completioncalendarunits', 'timecreated', 'timemodified', 'intro', 'introformat'));
 
         $habit = new backup_nested_element('mod_goodhabits_item', array('id'), array(
             'instanceid', 'userid', 'addedby', 'level', 'published', 'name',

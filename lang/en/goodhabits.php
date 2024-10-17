@@ -170,3 +170,7 @@ $string['blocks_of_days'] = 'blocks-of-days';
 $string['label_num_completed'] = 'Number of {$a} completed';
 //$string['completed_cal_units'] = 'Number of {$a->period_duration} completed: {$a->completed}';
 $string['label_remaining'] = 'To complete';
+$string['completionentries'] = 'You have to add a minimum number of entries';
+$string['completioncalendarunits'] = 'You have to complete a minimum number of days/weeks';
+$string['completiondetail:min_entries'] = 'make at least {$a} entries';
+$string['completiondetail:min_cal_units'] = 'complete {$a->min} {$a->units}';

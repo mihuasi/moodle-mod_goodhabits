@@ -96,14 +96,22 @@ class mod_goodhabits_mod_form extends moodleform_mod {
 
         $group = array();
 
-        $this->get_suffixed_name();
-
         $completionentries = Helper::get_string('completionentries');
         $completioncalendar = Helper::get_string('completion_calendar');
-        $group[] =& $mform->createElement('checkbox', 'completionentriessenabled', '', $completionentries);
+        $group[] =& $mform->createElement(
+            'checkbox',
+            $this->get_suffixed_name('completionentriessenabled'),
+            '',
+            $completionentries
+        );
         $group[] =& $mform->createElement('text', 'completionentries', '', array('size' => 3));
 
-        $group[] =& $mform->createElement('checkbox', 'completioncalendarenabled', '', $completioncalendar);
+        $group[] =& $mform->createElement(
+            'checkbox',
+            $this->get_suffixed_name('completioncalendarenabled'),
+            '',
+            $completioncalendar
+        );
         $group[] =& $mform->createElement('text', 'completioncalendarunits', '', array('size' => 3));
 
         $mform->setType('completionentries', PARAM_INT);
@@ -111,11 +119,32 @@ class mod_goodhabits_mod_form extends moodleform_mod {
 
         $grouplabel = Helper::get_string('completionentriesgroup');
 
-        $mform->addGroup($group, 'completionentriesgroup', $grouplabel, array(' '), false);
-        $mform->disabledIf('completionentries', 'completionentriessenabled', 'notchecked');
-        $mform->disabledIf('completioncalendarunits', 'completioncalendarenabled', 'notchecked');
+        $mform->addGroup(
+            $group,
+            $this->get_suffixed_name('completionentriesgroup'),
+            $grouplabel,
+            array(' '),
+            false
+        );
+        $mform->disabledIf(
+            $this->get_suffixed_name('completionentries'),
+            $this->get_suffixed_name('completionentriessenabled'),
+            'notchecked'
+        );
+        $mform->disabledIf(
+            $this->get_suffixed_name('completioncalendarunits'),
+            $this->get_suffixed_name('completioncalendarenabled'),
+            'notchecked'
+        );
 
-        return array('completionentriesgroup');
+
+
+
+        return array($this->get_suffixed_name('completionentriesgroup'));
+    }
+
+    protected function get_suffixed_name(string $fieldname): string {
+        return $fieldname . $this->get_suffix();
     }
 
     /**
@@ -125,6 +154,9 @@ class mod_goodhabits_mod_form extends moodleform_mod {
      * @return bool True if one or more rules is enabled, false if none are.
      */
     public function completion_rule_enabled($data) {
-        return ($data['completionentries'] != 0 OR $data['completioncalendarunits'] != 0);
+        $completion_entries = $this->get_suffixed_name('completionentries');
+        $completion_calendar_units = $this->get_suffixed_name('completioncalendarunits');
+        return (
+            $data[$completion_entries] != 0 OR $data[$completion_calendar_units] != 0);
     }
 }

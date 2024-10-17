@@ -95,11 +95,11 @@
 }
 
 .path-mod-goodhabits .calendar .time-unit.march {
-    background: #554377;
+    background: #b796f696;
 }
 
 .path-mod-goodhabits .calendar .time-unit.april {
-    background: #6a2b6b;
+    background: #f5b6f6;
 }
 
 .path-mod-goodhabits .calendar .time-unit.may {
@@ -734,7 +734,18 @@
 }
 
 
+#page-mod-goodhabits-simple .activity-header,
+body.pagelayout-embedded .activity-header {
+    display: none;
+}
 
+
+
+
+
+.path-mod-goodhabits .arrow-right .link-spanner {
+    left: -10px;
+}
 
 .completion {
     display: flex;
