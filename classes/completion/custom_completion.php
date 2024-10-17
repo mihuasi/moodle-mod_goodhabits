@@ -50,7 +50,7 @@ class custom_completion extends activity_custom_completion {
 
         switch ($rule) {
             case 'completionentries':
-                $num_entries = \mod_goodhabits\HabitItemsHelper::get_total_num_entries($goodhabits->id, $userid);
+                $num_entries = \mod_goodhabits\habit\HabitItemsHelper::get_total_num_entries($goodhabits->id, $userid);
                 $status = $num_entries >= $min_entries;
                 break;
             case 'completioncalendarunits':

@@ -70,44 +70,44 @@ $PAGE->navbar->add($pagetitle, $pageurl);
 
 $renderer = $PAGE->get_renderer('mod_goodhabits');
 
-gh\HabitItemsHelper::check_delete_habit();
-gh\HabitItemsHelper::check_delete_habit_entries();
+gh\habit\HabitItemsHelper::check_delete_habit();
+gh\habit\HabitItemsHelper::check_delete_habit_entries();
 
 $table = new html_table();
 
-gh\HabitItemsHelper::set_table_head($table);
+gh\habit\HabitItemsHelper::set_table_head($table);
 
 $mform = new gh\add_habit(null, $params);
 
 if ($action == 'edit') {
-    $habit = new gh\Habit($habitid);
+    $habit = new gh\habit\Habit($habitid);
     $mform->set_data($habit);
 }
 
 if ($data = $mform->get_data()) {
-    gh\HabitItemsHelper::process_form($data, $action);
+    gh\habit\HabitItemsHelper::process_form($data, $action);
 }
 
 $ispersonal = $level == 'personal';
 $showonlypublished = ($ispersonal) ? true : false;
-$habits = gh\HabitItemsHelper::get_activity_habits($instanceid, $showonlypublished);
+$habits = gh\habit\HabitItemsHelper::get_activity_habits($instanceid, $showonlypublished);
 
 $isactivity = !$ispersonal;
 
 if ($ispersonal) {
-    $habits += gh\HabitItemsHelper::get_personal_habits($instanceid, $USER->id);
+    $habits += gh\habit\HabitItemsHelper::get_personal_habits($instanceid, $USER->id);
 }
 
 foreach ($habits as $habit) {
     $row = array();
 
-    $habitname = gh\HabitItemsHelper::table_habit_name($habit, $ispersonal, $name);
+    $habitname = gh\habit\HabitItemsHelper::table_habit_name($habit, $ispersonal, $name);
 
     $row[] = $habitname;
     $row[] = format_text($habit->description);
-    $row[] = gh\HabitItemsHelper::get_num_entries($habit->id, $USER->id);
+    $row[] = gh\habit\HabitItemsHelper::get_num_entries($habit->id, $USER->id);
 
-    $actions = gh\HabitItemsHelper::table_actions_arr($habit, $isactivity, $level, $instanceid);
+    $actions = gh\habit\HabitItemsHelper::table_actions_arr($habit, $isactivity, $level, $instanceid);
 
     $row[] = implode('<br />', $actions);
     $table->data[] = $row;
@@ -120,7 +120,7 @@ if ($habits AND $action != 'edit') {
 }
 
 echo html_writer::start_div('add_habit');
-$formlangid = gh\HabitItemsHelper::get_form_submit_lang_id($action, $level);
+$formlangid = gh\habit\HabitItemsHelper::get_form_submit_lang_id($action, $level);
 
 $text = get_string($formlangid, 'mod_goodhabits');
 

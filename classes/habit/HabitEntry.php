@@ -20,7 +20,7 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace mod_goodhabits;
+namespace mod_goodhabits\habit;
 
 defined('MOODLE_INTERNAL') || die();
 

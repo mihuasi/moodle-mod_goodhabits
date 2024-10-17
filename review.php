@@ -86,7 +86,7 @@ if ($userid) {
 
     $calendar = gh\ViewHelper::get_flexi_calendar($moduleinstance, $userid);
 
-    $habits = gh\HabitItemsHelper::get_all_habits_for_user($instanceid, $userid);
+    $habits = gh\habit\HabitItemsHelper::get_all_habits_for_user($instanceid, $userid);
 
     $extraclasses = array('review');
     $renderer->print_calendar_area($calendar, $instanceid, $habits, $extraclasses, $userid);

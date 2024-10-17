@@ -94,7 +94,7 @@ $display_unit_inline = $calendar_unit->display_unit_inline();
 $date = $calendar_unit->format('Y-m-d');
 $timestamp = $calendar_unit->getTimestamp();
 
-$habits_objs = gh\HabitItemsHelper::get_incomplete_for_user_date($instanceid, $USER->id, $calendar_unit);
+$habits_objs = gh\habit\HabitItemsHelper::get_incomplete_for_user_date($instanceid, $USER->id, $calendar_unit);
 $habits = [];
 
 foreach ($habits_objs as $habits_obj) {

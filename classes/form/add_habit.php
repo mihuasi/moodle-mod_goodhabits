@@ -22,6 +22,8 @@
 
 namespace mod_goodhabits;
 
+use mod_goodhabits\habit\HabitItemsHelper;
+
 class add_habit extends \moodleform
 {
 

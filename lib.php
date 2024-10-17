@@ -99,9 +99,9 @@ function goodhabits_delete_instance($id) {
         return false;
     }
 
-    $habits = \mod_goodhabits\HabitItemsHelper::get_all_activity_instance_habits($id);
+    $habits = \mod_goodhabits\habit\HabitItemsHelper::get_all_activity_instance_habits($id);
     foreach ($habits as $habit) {
-        $habit = new \mod_goodhabits\Habit($habit->id);
+        $habit = new \mod_goodhabits\habit\Habit($habit->id);
         $habit->delete();
     }
 
@@ -134,7 +134,7 @@ function goodhabits_get_completion_state($course, $cm, $userid, $type) {
     $result = $type;
 
     if ($numrequired = $goodhabits->completionentries) {
-        $num = \mod_goodhabits\HabitItemsHelper::get_total_num_entries($goodhabits->id, $userid);
+        $num = \mod_goodhabits\habit\HabitItemsHelper::get_total_num_entries($goodhabits->id, $userid);
         $value = $num >= $numrequired;
 
         if ($type == COMPLETION_AND) {

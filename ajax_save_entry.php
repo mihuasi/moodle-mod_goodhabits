@@ -46,7 +46,7 @@ $y = required_param('y', PARAM_INT);
 
 require_sesskey();
 
-$habit = new gh\Habit($habitid);
+$habit = new gh\habit\Habit($habitid);
 
 $courseid = $habit->get_course_id();
 
@@ -63,7 +63,7 @@ $userid = $USER->id;
 
 $course = get_course($courseid);
 
-$entry = new gh\HabitEntryTwoDimensional($habit, $userid, $timestamp, $duration, $x, $y);
+$entry = new gh\habit\HabitEntryTwoDimensional($habit, $userid, $timestamp, $duration, $x, $y);
 
 if ($entry->already_exists()) {
     $entry->update();

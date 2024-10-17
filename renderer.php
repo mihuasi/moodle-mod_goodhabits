@@ -30,12 +30,12 @@ class mod_goodhabits_renderer extends plugin_renderer_base {
     /**
      * Gets template data for the top 'ribbon' in the activity, showing a series of days or weeks.
      *
-     * @param gh\FlexiCalendar $calendar
+     * @param \mod_goodhabits\calendar\FlexiCalendar $calendar
      * @param $instanceid
      * @return array
      * @throws moodle_exception
      */
-    protected function get_calendar_data(gh\FlexiCalendar $calendar, $instanceid, $userid) {
+    protected function get_calendar_data(gh\calendar\FlexiCalendar $calendar, $instanceid, $userid) {
         global $USER;
         $userid = ($userid) ? $userid : $USER->id;
 
@@ -87,12 +87,12 @@ class mod_goodhabits_renderer extends plugin_renderer_base {
 
     /**
      * Gets template data for the list of habits.
-     * @param gh\FlexiCalendar $calendar
+     * @param \mod_goodhabits\calendar\FlexiCalendar $calendar
      * @param $habits
      * @param $userid
      * @return array
      */
-    protected function get_habits_data(gh\FlexiCalendar $calendar, $habits, $userid = null) {
+    protected function get_habits_data(gh\calendar\FlexiCalendar $calendar, $habits, $userid = null) {
         $data = [];
         foreach ($habits as $habit) {
             $data[] = $this->get_habit_data($calendar, $habit, $userid);
@@ -104,13 +104,13 @@ class mod_goodhabits_renderer extends plugin_renderer_base {
     /**
      * Gets template data for a single habit - the name on the LHS and the "habit entries" on the RHS.
      *
-     * @param gh\FlexiCalendar $calendar
-     * @param gh\Habit $habit
+     * @param \mod_goodhabits\calendar\FlexiCalendar $calendar
+     * @param \mod_goodhabits\habit\Habit $habit
      * @param $userid
      * @return array
      * @throws coding_exception
      */
-    public function get_habit_data(gh\FlexiCalendar $calendar, gh\Habit $habit, $userid = null) {
+    public function get_habit_data(gh\calendar\FlexiCalendar $calendar, gh\habit\Habit $habit, $userid = null) {
         $habit_data = [];
         $habit_data['id'] = $habit->id;
 
@@ -150,14 +150,14 @@ class mod_goodhabits_renderer extends plugin_renderer_base {
     /**
      * 'Checkmarks' here are the circular entities used to manage habit entries.
      *
-     * @param gh\FlexiCalendar $calendar
-     * @param gh\Habit $habit
+     * @param \mod_goodhabits\calendar\FlexiCalendar $calendar
+     * @param \mod_goodhabits\habit\Habit $habit
      * @param $userid
      * @return array
      * @throws coding_exception
      * @throws dml_exception
      */
-    protected function get_checkmarks_data(gh\FlexiCalendar $calendar, gh\Habit $habit, $userid = null) {
+    protected function get_checkmarks_data(gh\calendar\FlexiCalendar $calendar, gh\habit\Habit $habit, $userid = null) {
         global $USER;
 
         $data = [];
@@ -436,7 +436,7 @@ class mod_goodhabits_renderer extends plugin_renderer_base {
         return $out;
     }
 
-    public function get_completion_data(gh\FlexiCalendar $calendar, $instanceid, $userid)
+    public function get_completion_data(gh\calendar\FlexiCalendar $calendar, $instanceid, $userid)
     {
         global $DB, $USER;
 

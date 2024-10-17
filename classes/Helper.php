@@ -22,6 +22,8 @@
 
 namespace mod_goodhabits;
 
+use mod_goodhabits\calendar\FlexiCalendarUnit;
+
 defined('MOODLE_INTERNAL') || die();
 
 /**
