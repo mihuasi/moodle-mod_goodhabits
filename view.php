@@ -73,6 +73,11 @@ if ($skip) {
     gh\BreaksHelper::process_skip($instanceid, $skip);
 }
 
+$calendar = gh\ViewHelper::get_flexi_calendar($moduleinstance);
+
+$auto = new gh\AutoSimple($calendar, $moduleinstance->id, $USER->id);
+//$auto->execute();
+
 
 $PAGE->set_url('/mod/goodhabits/view.php', array('id' => $cm->id));
 $PAGE->set_title(format_string($moduleinstance->name));
@@ -91,8 +96,6 @@ if ($is_basic_mobile) {
 }
 
 $renderer = $PAGE->get_renderer('mod_goodhabits');
-
-$calendar = gh\ViewHelper::get_flexi_calendar($moduleinstance);
 
 $habits = gh\habit\HabitItemsHelper::get_all_habits_for_user($instanceid, $USER->id);
 
