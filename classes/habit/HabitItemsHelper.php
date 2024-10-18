@@ -80,13 +80,17 @@ class HabitItemsHelper {
         global $DB;
         $timestamp = $calendar_unit->getTimestamp();
         $sql = 'SELECT h.* FROM {mod_goodhabits_item} h
-	LEFT JOIN {mod_goodhabits_entry} e ON (e.`habit_id` = h.id AND e.`userid` = :userid AND e.`endofperiod_timestamp` = :timestamp)
-	WHERE e.id IS NULL AND h.instanceid = :instanceid';
+	LEFT JOIN {mod_goodhabits_entry} e ON 
+	    (e.`habit_id` = h.id AND e.`userid` = :userid AND e.`endofperiod_timestamp` = :timestamp)
+	WHERE e.id IS NULL AND h.instanceid = :instanceid AND (h.userid = :userid2 OR h.level = :activity_level) ';
 
         $recs = $DB->get_records_sql($sql, [
             'instanceid' => $instanceid,
             'userid' => $userid,
-            'timestamp' => $timestamp]
+            'userid2' => $userid,
+            'timestamp' => $timestamp,
+            'activity_level' => "activity",
+            ]
         );
         return $recs;
     }

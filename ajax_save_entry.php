@@ -25,12 +25,7 @@
 use mod_goodhabits as gh;
 
 require_once('../../config.php');
-//require_once('classes/Habit.php');
-//require_once('classes/HabitEntry.php');
-//require_once('classes/HabitEntryTwoDimensional.php');
-//require_once('classes/FlexiCalendar.php');
-//require_once('classes/FlexiCalendarUnit.php');
-//require_once('classes/Helper.php');
+
 require_once('lib.php');
 require_once($CFG->dirroot . '/lib/completionlib.php');
 
@@ -65,6 +60,8 @@ $course = get_course($courseid);
 
 $entry = new gh\habit\HabitEntryTwoDimensional($habit, $userid, $timestamp, $duration, $x, $y);
 
+$prev_completed_cal_units_crit = gh\Helper::has_completed_cal_units_crit($instance, $userid);
+
 if ($entry->already_exists()) {
     $entry->update();
 } else {
@@ -73,4 +70,19 @@ if ($entry->already_exists()) {
 
 $rules = ['completionentries', 'completioncalendarunits'];
 
-gh\Helper::check_to_update_completion_state($course, $cm, $instance, $userid, $rules);
+$has_checked = gh\Helper::check_to_update_completion_state($course, $cm, $instance, $userid, $rules);
+
+$response = [];
+
+$newly_completed_cal_units_crit = false;
+if ($has_checked AND !$prev_completed_cal_units_crit) {
+    $status = gh\Helper::has_completed_cal_units_crit($instance, $userid);
+    if ($status) {
+        $newly_completed_cal_units_crit = true;
+    }
+}
+
+$response['newly_completed_cal_units_crit'] = $newly_completed_cal_units_crit;
+echo json_encode($response);
+
+

@@ -240,7 +240,10 @@ jQuery(window).on('load',function($) {
         var data = {x: x,y: y, habitId: habitId, timestamp: timestamp, periodDuration: periodDuration, sesskey: sesskey};
         $.post( wwwroot + "/mod/goodhabits/ajax_save_entry.php", data)
             .done(function( data ) {
-
+                let parsed = JSON.parse(data);
+                if (parsed.newly_completed_cal_units_crit) {
+                    window.location.reload();
+                }
             });
         selectedCheckmark.data('xVal', x);
         selectedCheckmark.data('yVal', y);

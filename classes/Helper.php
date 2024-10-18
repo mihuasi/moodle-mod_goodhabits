@@ -330,19 +330,17 @@ class Helper {
             }
         }
         if (!$any_rule) {
-            return null;
+            return false;
         }
 
         $completion = new \completion_info($course);
 
         if ($completion->is_enabled($cm)) {
-//            $iscomplete = goodhabits_get_completion_state($course, $cm, $userid, COMPLETION_AND);
             // We need to set to COMPLETION_UNKNOWN, so that individual rules are updated.
             $completion->update_state($cm, COMPLETION_UNKNOWN);
-//            if ($iscomplete) {
-//                $completion->update_state($cm, COMPLETION_COMPLETE);
-//            }
+            return true;
         }
+        return false;
     }
 
     public static function get_entries($instanceid, $userid, $endofperiod_timestamp) {
@@ -386,6 +384,14 @@ WHERE e.id IS NULL
         $recs = $DB->get_records_sql($sql, $params);
 
         return $recs;
+    }
+
+    public static function has_completed_cal_units_crit($instance, $userid)
+    {
+        $min_cal_units = (int) $instance->completioncalendarunits ?? null;
+        $pre_complete = \mod_goodhabits\Helper::get_cal_units_with_all_complete($instance->id, $userid);
+        $status = (count($pre_complete) >= $min_cal_units);
+        return $status;
     }
 
     public static function get_cal_units_with_all_complete($instanceid, $userid)
