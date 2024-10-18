@@ -74,14 +74,3 @@ if ($entry->already_exists()) {
 $rules = ['completionentries', 'completioncalendarunits'];
 
 gh\Helper::check_to_update_completion_state($course, $cm, $instance, $userid, $rules);
-
-//$completion = new completion_info($course);
-//
-//if ($completion->is_enabled($cm) && ($instance->completionentries || $instance->completioncalendarunits)) {
-//    $iscomplete = goodhabits_get_completion_state($course, $cm, $userid, COMPLETION_AND);
-//    \local_debugging\debugg::add_debugging($userid, 'ajax_save:82', $iscomplete);
-//    $completion->update_state($cm, COMPLETION_UNKNOWN);
-////    if ($iscomplete) {
-////        $completion->update_state($cm, COMPLETION_COMPLETE);
-////    }
-//}
