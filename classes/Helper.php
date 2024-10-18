@@ -310,6 +310,41 @@ class Helper {
         return $unit;
     }
 
+    public static function get_instance_from_instance_id($instanceid)
+    {
+        global $DB;
+        if (!$goodhabits = $DB->get_record('goodhabits', ['id' => $instanceid])) {
+            throw new \moodle_exception('Unable to find goodhabits with id ' . $instanceid);
+        }
+
+        return $goodhabits;
+    }
+
+    public static function check_to_update_completion_state($course, $cm, $instance, $userid, $rules)
+    {
+        $any_rule = false;
+        foreach ($rules as $rule) {
+            if (!empty($instance->$rule)) {
+                $any_rule = true;
+                break;
+            }
+        }
+        if (!$any_rule) {
+            return null;
+        }
+
+        $completion = new \completion_info($course);
+
+        if ($completion->is_enabled($cm)) {
+//            $iscomplete = goodhabits_get_completion_state($course, $cm, $userid, COMPLETION_AND);
+            // We need to set to COMPLETION_UNKNOWN, so that individual rules are updated.
+            $completion->update_state($cm, COMPLETION_UNKNOWN);
+//            if ($iscomplete) {
+//                $completion->update_state($cm, COMPLETION_COMPLETE);
+//            }
+        }
+    }
+
     public static function get_entries($instanceid, $userid, $endofperiod_timestamp) {
         global $DB;
         $sql = "SELECT e.*
@@ -335,7 +370,7 @@ class Helper {
     {
         global $DB;
 
-        $sql = "SELECT i.*, e.* 
+        $sql = "SELECT DISTINCT(i.id) 
 FROM {mod_goodhabits_item} i
 LEFT JOIN {mod_goodhabits_entry} e ON e.habit_id = i.id 
     AND e.userid = :userid 

@@ -22,6 +22,8 @@
  * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+use mod_goodhabits\habit\HabitItemsHelper;
+
 defined('MOODLE_INTERNAL') || die();
 
 /**
@@ -133,6 +135,17 @@ function goodhabits_get_completion_state($course, $cm, $userid, $type) {
     }
     $result = $type;
 
+    if ($min_habits = $goodhabits->completionhabits) {
+        $habits = HabitItemsHelper::get_all_habits_for_user($goodhabits->id, $userid);
+        $value = count($habits) >= $min_habits;
+
+        if ($type == COMPLETION_AND) {
+            $result = $result && $value;
+        } else {
+            $result = $result || $value;
+        }
+    }
+
     if ($numrequired = $goodhabits->completionentries) {
         $num = \mod_goodhabits\habit\HabitItemsHelper::get_total_num_entries($goodhabits->id, $userid);
         $value = $num >= $numrequired;
@@ -178,6 +191,7 @@ function goodhabits_get_coursemodule_info($coursemodule) {
 
     // Populate the custom completion rules as key => value pairs, but only if the completion mode is 'automatic'.
     if ($coursemodule->completion == COMPLETION_TRACKING_AUTOMATIC) {
+        $result->customdata['customcompletionrules']['completionhabits'] = $goodhabits->completionhabits;
         $result->customdata['customcompletionrules']['completionentries'] = $goodhabits->completionentries;
         $result->customdata['customcompletionrules']['completioncalendarunits'] = $goodhabits->completioncalendarunits;
     }
@@ -193,7 +207,7 @@ function goodhabits_get_coursemodule_info($coursemodule) {
 //        $result->customdata['cutoffdate'] = $goodhabits->cutoffdate;
 //    }
 
-    \local_debugging\debugg::add_debugging(2, 'goodhabits_get_coursemodule_info', print_r($result, 1));
+//    \local_debugging\debugg::add_debugging(2, 'goodhabits_get_coursemodule_info', print_r($result, 1));
     return $result;
 }
 
@@ -203,7 +217,7 @@ function goodhabits_get_completion_active_rule_descriptions($cm) {
 
 function mod_goodhabits_get_completion_active_rule_descriptions($cm) {
 //    print_object($cm);exit;
-    \local_debugging\debugg::add_debugging(2, 'mod_goodhabits_get_completion_active_rule_descriptions', 205);
+//    \local_debugging\debugg::add_debugging(2, 'mod_goodhabits_get_completion_active_rule_descriptions', 205);
 //    if (empty($cm->customdata['customcompletionrules'])
 //        || $cm->completion != COMPLETION_TRACKING_AUTOMATIC) {
 //        return [];
@@ -212,14 +226,19 @@ function mod_goodhabits_get_completion_active_rule_descriptions($cm) {
     $descriptions = [];
     foreach ($cm->customdata['customcompletionrules'] as $key => $val) {
         switch ($key) {
+            case 'completionhabits':
+                if (!empty($val)) {
+                    $descriptions[] = \mod_goodhabits\Helper::get_string('completiondetail:min_habits');
+                }
+                break;
             case 'completionentries':
                 if (!empty($val)) {
-                    $descriptions[] = \mod_goodhabits\Helper::get_string('completionentries');
+                    $descriptions[] = \mod_goodhabits\Helper::get_string('completiondetail:min_entries');
                 }
                 break;
             case 'completioncalendarunits':
                 if (!empty($val)) {
-                    $descriptions[] = \mod_goodhabits\Helper::get_string('completioncalendarunits');
+                    $descriptions[] = \mod_goodhabits\Helper::get_string('completiondetail:min_cal_units');
                 }
                 break;
             default:

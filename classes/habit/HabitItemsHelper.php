@@ -176,6 +176,7 @@ class HabitItemsHelper {
         $desc = $data->description;
         $instanceid = $data->instance;
         $level = $data->level;
+        $goodhabits = Helper::get_instance_from_instance_id($instanceid);
         require_capability('mod/goodhabits:manage_' . $level . '_habits', $PAGE->context);
 
         $params = array('name' => $name, 'userid' => $USER->id, 'instanceid' => $instanceid);
@@ -195,6 +196,12 @@ class HabitItemsHelper {
         $record->timemodified = $record->timecreated;
 
         $DB->insert_record('mod_goodhabits_item', $record);
+
+        $rules = ['completionhabits'];
+        $course = get_course($goodhabits->course);
+        $cm = Helper::get_coursemodule_from_instance($instanceid, $goodhabits->course);
+
+        Helper::check_to_update_completion_state($course, $cm, $goodhabits, $USER->id, $rules);
     }
 
     /**
@@ -243,18 +250,31 @@ class HabitItemsHelper {
      * @throws \moodle_exception
      */
     public static function check_delete_habit() {
-        global $PAGE;
+        global $PAGE, $USER;
         $action = optional_param('action', '', PARAM_TEXT);
         if ($action == 'delete') {
             require_sesskey();
             $habitid = required_param('habitid', PARAM_INT);
             $habit = new Habit($habitid);
             $habit->delete();
+            static::check_completion_status($habit, $USER->id);
             $msg = get_string('habit_deleted', 'mod_goodhabits');
             $url = $PAGE->url;
             $url->remove_params(array('action'));
             redirect($url, $msg);
         }
+    }
+
+    public static function check_completion_status(Habit $habit, $userid)
+    {
+        $course_id = $habit->get_course_id();
+        $course = get_course($course_id);
+        $instance = $habit->get_instance_record();
+        $cm = $habit->get_cm();
+
+        $rules = ['completionhabits'];
+
+        Helper::check_to_update_completion_state($course, $cm, $instance, $userid, $rules);
     }
 
     /**

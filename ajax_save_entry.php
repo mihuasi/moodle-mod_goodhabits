@@ -25,12 +25,12 @@
 use mod_goodhabits as gh;
 
 require_once('../../config.php');
-require_once('classes/Habit.php');
-require_once('classes/HabitEntry.php');
-require_once('classes/HabitEntryTwoDimensional.php');
-require_once('classes/FlexiCalendar.php');
-require_once('classes/FlexiCalendarUnit.php');
-require_once('classes/Helper.php');
+//require_once('classes/Habit.php');
+//require_once('classes/HabitEntry.php');
+//require_once('classes/HabitEntryTwoDimensional.php');
+//require_once('classes/FlexiCalendar.php');
+//require_once('classes/FlexiCalendarUnit.php');
+//require_once('classes/Helper.php');
 require_once('lib.php');
 require_once($CFG->dirroot . '/lib/completionlib.php');
 
@@ -71,11 +71,17 @@ if ($entry->already_exists()) {
     $entry->save();
 }
 
-$completion = new completion_info($course);
+$rules = ['completionentries', 'completioncalendarunits'];
 
-if ($completion->is_enabled($cm) && ($instance->completionentries || $instance->completioncalendarunits)) {
-    $iscomplete = goodhabits_get_completion_state($course, $cm, $userid, COMPLETION_AND);
-    if ($iscomplete) {
-        $completion->update_state($cm, COMPLETION_COMPLETE);
-    }
-}
+gh\Helper::check_to_update_completion_state($course, $cm, $instance, $userid, $rules);
+
+//$completion = new completion_info($course);
+//
+//if ($completion->is_enabled($cm) && ($instance->completionentries || $instance->completioncalendarunits)) {
+//    $iscomplete = goodhabits_get_completion_state($course, $cm, $userid, COMPLETION_AND);
+//    \local_debugging\debugg::add_debugging($userid, 'ajax_save:82', $iscomplete);
+//    $completion->update_state($cm, COMPLETION_UNKNOWN);
+////    if ($iscomplete) {
+////        $completion->update_state($cm, COMPLETION_COMPLETE);
+////    }
+//}

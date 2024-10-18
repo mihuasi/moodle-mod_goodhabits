@@ -20,6 +20,7 @@ namespace mod_goodhabits\completion;
 
 
 use core_completion\activity_custom_completion;
+use mod_goodhabits\habit\HabitItemsHelper;
 use mod_goodhabits\Helper;
 use mod_goodhabits\ViewHelper;
 
@@ -42,13 +43,17 @@ class custom_completion extends activity_custom_completion {
         $userid = $this->userid;
         $gh_id = $this->cm->instance;
 
-        if (!$goodhabits = $DB->get_record('goodhabits', ['id' => $gh_id])) {
-            throw new \moodle_exception('Unable to find goodhabits with id ' . $gh_id);
-        }
-        $min_entries = $goodhabits->completionentries ?? null;
-        $min_cal_units = $goodhabits->completioncalendarunits ?? null;
+        $goodhabits = Helper::get_instance_from_instance_id($gh_id);
+
+        $min_habits = (int) $goodhabits->completionhabits ?? null;
+        $min_entries = (int) $goodhabits->completionentries ?? null;
+        $min_cal_units = (int) $goodhabits->completioncalendarunits ?? null;
 
         switch ($rule) {
+            case 'completionhabits':
+                $habits = HabitItemsHelper::get_all_habits_for_user($goodhabits->id, $userid);
+                $status = count($habits) >= $min_habits;
+                break;
             case 'completionentries':
                 $num_entries = \mod_goodhabits\habit\HabitItemsHelper::get_total_num_entries($goodhabits->id, $userid);
                 $status = $num_entries >= $min_entries;
@@ -72,6 +77,7 @@ class custom_completion extends activity_custom_completion {
      */
     public static function get_defined_custom_rules(): array {
         return [
+            'completionhabits',
             'completionentries',
             'completioncalendarunits',
         ];
@@ -86,21 +92,21 @@ class custom_completion extends activity_custom_completion {
         global $DB;
         $gh_id = $this->cm->instance;
 
-        if (!$goodhabits = $DB->get_record('goodhabits', ['id' => $gh_id])) {
-            throw new \moodle_exception('Unable to find goodhabits with id ' . $gh_id);
-        }
+        $goodhabits = Helper::get_instance_from_instance_id($gh_id);
+
+        $completionhabits = $this->cm->customdata['customcompletionrules']['completionhabits'] ?? 0;
+        $completionentries = $this->cm->customdata['customcompletionrules']['completionentries'] ?? 0;
+        $completioncalendarunits = $this->cm->customdata['customcompletionrules']['completioncalendarunits'] ?? 0;
 
         $calendar = ViewHelper::get_flexi_calendar($goodhabits);
         $units = $calendar->get_period_duration_string();
-
-        $completionentries = $this->cm->customdata['customcompletionrules']['completionentries'] ?? 0;
-        $completioncalendarunits = $this->cm->customdata['customcompletionrules']['completioncalendarunits'] ?? 0;
 
         $strobj = new \stdClass();
         $strobj->min = $completioncalendarunits;
         $strobj->units = $units;
 
         return [
+            'completionhabits' => Helper::get_string('completiondetail:min_habits', $completionhabits),
             'completionentries' => Helper::get_string('completiondetail:min_entries', $completionentries),
             'completioncalendarunits' => Helper::get_string('completiondetail:min_cal_units', $strobj),
         ];
@@ -113,6 +119,7 @@ class custom_completion extends activity_custom_completion {
      */
     public function get_sort_order(): array {
         return [
+            'completionhabits',
             'completionentries',
             'completioncalendarunits',
         ];

@@ -65,5 +65,21 @@ function xmldb_goodhabits_upgrade($oldversion) {
         }
     }
 
+    if ($oldversion < 2024101701) {
+        $table = new xmldb_table('goodhabits');
+
+        $field = new xmldb_field('completionhabitsenabled', XMLDB_TYPE_INTEGER, 1, null, XMLDB_NOTNULL,
+            null, 0, 'freq');
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+
+        $field = new xmldb_field('completionhabits', XMLDB_TYPE_INTEGER, 10, null, XMLDB_NOTNULL,
+            null, 0, 'completionhabitsenabled');
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+    }
+
     return true;
 }
