@@ -22,6 +22,8 @@
 
 namespace mod_goodhabits;
 
+use mod_goodhabits\calendar\FlexiCalendar;
+
 defined('MOODLE_INTERNAL') || die();
 
 /**
@@ -149,12 +151,14 @@ class BreaksHelper {
         return false;
     }
 
-    public static function process_skip($instanceid, $skip_timestamp)
+    public static function process_skip($instanceid, $skip_timestamp, FlexiCalendar $calendar)
     {
         global $OUTPUT;
         $data = new \stdClass();
+        $duration = $calendar->get_period_duration();
+        $multiplier = $duration - 1;
         $data->fromdate = $skip_timestamp;
-        $data->todate = $skip_timestamp;
+        $data->todate = $skip_timestamp + ($multiplier * DAYSECS);
         $data->instance = $instanceid;
 
         static::add_personal_break($data);

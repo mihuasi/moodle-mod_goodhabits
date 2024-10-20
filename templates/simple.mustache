@@ -5,7 +5,12 @@
 >
     <form action="{{{view-url}}}" method="post" class="habit-form">
         <div class="simple-main">
-            <h1 class="simple-heading">{{heading}}, starting {{date}}</h1>
+            <h1 class="simple-heading">
+                {{heading}}
+                {{#date}}
+                    - {{#str}} starting, mod_goodhabits {{/str}} {{date}}
+                {{/date}}
+            </h1>
             <span class="prev-habit">←</span>
             <div class="habits-wrapper">
                 {{#habits}}
@@ -16,11 +21,11 @@
                                 ✔ {{#str}} saved, mod_goodhabits {{/str}}
                             </span>
                         </h2>
-                        <h3>Effort:</h3>
+                        <h3>{{#str}} simple_view_effort, mod_goodhabits {{/str}}:</h3>
                         <input type="range" class="discrete-slider effort habit-{{id}}" id="discreteSlider"
                                name="habit-{{id}}-effort" min="1" max="10" step="1"
                                value="5" data-habit-id="{{id}}" data-timestamp="{{timestamp}}">
-                        <h3>Outcome:</h3>
+                        <h3>{{#str}} simple_view_outcome, mod_goodhabits {{/str}}:</h3>
                         <input type="range" class="discrete-slider outcome habit-{{id}}"
                                name="habit-{{id}}-outcome" min="1" max="10" step="1"
                                value="5" data-habit-id="{{id}}" data-timestamp="{{timestamp}}">

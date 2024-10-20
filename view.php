@@ -69,11 +69,11 @@ $event->trigger();
 $completion = new completion_info($course);
 $completion->set_module_viewed($cm);
 
-if ($skip) {
-    gh\BreaksHelper::process_skip($instanceid, $skip);
-}
-
 $calendar = gh\ViewHelper::get_flexi_calendar($moduleinstance);
+
+if ($skip) {
+    gh\BreaksHelper::process_skip($instanceid, $skip, $calendar);
+}
 
 $auto = new gh\AutoSimple($calendar, $moduleinstance->id, $USER->id);
 //$auto->execute();

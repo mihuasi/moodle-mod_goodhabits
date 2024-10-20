@@ -87,11 +87,17 @@ if ($timestamp) {
     $calendar_unit = $calendar->get_latest();
 }
 
-$display_unit_inline = $calendar_unit->display_unit_inline();
+$heading = $calendar_unit->display_unit_inline();
 //$interval = new DateInterval('P7D'); //For week TODO: change for others.
 //$date = $calendar_unit->add($interval)->format('Y-m-d');
+$date = null;
+if ($calendar->get_period_duration() == 7) {
+    // Only show "starting on" for weeks.
+    $date = $calendar_unit->format('l, jS F, Y');
+} else if ($calendar->get_period_duration() === 1) {
+    $heading = $calendar_unit->format('l, jS F, Y');
+}
 
-$date = $calendar_unit->format('Y-m-d');
 $timestamp = $calendar_unit->getTimestamp();
 
 $habits_objs = gh\habit\HabitItemsHelper::get_incomplete_for_user_date($instanceid, $USER->id, $calendar_unit);
@@ -115,7 +121,7 @@ gh\Helper::add_layout_url_param($view_url);
 
 $template_data = [
     'periodduration' => $calendar->get_period_duration(),
-    'heading' => $display_unit_inline,
+    'heading' => $heading,
     'date' => $date,
     'timestamp' => $timestamp,
     'habits' => $habits,

@@ -176,3 +176,6 @@ $string['completion_habits'] = 'Student must track at least the following number
 $string['completiondetail:min_habits'] = 'track at least {$a} habits';
 $string['completiondetail:min_entries'] = 'make at least {$a} entries';
 $string['completiondetail:min_cal_units'] = 'complete {$a->min} {$a->units}';
+$string['starting'] = 'starting';
+$string['simple_view_effort'] = 'Effort';
+$string['simple_view_outcome'] = 'Outcome';
