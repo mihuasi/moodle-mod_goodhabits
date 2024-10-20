@@ -179,3 +179,4 @@ $string['completiondetail:min_cal_units'] = 'complete {$a->min} {$a->units}';
 $string['starting'] = 'starting';
 $string['simple_view_effort'] = 'Effort';
 $string['simple_view_outcome'] = 'Outcome';
+$string['simple_view_back'] = 'Back';
