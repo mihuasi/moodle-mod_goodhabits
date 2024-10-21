@@ -479,6 +479,19 @@
     .path-mod-goodhabits .habits .habit .streak {
         width: 20px;
     }
+
+    .path-mod-goodhabits .simple-view .simple-main {
+        width: 500px;
+        margin-left: 60px;
+    }
+
+    .path-mod-goodhabits .simple-view .next-habit {
+        right: -50px;
+    }
+
+    .path-mod-goodhabits .simple-view .prev-habit {
+        left: -50px;
+    }
 }
 
 @media only screen and (max-width: 683px) {
@@ -530,7 +543,8 @@
         padding: 10px;
     }
 
-    .path-mod-goodhabits .goodhabits-container {
+    .path-mod-goodhabits .goodhabits-container,
+    .path-mod-goodhabits .simple-view {
         display: none;
     }
 }
@@ -654,6 +668,7 @@
     /*bottom: 20px; !* Distance from the bottom of the viewport *!*/
     margin-top: 60px;
     margin-left: 140px;
+    margin-bottom: 20px;
     align-self: center; /* Center button horizontally within its container */
     padding: 15px 30px; /* Size of the button */
     font-size: 1.2rem; /* Font size for better visibility */
@@ -737,6 +752,11 @@
 #page-mod-goodhabits-simple .activity-header,
 body.pagelayout-embedded .activity-header {
     display: none;
+}
+
+#page-mod-goodhabits-review.path-mod-goodhabits .habits .habit .time-line .checkmark,
+#page-mod-goodhabits-review.path-mod-goodhabits .calendar .time-unit {
+    cursor: default;
 }
 
 

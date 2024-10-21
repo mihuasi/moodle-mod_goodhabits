@@ -31,20 +31,23 @@ class select_user_review extends \moodleform {
         $courseid = (isset($this->_customdata['courseid'])) ? $this->_customdata['courseid'] : 0;
 
         $options = [
-            'ajax' => 'core_search/form-search-user-selector',
+            'ajax' => 'mod_goodhabits/form-user-selector',
+//            'ajax' => 'core_search/form-search-user-selector',
             'multiple' => false,
             'noselectionstring' => '',
+//            'course' => $courseid,
             'courseid' => $courseid,
+//            'withincourseid' => $courseid,
             'valuehtmlcallback' => function($value) {
                 global $DB, $OUTPUT;
-                $user = $DB->get_record('user', ['id' => (int)$value], '*', IGNORE_MISSING);
+                $user = $DB->get_record('user', ['id' => (int) $value], '*', IGNORE_MISSING);
                 if (!$user || !user_can_view_profile($user)) {
                     return false;
                 }
 
                 $details = user_get_user_details($user);
                 return $OUTPUT->render_from_template(
-                    'core_search/form-user-selector-suggestion', $details);
+                    'mod_goodhabits/form_user_selector_suggestion', $details);
             }
         ];
 
