@@ -761,6 +761,38 @@ body.pagelayout-embedded .activity-header {
 
 
 
+.path-mod-goodhabits .grid-box-wording {
+    border-collapse: collapse;
+    width: 400px; /* Define table width */
+    height: 400px; /* Define table height */
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 30px;
+    margin-top: 30px;
+}
+
+.path-mod-goodhabits .grid-box-wording td {
+    width: 100px;  /* Each cell width */
+    height: 100px; /* Each cell height */
+    text-align: center;
+    vertical-align: middle;
+    border: 1px solid black;
+    font-size: 18px;
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2; /* Light grey background */
+    cursor: pointer;
+}
+
+
+
+
+
+
+
+
+
+
+
 
 
 .path-mod-goodhabits .arrow-right .link-spanner {

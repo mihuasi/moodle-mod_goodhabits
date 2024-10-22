@@ -1,0 +1,90 @@
+<?php
+// This file is part of Moodle - http://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+
+/**
+ * @package   mod_goodhabits
+ * @copyright 2024 Joe Cape
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+
+namespace mod_goodhabits;
+
+class preferences extends \moodleform
+{
+
+    public function definition() {
+        $mform = $this->_form;
+        $instanceid = (isset($this->_customdata['instance'])) ? $this->_customdata['instance'] : 0;
+        $text = get_string('fromdate_text', 'mod_goodhabits');
+
+        $mform->addElement('header', 'gridboxheader', Helper::get_string('prefs_tracker_privacy_header'));
+
+        $mform->addElement('advcheckbox', 'allow_review_admin', Helper::get_string('allow_review_admin'));
+        $mform->addElement('advcheckbox', 'allow_review_public', Helper::get_string('allow_review_public'));
+
+        $mform->addHelpButton('allow_review_admin', 'allow_review_admin', 'mod_goodhabits');
+        $mform->addHelpButton('allow_review_public', 'allow_review_public', 'mod_goodhabits');
+        $mform->setType('instance', PARAM_INT);
+
+        $mform->freeze('allow_review_admin');
+
+
+        $mform->addElement('header', 'gridboxheader', Helper::get_string('prefs_grid_box_header'));
+
+        $cells_text = [
+            1 => Helper::get_string('overlay_1_1'),
+            2 => Helper::get_string('overlay_1_2'),
+            3 => Helper::get_string('overlay_1_3'),
+            4 => Helper::get_string('overlay_2_1'),
+            5 => Helper::get_string('overlay_2_2'),
+            6 => Helper::get_string('overlay_2_3'),
+            7 => Helper::get_string('overlay_3_1'),
+            8 => Helper::get_string('overlay_3_2'),
+            9 => Helper::get_string('overlay_3_3'),
+        ];
+
+//        foreach ($cells_text as $key => $value) {
+//            $cells_text[$key] = '<textarea rows="3" cols="15" name="cell_text_' . $value . '">' . $value . '</textarea>';
+//        }
+
+
+
+        $mform->addElement('html', '<table class="grid-box-wording">
+    <tr>
+        <td class="grid-box-wording-cell" data-cell="1_1">' . $cells_text[1] . '</td>
+        <td class="grid-box-wording-cell" data-cell="1_2">' . $cells_text[2] . '</td>
+        <td class="grid-box-wording-cell" data-cell="1_3">' . $cells_text[3] . '</td>
+    </tr>
+    <tr>
+        <td class="grid-box-wording-cell" data-cell="2_1">' . $cells_text[4] . '</td>
+        <td class="grid-box-wording-cell" data-cell="2_2">' . $cells_text[5] . '</td>
+        <td class="grid-box-wording-cell" data-cell="2_3">' . $cells_text[6] . '</td>
+    </tr>
+    <tr>
+        <td class="grid-box-wording-cell" data-cell="3_1">' . $cells_text[7] . '</td>
+        <td class="grid-box-wording-cell" data-cell="3_2">' . $cells_text[8] . '</td>
+        <td class="grid-box-wording-cell" data-cell="3_3">' . $cells_text[9] . '</td>
+    </tr>
+</table>');
+
+        $this->set_data(['allow_review_admin' => 1]);
+
+        $mform->addElement('hidden', 'instance', $instanceid);
+
+        $this->add_action_buttons();
+    }
+
+}

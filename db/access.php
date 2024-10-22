@@ -42,6 +42,16 @@ $capabilities = array(
         )
     ),
 
+    'mod/goodhabits:manage_personal_prefs' => array(
+        'riskbitmask' => RISK_PERSONAL,
+        'contextlevel' => CONTEXT_MODULE,
+        'captype' => 'write',
+        'archetypes' => array(
+            'student' => CAP_ALLOW,
+            'user' => CAP_ALLOW,
+        )
+    ),
+
     'mod/goodhabits:manage_entries' => array(
         'riskbitmask' => RISK_SPAM,
         'contextlevel' => CONTEXT_MODULE,
