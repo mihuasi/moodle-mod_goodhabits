@@ -205,7 +205,16 @@ class Helper {
     public static function lang_string_as_data($ids, $module = 'mod_goodhabits') {
         $data = '';
         foreach ($ids as $id) {
-            $data .= ' data-lang-' .$id . '="'. get_string($id, $module).'" ';
+            $data .= ' data-lang-' .$id . '="' . get_string($id, $module) . '" ';
+        }
+        return $data;
+    }
+
+    public static function strings_as_data($strings)
+    {
+        $data = '';
+        foreach ($strings as $id => $string) {
+            $data .= ' data-lang-' .$id . '="'. $string . '" ';
         }
         return $data;
     }

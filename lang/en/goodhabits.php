@@ -188,3 +188,4 @@ $string['allow_review_admin_help'] = 'Allows admin to review your tracker data. 
 $string['allow_review_others'] = 'Allow others who opt in to review your tracker data';
 $string['prefs_tracker_privacy_header'] = 'Tracker privacy';
 $string['prefs_grid_box_header'] = 'Grid box wording';
+$string['pref_updated'] = 'Preferences updated';

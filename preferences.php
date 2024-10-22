@@ -21,6 +21,7 @@
  */
 
 use mod_goodhabits as gh;
+use mod_goodhabits\PreferencesManager;
 
 require_once('../../config.php');
 require_once("{$CFG->libdir}/formslib.php");
@@ -60,10 +61,66 @@ $renderer = $PAGE->get_renderer('mod_goodhabits');
 
 $params = array('instance' => $instanceid);
 $mform = new gh\preferences(null, $params);
+$userid = $USER->id;
+
+$mgr = new PreferencesManager($instanceid, $USER->id);
 
 if ($data = $mform->get_data()) {
-    $sdata = $_POST;
-print_object($_POST);exit();
+    $mgr->process_form($data);
+
+    $msg_success = gh\Helper::get_string('pref_updated');
+    redirect($pageurl, $msg_success, null, \core\output\notification::NOTIFY_SUCCESS);
+    
+
+//    $sdata = $_POST;
+//
+//    $text_data = [];
+//
+//    foreach ($_POST as $key => $value) {
+//        $needle = 'wording_pref_';
+//        if (strpos($key, $needle) !== false) {
+//            $expl = explode($needle, $key);
+//            $cell = $expl[1];
+//
+//            $field = 'text_overlay_' . $cell;
+//            $text_data[$field] = $value;
+//        }
+//    }
+////    print_object($data);
+//
+//    if (1) {
+//        global $DB;
+//        $params = [
+//            'instanceid' => $instanceid,
+//            'userid' => $userid,
+//        ];
+//        $pref = $DB->get_record('mod_goodhabits_prefs', $params);
+//        if ($pref) {
+//            $pref->allow_review_admin = $data->allow_review_admin;
+//            $pref->allow_review_public = $data->allow_review_public;
+//
+//            foreach ($text_data as $key => $val) {
+//                $pref->$key = $val;
+//            }
+//            $pref->timemodified = time();
+//
+//            $DB->update_record('mod_goodhabits_prefs', $pref);
+//        } else {
+//            $pref = new stdClass();
+//            $pref->instanceid = $instanceid;
+//            $pref->userid = $userid;
+//
+//            $pref->allow_review_admin = $data->allow_review_admin;
+//            $pref->allow_review_public = $data->allow_review_public;
+//
+//            foreach ($text_data as $key => $val) {
+//                $pref->$key = $val;
+//            }
+//            $pref->created = time();
+//            $pref->timemodified = $pref->created;
+//            $DB->insert_record('mod_goodhabits_prefs', $pref);
+//        }
+//    }
 
 }
 

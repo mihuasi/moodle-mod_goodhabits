@@ -101,7 +101,7 @@ $habits = gh\habit\HabitItemsHelper::get_all_habits_for_user($instanceid, $USER-
 
 echo $OUTPUT->header();
 
-echo $renderer->print_hidden_data();
+echo $renderer->print_hidden_data($instanceid);
 
 echo $renderer->print_viewport_too_small_message();
 
@@ -121,6 +121,7 @@ $canmanagepersonal = has_capability('mod/goodhabits:manage_personal_habits', $PA
 $canmanageactivityhabits = has_capability('mod/goodhabits:manage_activity_habits', $PAGE->context);
 $canreview = has_capability('mod/goodhabits:review', $PAGE->context);
 $canmanagebreaks = has_capability('mod/goodhabits:manage_personal_breaks', $PAGE->context);
+$canmanageprefs = has_capability('mod/goodhabits:manage_personal_prefs', $PAGE->context);
 
 if ($canmanageactivityhabits) {
     $renderer->print_manage_activity_habits($instanceid);
@@ -141,6 +142,10 @@ if ($canmanagepersonal) {
 
 if ($canmanagebreaks) {
     $renderer->print_manage_personal_breaks($instanceid);
+}
+
+if ($canmanageprefs) {
+    $renderer->print_preferences($instanceid);
 }
 
 $renderer->print_mobile_view($instanceid);

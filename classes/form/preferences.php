@@ -26,8 +26,12 @@ class preferences extends \moodleform
 {
 
     public function definition() {
+        global $USER;
         $mform = $this->_form;
         $instanceid = (isset($this->_customdata['instance'])) ? $this->_customdata['instance'] : 0;
+        
+        $mgr = new PreferencesManager($instanceid, $USER->id);
+        
         $text = get_string('fromdate_text', 'mod_goodhabits');
 
         $mform->addElement('header', 'gridboxheader', Helper::get_string('prefs_tracker_privacy_header'));
@@ -45,15 +49,15 @@ class preferences extends \moodleform
         $mform->addElement('header', 'gridboxheader', Helper::get_string('prefs_grid_box_header'));
 
         $cells_text = [
-            1 => Helper::get_string('overlay_1_1'),
-            2 => Helper::get_string('overlay_1_2'),
-            3 => Helper::get_string('overlay_1_3'),
-            4 => Helper::get_string('overlay_2_1'),
-            5 => Helper::get_string('overlay_2_2'),
-            6 => Helper::get_string('overlay_2_3'),
-            7 => Helper::get_string('overlay_3_1'),
-            8 => Helper::get_string('overlay_3_2'),
-            9 => Helper::get_string('overlay_3_3'),
+            1 => $mgr->get_preferred_string('overlay_1_1'),
+            2 => $mgr->get_preferred_string('overlay_1_2'),
+            3 => $mgr->get_preferred_string('overlay_1_3'),
+            4 => $mgr->get_preferred_string('overlay_2_1'),
+            5 => $mgr->get_preferred_string('overlay_2_2'),
+            6 => $mgr->get_preferred_string('overlay_2_3'),
+            7 => $mgr->get_preferred_string('overlay_3_1'),
+            8 => $mgr->get_preferred_string('overlay_3_2'),
+            9 => $mgr->get_preferred_string('overlay_3_3'),
         ];
 
 //        foreach ($cells_text as $key => $value) {

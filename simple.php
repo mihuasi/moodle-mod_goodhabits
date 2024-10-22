@@ -113,7 +113,7 @@ foreach ($habits_objs as $habits_obj) {
 
 echo $OUTPUT->header();
 
-echo $renderer->print_hidden_data();
+echo $renderer->print_hidden_data($instanceid);
 
 $view_url = new moodle_url('/mod/goodhabits/view.php', array('id' => $cm->id));
 

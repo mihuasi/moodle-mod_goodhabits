@@ -226,8 +226,10 @@ class mod_goodhabits_renderer extends plugin_renderer_base {
      * @return string
      * @throws coding_exception
      */
-    public function print_hidden_data() {
-        global $CFG;
+    public function print_hidden_data($instanceid) {
+        global $CFG, $USER;
+
+        $pref_mgr = new gh\PreferencesManager($instanceid, $USER->id);
 
         $data = array(
             'wwwroot' => $CFG->wwwroot,
@@ -250,13 +252,21 @@ class mod_goodhabits_renderer extends plugin_renderer_base {
         $gridstringids = array(
             'imagetitle', 'xlabel', 'ylabel', 'x_small_label_left', 'x_small_label_center', 'x_small_label_right',
             'y_small_label_bottom', 'y_small_label_center', 'y_small_label_top', 'x_select_label', 'y_select_label',
-            'x_default', 'y_default', 'overlay_1_1', 'overlay_1_2', 'overlay_1_3', 'overlay_2_1', 'overlay_2_2',
-            'overlay_2_3', 'overlay_3_1', 'overlay_3_2', 'overlay_3_3'
+            'x_default', 'y_default'
         );
 
         $langstringids = array_merge($langstringids, $gridstringids);
 
         $datalang = gh\Helper::lang_string_as_data($langstringids);
+
+        $strings = [];
+        $overlay_strings = ['overlay_1_1', 'overlay_1_2', 'overlay_1_3', 'overlay_2_1', 'overlay_2_2',
+            'overlay_2_3', 'overlay_3_1', 'overlay_3_2', 'overlay_3_3'];
+        foreach ($overlay_strings as $overlay_string) {
+            $strings[$overlay_string] = $pref_mgr->get_preferred_string($overlay_string);
+        }
+
+        $datalang .= gh\Helper::strings_as_data($strings);
 
         $hiddenlangstrings = '<div class="goodhabits-hidden-lang" '.$datalang.'></div> ';
 
@@ -304,6 +314,13 @@ class mod_goodhabits_renderer extends plugin_renderer_base {
         $url = new moodle_url('/mod/goodhabits/view.php', $params);
         $text = get_string('mobile_view', 'mod_goodhabits');
         echo $this->print_link_as_form($url, $text, 'mobile-view');
+    }
+
+    public function print_preferences($instanceid) {
+        $params = array('instance' => $instanceid);
+        $url = new moodle_url('/mod/goodhabits/preferences.php', $params);
+        $text = gh\Helper::get_string('manage_prefs_title');
+        echo $this->print_link_as_form($url, $text);
     }
 
     /**
