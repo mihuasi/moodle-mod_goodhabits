@@ -374,7 +374,7 @@ LEFT JOIN {mod_goodhabits_entry} e ON e.habit_id = i.id
     AND e.userid = :userid 
     AND e.endofperiod_timestamp = :timestamp
 WHERE e.id IS NULL 
-    AND i.instanceid = :instanceid ";
+    AND i.instanceid = :instanceid AND i.published = 1";
 
         $params = [
             'instanceid' => $instanceid,
@@ -402,24 +402,26 @@ WHERE e.id IS NULL
 FROM {mod_goodhabits_entry} e
 JOIN {mod_goodhabits_item} i ON e.habit_id = i.id
 WHERE e.userid = :userid
-  AND i.instanceid = :instanceid
+  AND i.instanceid = :instanceid AND i.published = 1
   AND NOT EXISTS (
       SELECT 1
       FROM {mod_goodhabits_break} b
       WHERE b.timestart <= e.endofperiod_timestamp 
         AND b.timeend >= e.endofperiod_timestamp
+        AND b.userid = :break_userid
   )
 GROUP BY e.endofperiod_timestamp
 HAVING COUNT(DISTINCT e.habit_id) >= (
     SELECT COUNT(i2.id) 
     FROM {mod_goodhabits_item} i2
-    WHERE i2.instanceid = :instanceid2 
+    WHERE i2.instanceid = :instanceid2 AND i2.published = 1
       AND (i2.level = 'activity' OR i2.userid = :userid2)
 )";
         $params = [
             'instanceid' => $instanceid,
             'instanceid2' => $instanceid,
             'userid' => $userid,
+            'break_userid' => $userid,
             'userid2' => $userid,
         ];
 

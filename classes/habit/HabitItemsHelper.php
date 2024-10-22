@@ -82,7 +82,8 @@ class HabitItemsHelper {
         $sql = 'SELECT h.* FROM {mod_goodhabits_item} h
 	LEFT JOIN {mod_goodhabits_entry} e ON 
 	    (e.`habit_id` = h.id AND e.`userid` = :userid AND e.`endofperiod_timestamp` = :timestamp)
-	WHERE e.id IS NULL AND h.instanceid = :instanceid AND (h.userid = :userid2 OR h.level = :activity_level) ';
+	WHERE e.id IS NULL AND h.published = 1 AND h.instanceid = :instanceid AND (h.userid = :userid2 OR h.level = :activity_level) 
+	ORDER BY h.level, h.id';
 
         $recs = $DB->get_records_sql($sql, [
             'instanceid' => $instanceid,

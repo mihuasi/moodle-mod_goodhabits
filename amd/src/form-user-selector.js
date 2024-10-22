@@ -16,9 +16,11 @@
 /**
  * Enrolled user selector module.
  *
- * @module     mod_goodhabits/form-user-selector
- * @copyright  2019 Shamim Rezaie
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @package   mod_goodhabits
+ * @module    mod_goodhabits/form-user-selector
+ * @basedon   mod_forum/form-user-selector
+ * @copyright 2024 Joe Cape
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 define(['jquery', 'core/ajax', 'core/templates'], function($, Ajax, Templates) {
