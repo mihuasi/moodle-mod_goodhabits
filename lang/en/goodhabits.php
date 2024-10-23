@@ -196,3 +196,4 @@ $string['opt_def_disallow'] = 'Optional [default: Don\'t allow]';
 $string['opt_def_allow'] = 'Optional [default: Allow]';
 $string['cm_reviews_admin'] = 'Admin reviews';
 $string['cm_reviews_peers'] = 'Peer reviews';
+$string['feature_disabled'] = 'This feature has been disabled';

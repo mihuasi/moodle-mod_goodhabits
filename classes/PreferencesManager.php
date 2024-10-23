@@ -44,9 +44,64 @@ class PreferencesManager
         $this->pref_rec = static::get_pref_rec($instanceid, $userid);
     }
 
-    public function get_review_preference()
+    /**
+     * Looks successively at global setting, activity level and preference to determine whether
+     *      the review setting is enabled.
+     *
+     * @param $setting
+     * @return bool
+     */
+    public function get_review_status($setting)
     {
+        if ($this->site_config->review == 'disable') {
+            return false;
+        }
+        $cm_setting = $this->instance_rec->{'cm_' . $setting};
+        switch ($cm_setting) {
+            case static::CM_OPTION_DISABLE:
+                return false;
+            case static::CM_OPTION_REQUIRED:
+                return true;
+            case static::CM_OPTION_OPTIONAL_DEFAULT_DISALLOW:
+                if (empty($this->pref_rec)) {
+                    return false;
+                } else {
+                    return $this->pref_rec->{'allow_' . $setting};
+                }
+            case static::CM_OPTION_OPTIONAL_DEFAULT_ALLOW:
+                if (empty($this->pref_rec)) {
+                    return true;
+                } else {
+                    return $this->pref_rec->{'allow_' . $setting};
+                }
+            default:
+                break;
+        }
+        return false;
+    }
 
+    public function is_review_option_enabled($setting)
+    {
+        if ($this->site_config->review == 'disable') {
+            return false;
+        }
+        $cm_setting = $this->instance_rec->{'cm_' . $setting};
+        if ($cm_setting == static::CM_OPTION_REQUIRED OR $cm_setting == static::CM_OPTION_DISABLE) {
+            return false;
+        }
+        return true;
+    }
+
+    public function is_review_option_required($setting)
+    {
+        if (!$this->site_config->review) {
+            return false;
+        }
+        $cm_setting = $this->instance_rec->{'cm_' . $setting};
+        if ($cm_setting == static::CM_OPTION_REQUIRED) {
+            return true;
+        }
+        return false;
     }
 
     public function get_preferred_string($string)

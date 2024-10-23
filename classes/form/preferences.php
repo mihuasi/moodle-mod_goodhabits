@@ -31,8 +31,6 @@ class preferences extends \moodleform
         $instanceid = (isset($this->_customdata['instance'])) ? $this->_customdata['instance'] : 0;
         
         $mgr = new PreferencesManager($instanceid, $USER->id);
-        
-        $text = get_string('fromdate_text', 'mod_goodhabits');
 
         $mform->addElement('header', 'gridboxheader', Helper::get_string('prefs_tracker_privacy_header'));
 
@@ -43,7 +41,21 @@ class preferences extends \moodleform
         $mform->addHelpButton('allow_reviews_peers', 'allow_reviews_peers', 'mod_goodhabits');
         $mform->setType('instance', PARAM_INT);
 
-        $mform->freeze('allow_reviews_admin');
+        $this->set_data(
+            [
+                'allow_reviews_admin' => $mgr->get_review_status('reviews_admin'),
+                'allow_reviews_peers' => $mgr->get_review_status('reviews_peers'),
+            ]
+        );
+
+        if (!$mgr->is_review_option_enabled('reviews_admin')) {
+            $mform->freeze('allow_reviews_admin');
+        }
+
+        if (!$mgr->is_review_option_enabled('reviews_peers')) {
+            $mform->freeze('allow_reviews_peers');
+        }
+
 
 
         $mform->addElement('header', 'gridboxheader', Helper::get_string('prefs_grid_box_header'));
@@ -83,8 +95,6 @@ class preferences extends \moodleform
         <td class="grid-box-wording-cell" data-cell="3_3">' . $cells_text[9] . '</td>
     </tr>
 </table>');
-
-        $this->set_data(['allow_reviews_admin' => 1]);
 
         $mform->addElement('hidden', 'instance', $instanceid);
 

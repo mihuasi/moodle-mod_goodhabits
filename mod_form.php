@@ -81,19 +81,25 @@ class mod_goodhabits_mod_form extends moodleform_mod {
 
         $mform->addElement('header', 'header_reviews', Helper::get_string('review'));
 
-        $options = \mod_goodhabits\PreferencesManager::get_cm_options();
-        $text = Helper::get_string('cm_reviews_admin');
-        $mform->addElement('select', 'cm_reviews_admin', $text, $options);
+        $site_config = get_config('goodhabits');
+        if ($site_config->review == 'disable') {
+            $mform->addElement('static', 'reviews_disabled', '', Helper::get_string('feature_disabled'));
+        } else {
+            $options = \mod_goodhabits\PreferencesManager::get_cm_options();
+            $text = Helper::get_string('cm_reviews_admin');
+            $mform->addElement('select', 'cm_reviews_admin', $text, $options);
 
-        $default = \mod_goodhabits\PreferencesManager::get_reviews_admin_default();
-        $mform->setDefault('cm_reviews_admin', $default);
+            $default = \mod_goodhabits\PreferencesManager::get_reviews_admin_default();
+            $mform->setDefault('cm_reviews_admin', $default);
 
-        $options = \mod_goodhabits\PreferencesManager::get_cm_options();
-        $text = Helper::get_string('cm_reviews_peers');
-        $mform->addElement('select', 'cm_reviews_peers', $text, $options);
+            $options = \mod_goodhabits\PreferencesManager::get_cm_options();
+            $text = Helper::get_string('cm_reviews_peers');
+            $mform->addElement('select', 'cm_reviews_peers', $text, $options);
 
-        $default = \mod_goodhabits\PreferencesManager::get_reviews_peers_default();
-        $mform->setDefault('cm_reviews_peers', $default);
+            $default = \mod_goodhabits\PreferencesManager::get_reviews_peers_default();
+            $mform->setDefault('cm_reviews_peers', $default);
+        }
+
 
         // Add standard elements.
         $this->standard_coursemodule_elements();
