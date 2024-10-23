@@ -117,5 +117,21 @@ function xmldb_goodhabits_upgrade($oldversion) {
         upgrade_mod_savepoint(true, 2024102301, 'goodhabits');
     }
 
+    if ($oldversion < 2024102302) {
+        $table = new xmldb_table('goodhabits');
+
+        $field = new xmldb_field('cm_reviews_admin', XMLDB_TYPE_CHAR, '20', null, null,
+            null, '', 'freq');
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+
+        $field = new xmldb_field('cm_reviews_peers', XMLDB_TYPE_CHAR, '20', null, null,
+            null, '', 'cm_reviews_admin');
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+    }
+
     return true;
 }

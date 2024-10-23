@@ -79,6 +79,22 @@ class mod_goodhabits_mod_form extends moodleform_mod {
         $mform->setDefault('freq', $defaultvalue);
         $mform->addHelpButton('freq', 'freq', 'mod_goodhabits');
 
+        $mform->addElement('header', 'header_reviews', Helper::get_string('review'));
+
+        $options = \mod_goodhabits\PreferencesManager::get_cm_options();
+        $text = Helper::get_string('cm_reviews_admin');
+        $mform->addElement('select', 'cm_reviews_admin', $text, $options);
+
+        $default = \mod_goodhabits\PreferencesManager::get_reviews_admin_default();
+        $mform->setDefault('cm_reviews_admin', $default);
+
+        $options = \mod_goodhabits\PreferencesManager::get_cm_options();
+        $text = Helper::get_string('cm_reviews_peers');
+        $mform->addElement('select', 'cm_reviews_peers', $text, $options);
+
+        $default = \mod_goodhabits\PreferencesManager::get_reviews_peers_default();
+        $mform->setDefault('cm_reviews_peers', $default);
+
         // Add standard elements.
         $this->standard_coursemodule_elements();
 

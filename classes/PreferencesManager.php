@@ -31,6 +31,11 @@ class PreferencesManager
     protected $instance_rec;
     protected $pref_rec;
 
+    const CM_OPTION_REQUIRED = 'required';
+    const CM_OPTION_OPTIONAL_DEFAULT_ALLOW = 'opt_default_allow';
+    const CM_OPTION_OPTIONAL_DEFAULT_DISALLOW = 'opt_default_disallow';
+    const CM_OPTION_DISABLE = 'disabled';
+
     public function __construct($instanceid, $userid) {
         $this->instanceid = $instanceid;
         $this->userid = $userid;
@@ -119,6 +124,26 @@ class PreferencesManager
         $pref = $DB->get_record('mod_goodhabits_prefs', $params);
 
         return $pref;
+    }
+
+    public static function get_cm_options()
+    {
+        return [
+            static::CM_OPTION_DISABLE => Helper::get_string('disabled'),
+            static::CM_OPTION_OPTIONAL_DEFAULT_DISALLOW => Helper::get_string('opt_def_disallow'),
+            static::CM_OPTION_OPTIONAL_DEFAULT_ALLOW => Helper::get_string('opt_def_allow'),
+            static::CM_OPTION_REQUIRED => Helper::get_string('required'),
+        ];
+    }
+
+    public static function get_reviews_admin_default()
+    {
+        return static::CM_OPTION_OPTIONAL_DEFAULT_ALLOW;
+    }
+
+    public static function get_reviews_peers_default()
+    {
+        return static::CM_OPTION_OPTIONAL_DEFAULT_DISALLOW;
     }
 
 }

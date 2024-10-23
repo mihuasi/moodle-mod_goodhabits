@@ -9,6 +9,8 @@
         <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
         <FIELD NAME="course" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" COMMENT="ID of the course this activity is part of."/>
         <FIELD NAME="name" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" COMMENT="The name of the activity module instance"/>
+        <FIELD NAME="cm_reviews_admin" TYPE="char" LENGTH="20" NOTNULL="false" SEQUENCE="false" COMMENT="Activity config of admin review"/>
+        <FIELD NAME="cm_reviews_peers" TYPE="char" LENGTH="20" NOTNULL="false" SEQUENCE="false" COMMENT="Activity config of peer review"/>
         <FIELD NAME="freq" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="Frequency with which habits will be tracked."/>
         <FIELD NAME="completionhabitsenabled" TYPE="int" LENGTH="1" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="Enable - completionhabits"/>
         <FIELD NAME="completionhabits" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="Number of habits user must track to complete activity."/>
