@@ -90,8 +90,8 @@ function xmldb_goodhabits_upgrade($oldversion) {
         $table->add_field('id', XMLDB_TYPE_INTEGER, '18', null, XMLDB_NOTNULL, XMLDB_SEQUENCE, null);
         $table->add_field('instanceid', XMLDB_TYPE_INTEGER, '18', null, XMLDB_NOTNULL, null, '0');
         $table->add_field('userid', XMLDB_TYPE_INTEGER, '9', null, XMLDB_NOTNULL, null, null);
-        $table->add_field('allow_review_admin', XMLDB_TYPE_INTEGER, '9', null, XMLDB_NOTNULL, null, '0');
-        $table->add_field('allow_review_peers', XMLDB_TYPE_INTEGER, '9', null, XMLDB_NOTNULL, null, '0');
+        $table->add_field('allow_reviews_admin', XMLDB_TYPE_INTEGER, '9', null, XMLDB_NOTNULL, null, '0');
+        $table->add_field('allow_reviews_peers', XMLDB_TYPE_INTEGER, '9', null, XMLDB_NOTNULL, null, '0');
         $table->add_field('text_overlay_1_1', XMLDB_TYPE_CHAR, '255', null, null, null, null);
         $table->add_field('text_overlay_1_2', XMLDB_TYPE_CHAR, '255', null, null, null, null);
         $table->add_field('text_overlay_1_3', XMLDB_TYPE_CHAR, '255', null, null, null, null);

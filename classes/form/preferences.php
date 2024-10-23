@@ -36,14 +36,14 @@ class preferences extends \moodleform
 
         $mform->addElement('header', 'gridboxheader', Helper::get_string('prefs_tracker_privacy_header'));
 
-        $mform->addElement('advcheckbox', 'allow_review_admin', Helper::get_string('allow_review_admin'));
-        $mform->addElement('advcheckbox', 'allow_review_peers', Helper::get_string('allow_review_peers'));
+        $mform->addElement('advcheckbox', 'allow_reviews_admin', Helper::get_string('allow_reviews_admin'));
+        $mform->addElement('advcheckbox', 'allow_reviews_peers', Helper::get_string('allow_reviews_peers'));
 
-        $mform->addHelpButton('allow_review_admin', 'allow_review_admin', 'mod_goodhabits');
-        $mform->addHelpButton('allow_review_peers', 'allow_review_peers', 'mod_goodhabits');
+        $mform->addHelpButton('allow_reviews_admin', 'allow_reviews_admin', 'mod_goodhabits');
+        $mform->addHelpButton('allow_reviews_peers', 'allow_reviews_peers', 'mod_goodhabits');
         $mform->setType('instance', PARAM_INT);
 
-        $mform->freeze('allow_review_admin');
+        $mform->freeze('allow_reviews_admin');
 
 
         $mform->addElement('header', 'gridboxheader', Helper::get_string('prefs_grid_box_header'));
@@ -84,7 +84,7 @@ class preferences extends \moodleform
     </tr>
 </table>');
 
-        $this->set_data(['allow_review_admin' => 1]);
+        $this->set_data(['allow_reviews_admin' => 1]);
 
         $mform->addElement('hidden', 'instance', $instanceid);
 
