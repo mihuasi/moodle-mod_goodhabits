@@ -119,7 +119,7 @@ if ($is_basic_mobile) {
 
 $canmanagepersonal = has_capability('mod/goodhabits:manage_personal_habits', $PAGE->context);
 $canmanageactivityhabits = has_capability('mod/goodhabits:manage_activity_habits', $PAGE->context);
-$canreview = has_capability('mod/goodhabits:review', $PAGE->context);
+$canreview = has_capability('mod/goodhabits:review_as_admin', $PAGE->context);
 $canmanagebreaks = has_capability('mod/goodhabits:manage_personal_breaks', $PAGE->context);
 $canmanageprefs = has_capability('mod/goodhabits:manage_personal_prefs', $PAGE->context);
 

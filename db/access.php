@@ -71,7 +71,7 @@ $capabilities = array(
         )
     ),
 
-    'mod/goodhabits:review' => array(
+    'mod/goodhabits:review_as_admin' => array(
         'riskbitmask' => RISK_PERSONAL,
         'contextlevel' => CONTEXT_MODULE,
         'captype' => 'read',

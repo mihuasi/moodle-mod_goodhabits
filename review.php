@@ -37,7 +37,7 @@ $name = $moduleinstance->name;
 $userid = optional_param('userid', 0, PARAM_INT);
 
 $context = context_module::instance($cm->id);
-require_capability('mod/goodhabits:review', $context);
+require_capability('mod/goodhabits:review_as_admin', $context);
 $reviewconf = get_config('goodhabits', 'review');
 if ($reviewconf == gh\ViewHelper::REVIEW_OPTION_DISABLE) {
     throw new moodle_exception(get_string('accessing_review_when_disabled', 'mod_goodhabits'));
