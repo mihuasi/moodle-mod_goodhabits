@@ -107,7 +107,7 @@ class PreferencesManager
     public function pop_pref_from_data($pref, $data, $text_data)
     {
         $pref->allow_review_admin = $data->allow_review_admin;
-        $pref->allow_review_public = $data->allow_review_public;
+        $pref->allow_review_peers = $data->allow_review_peers;
 
         foreach ($text_data as $key => $val) {
             $pref->$key = $val;

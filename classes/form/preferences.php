@@ -37,10 +37,10 @@ class preferences extends \moodleform
         $mform->addElement('header', 'gridboxheader', Helper::get_string('prefs_tracker_privacy_header'));
 
         $mform->addElement('advcheckbox', 'allow_review_admin', Helper::get_string('allow_review_admin'));
-        $mform->addElement('advcheckbox', 'allow_review_public', Helper::get_string('allow_review_public'));
+        $mform->addElement('advcheckbox', 'allow_review_peers', Helper::get_string('allow_review_peers'));
 
         $mform->addHelpButton('allow_review_admin', 'allow_review_admin', 'mod_goodhabits');
-        $mform->addHelpButton('allow_review_public', 'allow_review_public', 'mod_goodhabits');
+        $mform->addHelpButton('allow_review_peers', 'allow_review_peers', 'mod_goodhabits');
         $mform->setType('instance', PARAM_INT);
 
         $mform->freeze('allow_review_admin');
