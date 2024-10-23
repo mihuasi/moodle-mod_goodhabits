@@ -81,5 +81,41 @@ function xmldb_goodhabits_upgrade($oldversion) {
         }
     }
 
+    if ($oldversion < 2024102301) {
+
+        // Define table mod_goodhabits_prefs to be created.
+        $table = new xmldb_table('mod_goodhabits_prefs');
+
+        // Adding fields to table mod_goodhabits_prefs.
+        $table->add_field('id', XMLDB_TYPE_INTEGER, '18', null, XMLDB_NOTNULL, XMLDB_SEQUENCE, null);
+        $table->add_field('instanceid', XMLDB_TYPE_INTEGER, '18', null, XMLDB_NOTNULL, null, '0');
+        $table->add_field('userid', XMLDB_TYPE_INTEGER, '9', null, XMLDB_NOTNULL, null, null);
+        $table->add_field('allow_review_admin', XMLDB_TYPE_INTEGER, '9', null, XMLDB_NOTNULL, null, '0');
+        $table->add_field('allow_review_public', XMLDB_TYPE_INTEGER, '9', null, XMLDB_NOTNULL, null, '0');
+        $table->add_field('text_overlay_1_1', XMLDB_TYPE_CHAR, '255', null, null, null, null);
+        $table->add_field('text_overlay_1_2', XMLDB_TYPE_CHAR, '255', null, null, null, null);
+        $table->add_field('text_overlay_1_3', XMLDB_TYPE_CHAR, '255', null, null, null, null);
+        $table->add_field('text_overlay_2_1', XMLDB_TYPE_CHAR, '255', null, null, null, null);
+        $table->add_field('text_overlay_2_2', XMLDB_TYPE_CHAR, '255', null, null, null, null);
+        $table->add_field('text_overlay_2_3', XMLDB_TYPE_CHAR, '255', null, null, null, null);
+        $table->add_field('text_overlay_3_1', XMLDB_TYPE_CHAR, '255', null, null, null, null);
+        $table->add_field('text_overlay_3_2', XMLDB_TYPE_CHAR, '255', null, null, null, null);
+        $table->add_field('text_overlay_3_3', XMLDB_TYPE_CHAR, '255', null, null, null, null);
+        $table->add_field('question_version', XMLDB_TYPE_INTEGER, '9', null, null, null, null);
+        $table->add_field('timecreated', XMLDB_TYPE_INTEGER, '18', null, XMLDB_NOTNULL, null, '0');
+        $table->add_field('timemodified', XMLDB_TYPE_INTEGER, '18', null, XMLDB_NOTNULL, null, '0');
+
+        // Adding keys to table mod_goodhabits_prefs.
+        $table->add_key('id', XMLDB_KEY_PRIMARY, ['id']);
+
+        // Conditionally launch create table for mod_goodhabits_prefs.
+        if (!$dbman->table_exists($table)) {
+            $dbman->create_table($table);
+        }
+
+        // Goodhabits savepoint reached.
+        upgrade_mod_savepoint(true, 2024102301, 'goodhabits');
+    }
+
     return true;
 }

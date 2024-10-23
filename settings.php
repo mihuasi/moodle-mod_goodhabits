@@ -26,7 +26,11 @@ defined('MOODLE_INTERNAL') || die;
 
 if ($ADMIN->fulltree) {
 
-    $settings->add(new admin_setting_heading('goodhabits/general', '', get_string('general_settings', 'mod_goodhabits')));
+    $settings->add(new admin_setting_heading(
+        'goodhabits/general',
+        Helper::get_string('general_settings'),
+        '',
+    ));
 
     $options = \mod_goodhabits\ViewHelper::get_review_options();
     $settings->add(
@@ -39,7 +43,11 @@ if ($ADMIN->fulltree) {
         )
     );
 
-    $settings->add(new admin_setting_heading('goodhabits/defaults', '', get_string('default_settings', 'mod_goodhabits')));
+    $settings->add(new admin_setting_heading(
+        'goodhabits/defaults',
+        Helper::get_string('default_settings'),
+        Helper::get_string('default_settings_desc')
+    ));
 
     $options = Helper::possible_period_durations();
     $settings->add(
