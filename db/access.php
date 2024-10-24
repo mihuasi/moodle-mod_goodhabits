@@ -81,6 +81,16 @@ $capabilities = array(
         )
     ),
 
+    'mod/goodhabits:review_as_peer' => array(
+        'riskbitmask' => RISK_PERSONAL,
+        'contextlevel' => CONTEXT_MODULE,
+        'captype' => 'read',
+        'archetypes' => array(
+            'student' => CAP_ALLOW,
+            'user' => CAP_ALLOW
+        )
+    ),
+
     'mod/goodhabits:manage_personal_habits' => array(
         'riskbitmask' => RISK_SPAM,
         'contextlevel' => CONTEXT_MODULE,

@@ -22,21 +22,21 @@
 
 namespace mod_goodhabits\review;
 
-class ReviewManager
+use mod_goodhabits\PreferencesManager;
+
+class ReviewSubject2
 {
     /**
-     * @var int Current user ID.
+     * @var int Review subject user ID.
      */
     protected int $userid;
 
     protected int $instanceid;
 
-    protected bool $is_admin;
-
     /**
-     * @var bool Whether current user allows peer reviews.
+     * @var PreferencesManager for the subject user, to determine whether they should be included in reviews.
      */
-    protected bool $allow_reviews_peers;
+    protected PreferencesManager $pref_manager;
 
     public function __construct($instanceid, $userid) {
 

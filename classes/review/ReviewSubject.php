@@ -24,19 +24,37 @@ namespace mod_goodhabits\review;
 
 use mod_goodhabits\PreferencesManager;
 
-class ReviewSubject
+class ReviewSubject extends ReviewUser
 {
-    /**
-     * @var int Review subject user ID.
-     */
-    protected int $userid;
-
-    protected int $instanceid;
 
     /**
      * @var PreferencesManager for the subject user, to determine whether they should be included in reviews.
      */
     protected PreferencesManager $pref_manager;
+    protected $user;
+
+    protected bool $allow_reviews_admin;
+    protected bool $allow_reviews_peers;
+
+    public function __construct($instance, $user) {
+        $this->instanceid = $instance->id;
+        $this->user = $user;
+        $this->userid = $user->id;
+        $this->pref_manager = new PreferencesManager($instance->id, $user->id);
+        $this->allow_reviews_admin = $this->pref_manager->get_review_status('reviews_admin');
+        $this->allow_reviews_peers = $this->pref_manager->get_review_status('reviews_peers');
+    }
+
+    public function allow_review($is_admin, $is_reviewer_peer)
+    {
+        if ($is_admin AND $this->allow_reviews_admin) {
+            return true;
+        }
+        if ($is_reviewer_peer AND $this->allow_reviews_peers) {
+            return true;
+        }
+        return false;
+    }
 
 
 }

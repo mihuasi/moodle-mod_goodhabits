@@ -68,6 +68,11 @@ echo $OUTPUT->header();
 
 $params['courseid'] = $course->id;
 
+$reviewer = new gh\review\Reviewer($instanceid, $userid, $context);
+$reviewer->init();
+$subjects = $reviewer->get_subjects();
+//print_object($subjects);
+
 $selectform = new gh\select_user_review(null, $params);
 
 $selectform->display();
