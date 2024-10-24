@@ -33,6 +33,8 @@ class Reviewer extends ReviewUser
 
     protected array $missing_caps;
 
+    protected string $query;
+
     protected function get_candidates()
     {
         global $DB;
@@ -40,8 +42,15 @@ class Reviewer extends ReviewUser
         $sql = "SELECT u.* FROM {user} u 
 JOIN {user_enrolments} ue ON (u.id = ue.userid)
 JOIN {enrol} e ON (e.id = ue.enrolid) 
-                    WHERE e.courseid = :courseid";
-        $params = ['courseid' => $this->courseid];
+                    WHERE e.courseid = :courseid AND u.id != :reviewer_user_id ";
+        $params = ['courseid' => $this->courseid, 'reviewer_user_id' => $this->userid];
+
+        if (isset($this->query)) {
+            $sql .= " AND (" . $DB->sql_like('u.firstname', ':firstname', false);
+            $sql .= " OR " . $DB->sql_like('u.lastname', ':lastname', false) . ")";
+            $params['firstname'] = '%' . $this->query . '%';
+            $params['lastname'] = '%' . $this->query . '%';
+        }
 
         $users = $DB->get_records_sql($sql, $params);
 
@@ -106,6 +115,11 @@ JOIN {enrol} e ON (e.id = ue.enrolid)
         $is_peer = $pref_manager->get_review_status('reviews_peers');
         $has_peer_cap = has_capability('mod/goodhabits:review_as_peer', $this->context);
         $this->allow_reviews_peers = ($is_peer AND $has_peer_cap);
+    }
+
+    public function set_query($query)
+    {
+        $this->query = $query;
     }
 
     public function get_subjects()

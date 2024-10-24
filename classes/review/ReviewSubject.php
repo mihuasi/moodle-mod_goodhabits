@@ -56,5 +56,10 @@ class ReviewSubject extends ReviewUser
         return false;
     }
 
+    public function get_user()
+    {
+        return $this->user;
+    }
+
 
 }

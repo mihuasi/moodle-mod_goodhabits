@@ -40,16 +40,18 @@ define(['jquery', 'core/ajax', 'core/templates'], function($, Ajax, Templates) {
             var promise;
             var courseid = $(selector).attr('courseid');
             var contextid = $(selector).attr('data-contextid');
+            var instanceid = $(selector).attr('instanceid');
+            var reviewer_user_id = $(selector).attr('reviewer_user_id');
+            console.log(query);
+            console.log(instanceid);
+            console.log(reviewer_user_id);
 
             promise = Ajax.call([{
-                methodname: 'core_enrol_search_users',
+                methodname: 'mod_goodhabits_get_review_subjects',
                 args: {
-                    courseid: courseid,
-                    search: query,
-                    searchanywhere: true,
-                    page: 0,
-                    perpage: 30,
-                    contextid: contextid,
+                    query: query,
+                    instanceid: instanceid,
+                    userid: reviewer_user_id,
                 }
             }]);
 

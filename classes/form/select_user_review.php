@@ -25,6 +25,7 @@ namespace mod_goodhabits;
 class select_user_review extends \moodleform {
 
     public function definition() {
+        global $USER;
         $mform = $this->_form;
 
         $instanceid = (isset($this->_customdata['instance'])) ? $this->_customdata['instance'] : 0;
@@ -37,6 +38,8 @@ class select_user_review extends \moodleform {
             'noselectionstring' => '',
 //            'course' => $courseid,
             'courseid' => $courseid,
+            'instanceid' => $instanceid,
+            'reviewer_user_id' => $USER->id,
 //            'withincourseid' => $courseid,
             'valuehtmlcallback' => function($value) {
                 global $DB, $OUTPUT;
