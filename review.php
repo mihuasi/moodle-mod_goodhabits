@@ -37,7 +37,11 @@ $name = $moduleinstance->name;
 $userid = optional_param('userid', 0, PARAM_INT);
 
 $context = context_module::instance($cm->id);
-require_capability('mod/goodhabits:review_as_admin', $context);
+//TODO: Check settings.
+$canreview = (has_capability('mod/goodhabits:review_as_admin', $context) OR has_capability('mod/goodhabits:review_as_peer', $context));
+if (!$canreview) {
+    throw new moodle_exception(get_string('no_access', 'mod_goodhabits'));
+}
 $reviewconf = get_config('goodhabits', 'review');
 if ($reviewconf == gh\ViewHelper::REVIEW_OPTION_DISABLE) {
     throw new moodle_exception(get_string('accessing_review_when_disabled', 'mod_goodhabits'));
@@ -68,10 +72,10 @@ echo $OUTPUT->header();
 
 $params['courseid'] = $course->id;
 
-$reviewer = new gh\review\Reviewer($instanceid, $userid, $context);
-$reviewer->init();
-$reviewer->set_query('St');
-$subjects = $reviewer->get_subjects();
+//$reviewer = new gh\review\Reviewer($instanceid, $userid, $context);
+//$reviewer->init();
+//$reviewer->set_query('St');
+//$subjects = $reviewer->get_subjects();
 //print_object($subjects);
 //exit;
 $selectform = new gh\select_user_review(null, $params);
