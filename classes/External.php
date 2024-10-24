@@ -14,11 +14,10 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 /**
- * Class containing the external API functions functions for the Data Privacy tool.
- *
- * @package    tool_dataprivacy
- * @copyright  2018 Jun Pataleta
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @package   mod_goodhabits
+ * @copyright 2024 Joe Cape
+ * @basedon   tool_dataprivacy\external
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 namespace mod_goodhabits;
 
@@ -88,17 +87,10 @@ class External extends external_api {
                 'fullname' => fullname($user)
             ];
             $useroption->extrafields = [];
-//            foreach ($extrafields as $extrafield) {
-//                // Sanitize the extra fields to prevent potential XSS exploit.
-//                $useroption->extrafields[] = (object)[
-//                    'name' => $extrafield,
-//                    'value' => s($user->$extrafield)
-//                ];
-//            }
+
             $useroptions[] = $useroption;
         }
 
-//print_object($useroptions);
         return $useroptions;
     }
 
@@ -114,13 +106,6 @@ class External extends external_api {
             [
                 'id' => new external_value(\core_user::get_property_type('id'), 'ID of the user'),
                 'fullname' => new external_value(\core_user::get_property_type('firstname'), 'The fullname of the user'),
-//                'extrafields' => new external_multiple_structure(
-//                    new external_single_structure([
-//                            'name' => new external_value(PARAM_TEXT, 'Name of the extrafield.'),
-//                            'value' => new external_value(PARAM_TEXT, 'Value of the extrafield.')
-//                        ]
-//                    ), 'List of extra fields', VALUE_OPTIONAL
-//                )
             ]
         ));
     }

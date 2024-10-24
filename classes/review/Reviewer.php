@@ -52,6 +52,8 @@ JOIN {enrol} e ON (e.id = ue.enrolid)
             $params['lastname'] = '%' . $this->query . '%';
         }
 
+        $sql .= " ORDER BY u.firstname, u.lastname ";
+
         $users = $DB->get_records_sql($sql, $params);
 
         $candidates = [];
