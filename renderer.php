@@ -294,10 +294,10 @@ class mod_goodhabits_renderer extends plugin_renderer_base {
      * @throws coding_exception
      * @throws moodle_exception
      */
-    public function print_review_entries($instanceid) {
+    public function print_review_entries($instanceid, $string_id) {
         $params = array('instance' => $instanceid);
         $url = new moodle_url('/mod/goodhabits/review.php', $params);
-        $text = get_string('review_entries', 'mod_goodhabits');
+        $text = gh\Helper::get_string($string_id);
         echo $this->print_link_as_form($url, $text);
     }
 
@@ -409,9 +409,12 @@ class mod_goodhabits_renderer extends plugin_renderer_base {
      * @param $fullname
      * @throws coding_exception
      */
-    public function print_review_intro($fullname) {
+    public function print_review_intro($fullname, $accessing_as_string_id) {
+        $accessing_as_text = gh\Helper::get_string($accessing_as_string_id);
+        $accessing_as = html_writer::div($accessing_as_text, 'accessing-as');
         $string = get_string('review_entries_name', 'mod_goodhabits', $fullname);
         $string = html_writer::div($string, 'intro-name', array('id' => 'intro-name'));
+        $string .= $accessing_as;
         echo html_writer::div($string, 'intro');
     }
 

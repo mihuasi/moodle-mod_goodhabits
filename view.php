@@ -121,7 +121,14 @@ $canmanagepersonal = has_capability('mod/goodhabits:manage_personal_habits', $PA
 $canmanageactivityhabits = has_capability('mod/goodhabits:manage_activity_habits', $PAGE->context);
 ////TODO: Check settings.
 //$canreview = (has_capability('mod/goodhabits:review_as_admin', $PAGE->context) OR has_capability('mod/goodhabits:review_as_peer', $PAGE->context));
-$canreview = gh\PreferencesManager::display_review($instanceid);
+$access_review_as = gh\PreferencesManager::access_review_feature_as($instanceid);
+
+$access_review_string = 'review_entries_as_admin';
+if ($access_review_as == gh\PreferencesManager::ACCESS_AS_PEER) {
+    $access_review_string = 'review_entries_as_peer';
+}
+
+$canreview = !empty($access_review_as);
 $canmanagebreaks = has_capability('mod/goodhabits:manage_personal_breaks', $PAGE->context);
 $canmanageprefs = has_capability('mod/goodhabits:manage_personal_prefs', $PAGE->context);
 
@@ -135,7 +142,7 @@ if ($reviewconf == gh\ViewHelper::REVIEW_OPTION_DISABLE) {
 }
 
 if ($canreview) {
-    $renderer->print_review_entries($instanceid);
+    $renderer->print_review_entries($instanceid, $access_review_string);
 }
 
 if ($canmanagepersonal) {

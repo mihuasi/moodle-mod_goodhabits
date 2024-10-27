@@ -36,6 +36,9 @@ class PreferencesManager
     const CM_OPTION_OPTIONAL_DEFAULT_DISALLOW = 'opt_default_disallow';
     const CM_OPTION_DISABLE = 'disabled';
 
+    const ACCESS_AS_ADMIN = 'as_admin';
+    const ACCESS_AS_PEER = 'as_peer';
+
     public function __construct($instanceid, $userid) {
         $this->instanceid = $instanceid;
         $this->userid = $userid;
@@ -76,6 +79,28 @@ class PreferencesManager
                 }
             default:
                 break;
+        }
+        return false;
+    }
+
+    public function get_review_mod_status($setting)
+    {
+        if ($this->site_config->review == 'disable') {
+            return false;
+        }
+        $cm_setting = $this->instance_rec->{'cm_' . $setting};
+        if ($cm_setting == static::CM_OPTION_DISABLE) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public function is_review_opt_in($setting)
+    {
+        $cm_setting = $this->instance_rec->{'cm_' . $setting};
+        if ($cm_setting == static::CM_OPTION_OPTIONAL_DEFAULT_DISALLOW) {
+            return true;
         }
         return false;
     }
@@ -206,30 +231,75 @@ class PreferencesManager
         return static::CM_OPTION_OPTIONAL_DEFAULT_DISALLOW;
     }
 
-    public static function display_review($instanceid)
+//    public static function access_feature_as($instanceid)
+//    {
+////        global $PAGE, $USER;
+////        $has_as_admin = has_capability('mod/goodhabits:review_as_admin', $PAGE->context);
+////        $has_as_peer = has_capability('mod/goodhabits:review_as_peer', $PAGE->context);
+////        $mgr = new PreferencesManager($instanceid, $USER->id);
+////
+////        $allow_admin = $mgr->get_review_status('reviews_peer');
+////        $allow_peer = $mgr->get_review_status('reviews_peer');
+////        if ($has_as_admin) {
+////            return
+////        }
+//    }
+
+    /**
+     * Returns the user type the current user is accessing as -- admin or peer --
+     *        or false if no access.
+     *
+     * @param $instanceid
+     * @param $review_subject_id
+     * @return false|string
+     * @throws \coding_exception
+     */
+    public static function access_review_feature_as($instanceid, $review_subject_id = null)
     {
         global $PAGE, $USER;
-        $has_as_admin = has_capability('mod/goodhabits:review_as_admin', $PAGE->context);
-        $has_as_peer = has_capability('mod/goodhabits:review_as_peer', $PAGE->context);
+        $access_as_admin = has_capability('mod/goodhabits:review_as_admin', $PAGE->context);
+        $access_as_peer = has_capability('mod/goodhabits:review_as_peer', $PAGE->context);
 
         $mgr = new PreferencesManager($instanceid, $USER->id);
 
-        $allow_peer = $mgr->get_review_status('reviews_peer');
+        $allow_admin_mod = $mgr->get_review_mod_status('reviews_admin');
+        if (!$allow_admin_mod) {
+            // It is disabled for this activity.
+            $access_as_admin = false;
+        }
+
+        if ($review_subject_id) {
+            $subject_mgr = new PreferencesManager($instanceid, $review_subject_id);
+            $subject_allow_admin = $subject_mgr->get_review_status('reviews_admin');
+            if (!$subject_allow_admin) {
+                $access_as_admin = false;
+            }
+        }
+
+        $allow_peer = $mgr->get_review_status('reviews_peers');
 
         if (!$allow_peer) {
             // The current user must allow peer reviews to be a peer.
-            $has_as_peer = false;
+            $access_as_peer = false;
         }
 
-        if ($has_as_peer) {
+        $is_peer_opt_in = $mgr->is_review_opt_in('reviews_peers');
+
+        if ($is_peer_opt_in AND $access_as_peer) {
             $any_other_to_review = static::does_any_other_user_allow_peer_review($instanceid, $USER->id);
             if (!$any_other_to_review) {
                 // They have the capability, but cannot use it, as there is no-one to review.
-                $has_as_peer = false;
+                $access_as_peer = false;
             }
         }
-        $canreview = ($has_as_admin OR $has_as_peer);
-        return $canreview;
+        if ($access_as_admin) {
+            // Prefer access_as_admin if user has both.
+            return static::ACCESS_AS_ADMIN;
+        }
+        if ($access_as_peer) {
+            return static::ACCESS_AS_PEER;
+        }
+        return false;
     }
 
     public static function does_any_other_user_allow_peer_review($instanceid, $userid)
