@@ -119,8 +119,9 @@ if ($is_basic_mobile) {
 
 $canmanagepersonal = has_capability('mod/goodhabits:manage_personal_habits', $PAGE->context);
 $canmanageactivityhabits = has_capability('mod/goodhabits:manage_activity_habits', $PAGE->context);
-//TODO: Check settings.
-$canreview = (has_capability('mod/goodhabits:review_as_admin', $PAGE->context) OR has_capability('mod/goodhabits:review_as_peer', $PAGE->context));
+////TODO: Check settings.
+//$canreview = (has_capability('mod/goodhabits:review_as_admin', $PAGE->context) OR has_capability('mod/goodhabits:review_as_peer', $PAGE->context));
+$canreview = gh\PreferencesManager::display_review($instanceid);
 $canmanagebreaks = has_capability('mod/goodhabits:manage_personal_breaks', $PAGE->context);
 $canmanageprefs = has_capability('mod/goodhabits:manage_personal_prefs', $PAGE->context);
 

@@ -460,4 +460,13 @@ HAVING COUNT(DISTINCT e.habit_id) >= (
         return $results;
     }
 
+    public static function rm_from_array($array, $val_to_remove)
+    {
+        $key = array_search($val_to_remove, $array);
+        if ($key !== false) {
+            unset($array[$key]);
+        }
+        return $array;
+    }
+
 }

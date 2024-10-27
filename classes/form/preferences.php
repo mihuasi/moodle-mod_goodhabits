@@ -78,7 +78,9 @@ class preferences extends \moodleform
 
 
 
-        $mform->addElement('html', '<table class="grid-box-wording">
+        $mform->addElement('html', '
+            <p>' . Helper::get_string('grid_box_wording_intro') . '</p>
+            <table class="grid-box-wording">
     <tr>
         <td class="grid-box-wording-cell" data-cell="1_1">' . $cells_text[1] . '</td>
         <td class="grid-box-wording-cell" data-cell="1_2">' . $cells_text[2] . '</td>

@@ -198,4 +198,5 @@ $string['cm_reviews_admin'] = 'Admin reviews';
 $string['cm_reviews_peers'] = 'Peer reviews';
 $string['feature_disabled'] = 'This feature has been disabled';
 $string['no_access'] = 'You do not have access to this';
+$string['grid_box_wording_intro'] = 'You can customise this text:';
 $string['goodhabits:review_as_peer'] = 'See the habit entries of others who also have this capability and who have enabled this';

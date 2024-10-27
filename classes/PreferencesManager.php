@@ -206,4 +206,52 @@ class PreferencesManager
         return static::CM_OPTION_OPTIONAL_DEFAULT_DISALLOW;
     }
 
+    public static function display_review($instanceid)
+    {
+        global $PAGE, $USER;
+        $has_as_admin = has_capability('mod/goodhabits:review_as_admin', $PAGE->context);
+        $has_as_peer = has_capability('mod/goodhabits:review_as_peer', $PAGE->context);
+
+        $mgr = new PreferencesManager($instanceid, $USER->id);
+
+        $allow_peer = $mgr->get_review_status('reviews_peer');
+
+        if (!$allow_peer) {
+            // The current user must allow peer reviews to be a peer.
+            $has_as_peer = false;
+        }
+
+        if ($has_as_peer) {
+            $any_other_to_review = static::does_any_other_user_allow_peer_review($instanceid, $USER->id);
+            if (!$any_other_to_review) {
+                // They have the capability, but cannot use it, as there is no-one to review.
+                $has_as_peer = false;
+            }
+        }
+        $canreview = ($has_as_admin OR $has_as_peer);
+        return $canreview;
+    }
+
+    public static function does_any_other_user_allow_peer_review($instanceid, $userid)
+    {
+        $all = static::get_users_who_allow_peer_review($instanceid);
+        if (empty($all)) {
+            $all = [];
+        }
+        $others = Helper::rm_from_array($all, $userid);
+        return !empty($others);
+    }
+
+    public static function get_users_who_allow_peer_review($instanceid)
+    {
+        global $DB;
+
+        $userids = $DB->get_fieldset('mod_goodhabits_prefs', 'userid',
+            [
+                'allow_reviews_peers' => 1,
+                'instanceid' => $instanceid
+            ]);
+        return $userids;
+    }
+
 }
