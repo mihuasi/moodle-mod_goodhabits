@@ -29,9 +29,14 @@ use core_external\external_multiple_structure;
 use core_external\external_single_structure;
 use core_external\external_value;
 
-
+/**
+ *  The external API for this activity module.
+ */
 class External extends external_api {
-    
+
+    /**
+     * @return external_function_parameters
+     */
     public static function get_review_subjects_parameters() {
         return new external_function_parameters([
             'query' => new external_value(PARAM_TEXT, 'The search query', VALUE_REQUIRED),
@@ -41,18 +46,18 @@ class External extends external_api {
     }
 
     /**
-     * Fetch the details of a user's data request.
+     * Gets review subjects that are available for the provided user to review.
      *
-     * @param string $query The search request.
+     * @param $query
+     * @param $instanceid
+     * @param $userid
      * @return array
-     * @throws required_capability_exception
-     * @throws \tool_dataprivacy\dml_exception
-     * @throws \tool_dataprivacy\invalid_parameter_exception
-     * @throws \tool_dataprivacy\restricted_context_exception
-     * @since Moodle 3.5
+     * @throws \coding_exception
+     * @throws \core_external\restricted_context_exception
+     * @throws \dml_exception
+     * @throws \invalid_parameter_exception
      */
     public static function get_review_subjects($query, $instanceid, $userid) {
-        global $DB;
         $params = external_api::validate_parameters(self::get_review_subjects_parameters(), [
             'query' => $query,
             'instanceid' => $instanceid,
@@ -79,7 +84,6 @@ class External extends external_api {
 
         $subjects = $reviewer->get_subjects();
 
-
         foreach ($subjects as $subject) {
             $user = $subject->get_user();
             $useroption = (object)[
@@ -91,15 +95,16 @@ class External extends external_api {
             $useroptions[] = $useroption;
         }
 
+        if (empty($subject)) {
+            $useroptions = [];
+        }
+
         return $useroptions;
     }
 
     /**
-     * Parameter description for get_review_subjects().
-     *
-     * @since Moodle 3.5
-     * @return \core_external\external_description
-     * @throws \tool_dataprivacy\coding_exception
+     * @return external_multiple_structure
+     * @throws \coding_exception
      */
     public static function get_review_subjects_returns() {
         return new external_multiple_structure(new external_single_structure(

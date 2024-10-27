@@ -25,8 +25,19 @@ namespace mod_goodhabits\review;
 use mod_goodhabits\Helper;
 use mod_goodhabits\PreferencesManager;
 
-class Reviewer extends ReviewUser
+/**
+ * Models a user seeking to review another user.
+ */
+class Reviewer
 {
+    protected int $userid;
+
+    protected int $instanceid;
+
+    protected $instance;
+
+    protected int $courseid;
+
     protected array $candidates;
 
     protected array $subjects;
@@ -34,6 +45,21 @@ class Reviewer extends ReviewUser
     protected array $missing_caps;
 
     protected string $query;
+
+    protected \context_module $context;
+
+    protected bool $allow_reviews_peers;
+
+    public function __construct($instanceid, $userid, $context) {
+        $this->instanceid = $instanceid;
+        $this->userid = $userid;
+        $this->context = $context;
+    }
+
+    public function get_userid()
+    {
+        return $this->userid;
+    }
 
     protected function get_candidates()
     {

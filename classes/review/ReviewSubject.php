@@ -24,7 +24,10 @@ namespace mod_goodhabits\review;
 
 use mod_goodhabits\PreferencesManager;
 
-class ReviewSubject extends ReviewUser
+/**
+ * Models a user who another user is seeking to review.
+ */
+class ReviewSubject
 {
 
     /**
@@ -32,6 +35,10 @@ class ReviewSubject extends ReviewUser
      */
     protected PreferencesManager $pref_manager;
     protected $user;
+
+    protected int $userid;
+
+    protected int $instanceid;
 
     protected bool $allow_reviews_admin;
     protected bool $allow_reviews_peers;
@@ -45,6 +52,13 @@ class ReviewSubject extends ReviewUser
         $this->allow_reviews_peers = $this->pref_manager->get_review_status('reviews_peers');
     }
 
+    /**
+     * Whether the current review subject allows review by the reviewing user.
+     *
+     * @param $is_admin - Whether the reviewing user is admin.
+     * @param $is_reviewer_peer - Whether the reviewing user is a peer.
+     * @return bool
+     */
     public function allow_review($is_admin, $is_reviewer_peer)
     {
         if ($is_admin AND $this->allow_reviews_admin) {
@@ -59,6 +73,11 @@ class ReviewSubject extends ReviewUser
     public function get_user()
     {
         return $this->user;
+    }
+
+    public function get_userid()
+    {
+        return $this->userid;
     }
 
 
