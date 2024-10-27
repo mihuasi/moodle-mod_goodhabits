@@ -33,14 +33,11 @@ class select_user_review extends \moodleform {
 
         $options = [
             'ajax' => 'mod_goodhabits/form-user-selector',
-//            'ajax' => 'core_search/form-search-user-selector',
             'multiple' => false,
             'noselectionstring' => '',
-//            'course' => $courseid,
             'courseid' => $courseid,
             'instanceid' => $instanceid,
             'reviewer_user_id' => $USER->id,
-//            'withincourseid' => $courseid,
             'valuehtmlcallback' => function($value) {
                 global $DB, $OUTPUT;
                 $user = $DB->get_record('user', ['id' => (int) $value], '*', IGNORE_MISSING);
