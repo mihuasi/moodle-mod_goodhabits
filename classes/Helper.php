@@ -373,6 +373,15 @@ class Helper {
 
     }
 
+    /**
+     * Finds which habits have not been filled out for a given timestamp (+ user + instance).
+     *
+     * @param $instanceid
+     * @param $userid
+     * @param $endofperiod_timestamp
+     * @return array
+     * @throws \dml_exception
+     */
     public static function get_missing_entries($instanceid, $userid, $endofperiod_timestamp)
     {
         global $DB;
@@ -383,7 +392,8 @@ LEFT JOIN {mod_goodhabits_entry} e ON e.habit_id = i.id
     AND e.userid = :userid 
     AND e.endofperiod_timestamp = :timestamp
 WHERE e.id IS NULL 
-    AND i.instanceid = :instanceid AND i.published = 1";
+    AND i.instanceid = :instanceid AND i.published = 1
+        AND (i.level = 'activity' OR i.userid = e.userid)";
 
         $params = [
             'instanceid' => $instanceid,
@@ -403,6 +413,15 @@ WHERE e.id IS NULL
         return $status;
     }
 
+    /**
+     * Finds how many calendar units (days / weeks / blocks of days) have been completed by a user
+     *      in an instance.
+     *
+     * @param $instanceid
+     * @param $userid
+     * @return array
+     * @throws \dml_exception
+     */
     public static function get_cal_units_with_all_complete($instanceid, $userid)
     {
         global $DB;
@@ -410,8 +429,10 @@ WHERE e.id IS NULL
         $sql = "SELECT e.endofperiod_timestamp, COUNT(DISTINCT e.habit_id) AS num_complete
 FROM {mod_goodhabits_entry} e
 JOIN {mod_goodhabits_item} i ON e.habit_id = i.id
+JOIN {goodhabits} mod_instance ON (i.instanceid = mod_instance.id)
 WHERE e.userid = :userid
   AND i.instanceid = :instanceid AND i.published = 1
+  AND mod_instance.freq = e.period_duration
   AND NOT EXISTS (
       SELECT 1
       FROM {mod_goodhabits_break} b
