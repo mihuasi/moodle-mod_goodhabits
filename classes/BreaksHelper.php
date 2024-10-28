@@ -140,10 +140,11 @@ class BreaksHelper {
      */
     public static function is_in_a_break($timestamp) {
         $instanceid = Helper::get_instance_id_from_url();
+        $error_margin = Helper::get_timestamp_error_margin();
         $breaks = static::get_personal_breaks($instanceid);
         foreach ($breaks as $break) {
-            $start = $break->timestart;
-            $end = $break->timeend;
+            $start = $break->timestart - $error_margin;
+            $end = $break->timeend + $error_margin;
             if ($timestamp >= $start AND $timestamp <= $end) {
                 return true;
             }
