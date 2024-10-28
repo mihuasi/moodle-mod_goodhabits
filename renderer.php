@@ -182,9 +182,10 @@ class mod_goodhabits_renderer extends plugin_renderer_base {
             $classxy = 'noxy';
             $title = get_string('checkmark_title_empty', 'mod_goodhabits');
             $is_filled = false;
-            if (isset($entries[$timestamp])) {
+            $entry = $unit->get_closest_entry($entries);
+
+            if ($entry) {
                 $is_filled = true;
-                $entry = $entries[$timestamp];
                 $xval = $entry->x_axis_val;
                 $yval = $entry->y_axis_val;
                 $title = get_string('checkmark_title', 'mod_goodhabits', $entry);

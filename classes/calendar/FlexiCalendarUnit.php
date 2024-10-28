@@ -143,4 +143,19 @@ class FlexiCalendarUnit extends \DateTime {
         }
         return $classes;
     }
+
+    public function get_closest_entry($entries)
+    {
+        $timestamp = $this->getTimestamp();
+        $error_margin = Helper::get_timestamp_error_margin();
+        $lower = $timestamp - $error_margin;
+        $upper = $timestamp + $error_margin;
+
+        foreach ($entries as $entry_time => $val) {
+            if ($entry_time >= $lower AND $entry_time <= $upper) {
+                return $val;
+            }
+        }
+        return null;
+    }
 }

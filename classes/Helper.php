@@ -469,4 +469,9 @@ HAVING COUNT(DISTINCT e.habit_id) >= (
         return $array;
     }
 
+    public static function get_timestamp_error_margin()
+    {
+        return HOURSECS * 5;
+    }
+
 }
