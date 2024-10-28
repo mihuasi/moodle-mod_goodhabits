@@ -96,6 +96,17 @@ class HabitItemsHelper {
         return $recs;
     }
 
+    public static function habit_item_ids_to_recs($ids)
+    {
+        global $DB;
+        if (empty($ids)) {
+            return [];
+        }
+
+        $items = $DB->get_records_list('mod_goodhabits_item', 'id', $ids);
+        return $items;
+    }
+
     /**
      * Like {@see get_all_habits_for_user} but only personal habits.
      *

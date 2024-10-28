@@ -100,14 +100,16 @@ if ($calendar->get_period_duration() == 7) {
 
 $timestamp = $calendar_unit->getTimestamp();
 
-$habits_objs = gh\habit\HabitItemsHelper::get_incomplete_for_user_date($instanceid, $USER->id, $calendar_unit);
-
+//$habits_objs = gh\habit\HabitItemsHelper::get_incomplete_for_user_date($instanceid, $USER->id, $calendar_unit);
+$limits = $calendar_unit->get_limits();
+$item_ids = gh\Helper::get_habits_with_missing_entries($instanceid, $USER->id, $limits);
+$habits_recs = gh\habit\HabitItemsHelper::habit_item_ids_to_recs($item_ids);
 $habits = [];
 
-foreach ($habits_objs as $habits_obj) {
+foreach ($habits_recs as $habits_rec) {
     $arr = [];
-    $arr['name'] = $habits_obj->name;
-    $arr['id'] = $habits_obj->id;
+    $arr['name'] = $habits_rec->name;
+    $arr['id'] = $habits_rec->id;
     $habits[] = $arr;
 }
 
