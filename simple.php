@@ -115,7 +115,11 @@ echo $OUTPUT->header();
 
 echo $renderer->print_hidden_data($instanceid);
 
-$view_url = new moodle_url('/mod/goodhabits/view.php', array('id' => $cm->id));
+$params = array('id' => $cm->id);
+$next_calendar_unit = gh\Helper::new_date_time($calendar_unit, '+1day');
+$to_date = gh\Helper::date_time_to_mysql($next_calendar_unit);
+$params['toDate'] = $to_date;
+$view_url = new moodle_url('/mod/goodhabits/view.php', $params);
 
 gh\Helper::add_layout_url_param($view_url);
 
