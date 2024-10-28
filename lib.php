@@ -195,19 +195,7 @@ function goodhabits_get_coursemodule_info($coursemodule) {
         $result->customdata['customcompletionrules']['completionentries'] = $goodhabits->completionentries;
         $result->customdata['customcompletionrules']['completioncalendarunits'] = $goodhabits->completioncalendarunits;
     }
-//    print_object($result);exit;
-//    $result->customdata['customcompletionrules']['completionentries'] = $goodhabits->completionentries;
-//    $result->customdata['customcompletionrules']['completioncalendarunits'] = $goodhabits->completioncalendarunits;
 
-//    // Populate some other values that can be used in calendar or on dashboard.
-//    if ($goodhabits->duedate) {
-//        $result->customdata['duedate'] = $goodhabits->duedate;
-//    }
-//    if ($goodhabits->cutoffdate) {
-//        $result->customdata['cutoffdate'] = $goodhabits->cutoffdate;
-//    }
-
-//    \local_debugging\debugg::add_debugging(2, 'goodhabits_get_coursemodule_info', print_r($result, 1));
     return $result;
 }
 
@@ -216,12 +204,6 @@ function goodhabits_get_completion_active_rule_descriptions($cm) {
 }
 
 function mod_goodhabits_get_completion_active_rule_descriptions($cm) {
-//    print_object($cm);exit;
-//    \local_debugging\debugg::add_debugging(2, 'mod_goodhabits_get_completion_active_rule_descriptions', 205);
-//    if (empty($cm->customdata['customcompletionrules'])
-//        || $cm->completion != COMPLETION_TRACKING_AUTOMATIC) {
-//        return [];
-//    }
 
     $descriptions = [];
     foreach ($cm->customdata['customcompletionrules'] as $key => $val) {
