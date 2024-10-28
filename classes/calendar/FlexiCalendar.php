@@ -89,7 +89,7 @@ class FlexiCalendar {
     }
 
     /**
-     * @return array
+     * @return FlexiCalendarUnit[]
      */
     public function get_display_set() {
         return $this->displayset;

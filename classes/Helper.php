@@ -382,7 +382,7 @@ class Helper {
      * @return array
      * @throws \dml_exception
      */
-    public static function get_missing_entries($instanceid, $userid, $endofperiod_timestamp)
+    public static function get_missing_entries($instanceid, $userid, $endofperiod_timestamp, $limits)
     {
         global $DB;
 
@@ -390,15 +390,19 @@ class Helper {
 FROM {mod_goodhabits_item} i
 LEFT JOIN {mod_goodhabits_entry} e ON e.habit_id = i.id 
     AND e.userid = :userid 
-    AND e.endofperiod_timestamp = :timestamp
+    AND e.endofperiod_timestamp >= :lower AND e.endofperiod_timestamp <= :upper
 WHERE e.id IS NULL 
     AND i.instanceid = :instanceid AND i.published = 1
         AND (i.level = 'activity' OR i.userid = e.userid)";
 
+        $lower = $limits['lower'];
+        $upper = $limits['upper'];
+
         $params = [
             'instanceid' => $instanceid,
             'userid' => $userid,
-            'timestamp' => $endofperiod_timestamp,
+            'lower' => $lower,
+            'upper' => $upper,
         ];
         $recs = $DB->get_records_sql($sql, $params);
 

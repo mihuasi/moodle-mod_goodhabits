@@ -62,7 +62,8 @@ class mod_goodhabits_renderer extends plugin_renderer_base {
             $display = $unit->display_unit();
 
             $endofperiod_timestamp = $unit->getTimestamp();
-            $missing = gh\Helper::get_missing_entries($instanceid, $userid, $endofperiod_timestamp);
+            $limits = $unit->get_limits();
+            $missing = gh\Helper::get_missing_entries($instanceid, $userid, $endofperiod_timestamp, $limits);
             $all_complete = (empty($missing));
 
             $month = $unit->display_month();

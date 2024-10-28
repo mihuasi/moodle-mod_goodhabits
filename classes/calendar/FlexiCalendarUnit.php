@@ -144,12 +144,22 @@ class FlexiCalendarUnit extends \DateTime {
         return $classes;
     }
 
-    public function get_closest_entry($entries)
+    public function get_limits()
     {
         $timestamp = $this->getTimestamp();
         $error_margin = Helper::get_timestamp_error_margin();
-        $lower = $timestamp - $error_margin;
-        $upper = $timestamp + $error_margin;
+
+        return [
+            'lower' => $timestamp - $error_margin,
+            'upper' => $timestamp + $error_margin,
+        ];
+    }
+
+    public function get_closest_entry($entries)
+    {
+        $limits = $this->get_limits();
+        $lower = $limits['lower'];
+        $upper = $limits['upper'];
 
         foreach ($entries as $entry_time => $val) {
             if ($entry_time >= $lower AND $entry_time <= $upper) {
