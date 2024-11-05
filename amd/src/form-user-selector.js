@@ -42,9 +42,6 @@ define(['jquery', 'core/ajax', 'core/templates'], function($, Ajax, Templates) {
             var contextid = $(selector).attr('data-contextid');
             var instanceid = $(selector).attr('instanceid');
             var reviewer_user_id = $(selector).attr('reviewer_user_id');
-            console.log(query);
-            console.log(instanceid);
-            console.log(reviewer_user_id);
 
             promise = Ajax.call([{
                 methodname: 'mod_goodhabits_get_review_subjects',

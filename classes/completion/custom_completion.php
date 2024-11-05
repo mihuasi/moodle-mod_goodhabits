@@ -25,7 +25,9 @@ use mod_goodhabits\Helper;
 use mod_goodhabits\ViewHelper;
 
 /**
- * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * Implements custom completion rules.
+ *
+ * @basedon mod_forum\completion\custom_completion
  */
 class custom_completion extends activity_custom_completion {
 

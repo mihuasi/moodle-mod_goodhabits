@@ -14,6 +14,15 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
+/**
+ * Good habits mod external functions and services.
+ *
+ * @package     mod_goodhabits
+ * @category    services
+ * @copyright   2024 Joe Cape <joe.sc.cape@gmail.com>
+ * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+
 defined('MOODLE_INTERNAL') || die;
 $functions = [
     'mod_goodhabits_get_review_subjects' => [

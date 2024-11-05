@@ -15,10 +15,10 @@
 // along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
 
 /**
- * Prints an instance of mod_goodhabits.
+ * "Simple view" page.
  *
  * @package     mod_goodhabits
- * @copyright   2021 Joe Cape <joe.sc.cape@gmail.com>
+ * @copyright   2024 Joe Cape <joe.sc.cape@gmail.com>
  * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 

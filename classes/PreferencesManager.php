@@ -24,6 +24,9 @@ namespace mod_goodhabits;
 
 use mod_goodhabits\review\Reviewer;
 
+/**
+ * Finds the status of settings, based on site config, activity config and user preferences.
+ */
 class PreferencesManager
 {
     protected $instanceid;

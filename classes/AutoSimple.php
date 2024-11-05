@@ -49,7 +49,6 @@ class AutoSimple
 
     public function execute()
     {
-        // TODO: Check mod config.
         $time = $this->latest->getTimestamp();
         if (BreaksHelper::is_in_a_break($time)) {
             return false;
