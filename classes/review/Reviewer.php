@@ -182,4 +182,22 @@ JOIN {enrol} e ON (e.id = ue.enrolid)
         ];
     }
 
+    public static function get_peer_required_caps()
+    {
+        $caps = [
+            'mod/goodhabits:review_as_peer'
+        ];
+        $caps = array_merge($caps, static::get_other_required_caps());
+        return $caps;
+    }
+
+    public static function get_admin_required_caps()
+    {
+        $caps = [
+            'mod/goodhabits:review_as_admin'
+        ];
+        $caps = array_merge($caps, static::get_other_required_caps());
+        return $caps;
+    }
+
 }

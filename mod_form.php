@@ -98,6 +98,16 @@ class mod_goodhabits_mod_form extends moodleform_mod {
 
             $default = \mod_goodhabits\PreferencesManager::get_reviews_peers_default();
             $mform->setDefault('cm_reviews_peers', $default);
+
+            $caps = \mod_goodhabits\review\Reviewer::get_admin_required_caps();
+            $caps_text = implode(', ', $caps);
+
+            $mform->addHelpButton('cm_reviews_admin', 'cm_reviews_admin', 'mod_goodhabits', '', false, $caps_text);
+
+            $caps = \mod_goodhabits\review\Reviewer::get_peer_required_caps();
+            $caps_text = implode(', ', $caps);
+
+            $mform->addHelpButton('cm_reviews_peers', 'cm_reviews_peers', 'mod_goodhabits', '', false, $caps_text);
         }
 
 

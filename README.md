@@ -1,4 +1,4 @@
-# Good Habits Activity Module (1.2.2) for Moodle #
+# Good Habits Activity Module (2.0) for Moodle #
 
 The intention of this plugin is to help track habits over time. Within an e-learning context this may help cultivate behaviours that improve learning outcomes.
 
@@ -10,7 +10,21 @@ The intention of this plugin is to help track habits over time. Within an e-lear
 - Uses the Privacy API to allow for control over user data.
 - Create breaks for stretches of time in which you do not want to track habits.
 - Keyboard shortcuts (number keys to set values, enter key to save).
-- Can track activity completion based on user entries.
+- Can track activity completion based on: user entries / days or weeks complete / number of habits tracked.
+- A simple view gives space for posing questions related to a particular entry.
+- Can be set up to allow for admin review of entries, or for peer review.
+- Student users have control over their own review preferences.
+
+## 2.0 Notes
+- Render using mustache templates - allows for easier UI changes.
+- Add "simple view".
+- Add "mobile view" (embedded page layout) and improve general responsiveness.
+- Improve UI for calendar view to access simple view and 'skip' days/weeks.
+- Add completion options / change implementation to use custom completion class.
+- Add fix for server time changes.
+- Fix issues with admin review.
+- Add peer review.
+- Add mod-level settings for admin/peer review and further user-level preferences.
 
 ## 1.2.2 Notes
 - Minor code style updates.
@@ -34,7 +48,7 @@ The intention of this plugin is to help track habits over time. Within an e-lear
 
 ## License ##
 
-2021 Joe Cape <joe.sc.cape@gmail.com>
+2024 Joe Cape <joe.sc.cape@gmail.com>
 
 This program is free software: you can redistribute it and/or modify it under
 the terms of the GNU General Public License as published by the Free Software

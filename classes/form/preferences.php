@@ -56,10 +56,8 @@ class preferences extends \moodleform
         if ($allow_review_peers) {
             // Then check that user also has required caps to review.
             $context = $PAGE->context;
-            $caps = [
-                'mod/goodhabits:review_as_peer'
-            ];
-            $caps = array_merge($caps, Reviewer::get_other_required_caps());
+
+            $caps = Reviewer::get_peer_required_caps();
 
             $has_all = has_all_capabilities($caps, $context);
             if (!$has_all) {

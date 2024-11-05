@@ -261,9 +261,9 @@ class PreferencesManager
         global $PAGE, $USER;
         $access_as_admin = has_capability('mod/goodhabits:review_as_admin', $PAGE->context);
         $access_as_peer = has_capability('mod/goodhabits:review_as_peer', $PAGE->context);
-        $required_caps = Reviewer::get_other_required_caps();
-        $has_all = has_all_capabilities($required_caps, $PAGE->context);
-        if (!$has_all) {
+        $other_required_caps = Reviewer::get_other_required_caps();
+        $has_all_other = has_all_capabilities($other_required_caps, $PAGE->context);
+        if (!$has_all_other) {
             return false;
         }
 

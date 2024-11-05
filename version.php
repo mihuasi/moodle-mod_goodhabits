@@ -28,4 +28,4 @@ $plugin->component = 'mod_goodhabits';
 $plugin->release = '2.0';
 $plugin->version = 2024102801;
 $plugin->requires = 2019052002;
-$plugin->maturity = MATURITY_BETA;
+$plugin->maturity = MATURITY_RC;
