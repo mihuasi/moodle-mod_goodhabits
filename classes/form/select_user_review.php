@@ -41,7 +41,7 @@ class select_user_review extends \moodleform {
             'valuehtmlcallback' => function($value) {
                 global $DB, $OUTPUT;
                 $user = $DB->get_record('user', ['id' => (int) $value], '*', IGNORE_MISSING);
-                if (!$user || !user_can_view_profile($user)) {
+                if (!$user) {
                     return false;
                 }
 

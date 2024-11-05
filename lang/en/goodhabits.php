@@ -204,3 +204,4 @@ $string['feature_disabled'] = 'This feature has been disabled';
 $string['no_access'] = 'You do not have access to this';
 $string['grid_box_wording_intro'] = 'You can customise this text:';
 $string['goodhabits:review_as_peer'] = 'See the habit entries of others who also have this capability and who have enabled this';
+$string['lacking_peer_caps'] = 'You are set up as a peer but do not have the capabilities required to review as a peer.';

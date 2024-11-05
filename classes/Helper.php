@@ -479,4 +479,20 @@ HAVING COUNT(DISTINCT e.habit_id) >= (
         return HOURSECS * 5;
     }
 
+    public static function get_context_from_instance_id($instanceid)
+    {
+        $moduleinstance = static::get_module_instance($instanceid);
+        $course = get_course($moduleinstance->course);
+        $cm = get_coursemodule_from_instance('goodhabits', $moduleinstance->id, $course->id, false, MUST_EXIST);
+        $context = \context_module::instance($cm->id);
+
+        return $context;
+    }
+
+    public static function form_warning_text($mform, $text)
+    {
+        $html = "<div class='form-warning'>$text</div>";
+        $mform->addElement('html', $html);
+    }
+
 }

@@ -127,7 +127,7 @@ JOIN {enrol} e ON (e.id = ue.enrolid)
 
     protected function init_missing_caps()
     {
-        $required = ['moodle/course:viewparticipants'];
+        $required = static::get_other_required_caps();
         $this->missing_caps = [];
 
         foreach ($required as $cap) {
@@ -166,6 +166,20 @@ JOIN {enrol} e ON (e.id = ue.enrolid)
     public function get_missing_caps()
     {
         return $this->missing_caps;
+    }
+
+    /**
+     * Returns any additional capabilities required to be a reviewer, beyond:
+     *      mod/goodhabits:review_as_admin and mod/goodhabits:review_as_peer
+     *      (which reviewers will need at least one of)
+     *
+     * @return string[]
+     */
+    public static function get_other_required_caps()
+    {
+        return [
+            'moodle/course:viewparticipants'
+        ];
     }
 
 }

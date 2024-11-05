@@ -22,11 +22,13 @@
 
 namespace mod_goodhabits;
 
+use mod_goodhabits\review\Reviewer;
+
 class preferences extends \moodleform
 {
 
     public function definition() {
-        global $USER;
+        global $USER, $PAGE;
         $mform = $this->_form;
         $instanceid = (isset($this->_customdata['instance'])) ? $this->_customdata['instance'] : 0;
         
@@ -41,12 +43,29 @@ class preferences extends \moodleform
         $mform->addHelpButton('allow_reviews_peers', 'allow_reviews_peers', 'mod_goodhabits');
         $mform->setType('instance', PARAM_INT);
 
+        $allow_review_admin = $mgr->get_review_status('reviews_admin');
+        $allow_review_peers = $mgr->get_review_status('reviews_peers');
+
         $this->set_data(
             [
-                'allow_reviews_admin' => $mgr->get_review_status('reviews_admin'),
-                'allow_reviews_peers' => $mgr->get_review_status('reviews_peers'),
+                'allow_reviews_admin' => $allow_review_admin,
+                'allow_reviews_peers' => $allow_review_peers,
             ]
         );
+
+        if ($allow_review_peers) {
+            // Then check that user also has required caps to review.
+            $context = $PAGE->context;
+            $caps = [
+                'mod/goodhabits:review_as_peer'
+            ];
+            $caps = array_merge($caps, Reviewer::get_other_required_caps());
+
+            $has_all = has_all_capabilities($caps, $context);
+            if (!$has_all) {
+                Helper::form_warning_text($mform, Helper::get_string('lacking_peer_caps'));
+            }
+        }
 
         if (!$mgr->is_review_option_enabled('reviews_admin')) {
             $mform->freeze('allow_reviews_admin');

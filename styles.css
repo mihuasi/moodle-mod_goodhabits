@@ -783,6 +783,12 @@ body.pagelayout-embedded .activity-header {
     cursor: pointer;
 }
 
+.path-mod-goodhabits .form-warning {
+    color: red;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
 
 
 
