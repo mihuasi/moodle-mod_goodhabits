@@ -67,11 +67,14 @@ class HabitEntryTwoDimensional extends HabitEntry {
     public function save() {
         global $DB;
         $record = new \stdClass();
+        if (!$time = $this->get_snap_to_time()) {
+            $time = $this->flexiunit->getTimestamp();
+        }
         $record->habit_id = $this->habit->id;
         $record->userid = $this->userid;
         $record->entry_type = $this->entrytype;
         $record->period_duration = $this->periodduration;
-        $record->endofperiod_timestamp = $this->endofperiodtimestamp;
+        $record->endofperiod_timestamp = $time;
         $record->x_axis_val = $this->xval;
         $record->y_axis_val = $this->yval;
         $record->timecreated = time();

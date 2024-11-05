@@ -22,6 +22,8 @@
 
 namespace mod_goodhabits\habit;
 
+use mod_goodhabits\Helper;
+
 defined('MOODLE_INTERNAL') || die();
 
 /**
@@ -43,9 +45,9 @@ abstract class HabitEntry {
     protected $userid;
 
     /**
-     * @var int
+     * @var \mod_goodhabits\calendar\FlexiCalendarUnit
      */
-    protected $endofperiodtimestamp;
+    protected $flexiunit;
 
     /**
      * @var int
@@ -74,7 +76,7 @@ abstract class HabitEntry {
     public function __construct(Habit $habit, $userid, $endofperiodtimestamp, $periodduration) {
         $this->habit = $habit;
         $this->userid = $userid;
-        $this->endofperiodtimestamp = $endofperiodtimestamp;
+        $this->flexiunit = Helper::get_flexi_cal_unit_from_timestamp($endofperiodtimestamp, $periodduration);
         $this->periodduration = $periodduration;
         $this->init_existing_record();
     }
@@ -82,17 +84,63 @@ abstract class HabitEntry {
     /**
      * Initialises the DB record for this entry, if it exists.
      *
+     * TODO: Check from-to timestamp.
+     *
      * @throws \dml_exception
      */
     public function init_existing_record() {
         global $DB;
+        $params = $this->get_sql_params();
+        $sql = "SELECT * FROM {mod_goodhabits_entry} e
+                    WHERE userid = :userid AND habit_id = :habit_id
+                      AND e.period_duration = :period_duration
+                      AND e.endofperiod_timestamp >= :lower AND e.endofperiod_timestamp <= :upper";
+        $this->existingrecord = $DB->get_record_sql($sql, $params);
+    }
+
+    protected function get_sql_params()
+    {
+        $limits = $this->flexiunit->get_limits();
         $params = array(
             'habit_id' => $this->habit->id,
             'userid' => $this->userid,
             'entry_type' => $this->entrytype,
             'period_duration' => $this->periodduration,
-            'endofperiod_timestamp' => $this->endofperiodtimestamp);
-        $this->existingrecord = $DB->get_record('mod_goodhabits_entry', $params);
+            'lower' => $limits['lower'],
+            'upper' => $limits['upper'],
+        );
+        return $params;
+    }
+
+    protected function get_any_existing_similar_timestamp_record()
+    {
+        global $DB;
+        $params = $this->get_sql_params();
+        unset($params['habit_id']);
+        $sql = "SELECT * FROM {mod_goodhabits_entry} e
+                    WHERE userid = :userid 
+                      AND e.period_duration = :period_duration
+                      AND e.endofperiod_timestamp >= :lower AND e.endofperiod_timestamp <= :upper";
+        $all = $DB->get_records_sql($sql, $params);
+        $example = reset($all);
+        return $example;
+    }
+
+    public function get_snap_to_time()
+    {
+        if ($example = $this->get_any_existing_similar_timestamp_record()) {
+            return $example->endofperiod_timestamp;
+        }
+        return false;
+    }
+
+    public function upsert()
+    {
+        if ($this->already_exists()) {
+            $this->update();
+        } else {
+            $this->save();
+        }
     }
 
     /**
@@ -101,7 +149,6 @@ abstract class HabitEntry {
      * @return bool
      */
     public function already_exists() {
-
         return (boolean) $this->existingrecord;
     }
 

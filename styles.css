@@ -545,7 +545,7 @@
 
     .path-mod-goodhabits .goodhabits-container,
     .path-mod-goodhabits .simple-view {
-        display: none;
+        /*display: none;*/
     }
 }
 

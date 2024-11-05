@@ -214,6 +214,8 @@ jQuery(window).on('load',function($) {
                 },
             };
 
+            // options.tokenWidth = 30;
+
             var talentgrid = $('.talentgrid').talentgriddle(options);
 
         });

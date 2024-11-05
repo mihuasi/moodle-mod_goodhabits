@@ -62,11 +62,7 @@ $entry = new gh\habit\HabitEntryTwoDimensional($habit, $userid, $timestamp, $dur
 
 $prev_completed_cal_units_crit = gh\Helper::has_completed_cal_units_crit($instance, $userid);
 
-if ($entry->already_exists()) {
-    $entry->update();
-} else {
-    $entry->save();
-}
+$entry->upsert();
 
 $rules = ['completionentries', 'completioncalendarunits'];
 
