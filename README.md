@@ -25,6 +25,7 @@ The intention of this plugin is to help track habits over time. Within an e-lear
 - Fix issues with admin review.
 - Add peer review.
 - Add mod-level settings for admin/peer review and further user-level preferences.
+- Change no-habits message to link to create new habit
 
 ## 1.2.2 Notes
 - Minor code style updates.

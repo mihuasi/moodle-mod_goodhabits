@@ -388,9 +388,11 @@ class mod_goodhabits_renderer extends plugin_renderer_base {
      *
      * @throws coding_exception
      */
-    protected function print_no_habits() {
+    protected function print_no_habits($instanceid) {
         $string = get_string('no_habits', 'mod_goodhabits');
-        echo html_writer::div($string, 'no-habits');
+        $url = new moodle_url('/mod/goodhabits/manage_habits.php', ['instance' => $instanceid]);
+        $link = html_writer::link($url, $string);
+        echo html_writer::div($link, 'no-habits');
     }
 
     /**
@@ -435,7 +437,7 @@ class mod_goodhabits_renderer extends plugin_renderer_base {
     {
         global $OUTPUT;
         if (empty($habits)) {
-            $this->print_no_habits();
+            $this->print_no_habits($instanceid);
             return null;
         }
 
@@ -447,8 +449,37 @@ class mod_goodhabits_renderer extends plugin_renderer_base {
 
         $template_data['habits'] = $this->get_habits_data($calendar, $habits, $userid);
         $template_data['extra_classes'] = $extraclasses;
+        $template_data['help'] = $this->get_help_data($calendar, $instanceid, $userid);
 
         echo $OUTPUT->render_from_template('mod_goodhabits/calendar_area', $template_data);
+    }
+
+    protected function get_help_data(gh\calendar\FlexiCalendar $calendar, $instanceid, $userid)
+    {
+        global $USER;
+        $userid = ($userid) ? $userid : $USER->id;
+
+        $data = [];
+//        $latest_unit = $calendar->get_latest();
+//        $latest_complete = gh\Helper::unit_has_all_complete($instanceid, $latest_unit, $userid);
+//        $upper = $calendar->get_latest()->getTimestamp() + YEARSECS;
+//        $limits = [
+//            'lower' => 0,
+//            'upper' => $upper,
+//        ];
+        $data['show_help'] = 0;
+
+        $data['period_string'] = $calendar->get_period_duration_string(false);
+        $units_with_all_complete = gh\Helper::get_cal_units_with_all_complete($instanceid, $userid);
+
+        if (empty($units_with_all_complete)) {
+            $url = new moodle_url('/mod/goodhabits/simple.php', ['g' => $instanceid]);
+            $text = gh\Helper::get_string('get_started', $data['period_string']);
+            $data['get_started'] = html_writer::link($url, $text);
+            $data['show_help'] = 1;
+        }
+
+        return $data;
     }
 
     public function print_viewport_too_small_message() {

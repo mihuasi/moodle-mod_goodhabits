@@ -112,7 +112,7 @@ $string['delete'] = 'Delete';
 $string['edit'] = 'Edit';
 $string['break_deleted'] = 'Break deleted';
 $string['break_added'] = 'Break added';
-$string['no_habits'] = '[No habits have been set up yet]';
+$string['no_habits'] = '[It looks like you don\'t have any habits set up yet - add some here]';
 $string['habit_level'] = 'Ownership';
 $string['new_habit_name'] = 'Habit name';
 $string['new_habit_desc'] = 'Habit description';
@@ -172,6 +172,9 @@ $string['completion_calendar'] = 'Student must complete the following number of 
 $string['days'] = 'days';
 $string['weeks'] = 'weeks';
 $string['blocks_of_days'] = 'blocks-of-days';
+$string['day'] = 'day';
+$string['week'] = 'week';
+$string['blocks_of_day'] = 'block-of-days';
 $string['label_num_completed'] = 'Number of {$a} completed';
 //$string['completed_cal_units'] = 'Number of {$a->period_duration} completed: {$a->completed}';
 $string['label_remaining'] = 'To complete';
@@ -222,3 +225,5 @@ Optional [default: Don\'t allow] - Students control whether to allow peer review
 Optional [default: Allow] - As above, students can set whether to allow in their preferences page. By default, peer review is disabled.<br /><br />
 Required - Peer review is enabled and students are not able to change this.
 ';
+$string['get_started'] = 'Need some help getting started? Answer questions about the latest {$a}.';
+$string['get_started'] = 'Need some help getting started? Answer questions about the latest {$a}.';

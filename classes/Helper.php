@@ -23,6 +23,7 @@
 namespace mod_goodhabits;
 
 use mod_goodhabits\calendar\FlexiCalendarUnit;
+use mod_goodhabits\habit\HabitItemsHelper;
 
 defined('MOODLE_INTERNAL') || die();
 
@@ -352,25 +353,41 @@ class Helper {
         return false;
     }
 
-    public static function get_entries($instanceid, $userid, $endofperiod_timestamp) {
+    public static function get_entries($instanceid, $userid, $limits) {
         global $DB;
         $sql = "SELECT e.*
             FROM {mod_goodhabits_item} i
             INNER JOIN {mod_goodhabits_entry} e ON e.habit_id = i.id 
                 AND e.userid = :userid 
-                AND e.endofperiod_timestamp = :timestamp
+                AND e.endofperiod_timestamp >= :lower AND e.endofperiod_timestamp <= :upper
             WHERE i.instanceid = :instanceid";
+
+        $lower = $limits['lower'];
+        $upper = $limits['upper'];
 
         $params = [
             'instanceid' => $instanceid,
             'userid' => $userid,
-            'timestamp' => $endofperiod_timestamp,
+            'lower' => $lower,
+            'upper' => $upper,
         ];
 
         $recs = $DB->get_records_sql($sql, $params);
 
         return $recs;
 
+    }
+
+    public static function unit_has_all_complete($instanceid, FlexiCalendarUnit $unit, $userid)
+    {
+        $habits = HabitItemsHelper::get_all_habits_for_user($instanceid, $userid);
+        if (empty($habits)) {
+            // Don't count as complete if there are no habits.
+            return false;
+        }
+
+        $missing = static::get_habits_with_missing_entries($instanceid, $userid, $unit->get_limits());
+        return empty($missing);
     }
 
     /**

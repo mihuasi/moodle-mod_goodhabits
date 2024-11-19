@@ -49,11 +49,11 @@ class AutoSimple
 
     public function execute()
     {
-        $time = $this->latest->getTimestamp();
-        if (BreaksHelper::is_in_a_break($time)) {
+        $limits = $this->latest->get_limits();
+        if (BreaksHelper::is_in_a_break($this->latest->getTimestamp())) {
             return false;
         }
-        $entries = Helper::get_entries($this->instanceid, $this->userid, $time);
+        $entries = Helper::get_entries($this->instanceid, $this->userid, $limits);
         if (!empty($entries)) {
             return false;
         }

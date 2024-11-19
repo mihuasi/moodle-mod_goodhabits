@@ -95,5 +95,15 @@
         {{/habits}}
     </div>
 
+    {{#help.show_help}}
+        <div class="help-section">
+            {{#help.get_started}}
+                <div class="answer-qs">
+                    {{{help.get_started}}}
+                </div>
+            {{/help.get_started}}
+        </div>
+    {{/help.show_help}}
+
 
 </div><br /><br />

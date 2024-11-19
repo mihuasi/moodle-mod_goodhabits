@@ -351,8 +351,16 @@
     font-weight: bold;
 }
 
-.path-mod-goodhabits .no-habits {
+.path-mod-goodhabits .no-habits,
+.path-mod-goodhabits .answer-qs
+{
     color: darkblue;
+    margin: auto;
+    width: 70%;
+}
+
+.path-mod-goodhabits .answer-qs {
+    margin-top: 20px;
 }
 
 .path-mod-goodhabits .intro-name {
