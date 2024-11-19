@@ -52,6 +52,20 @@ class PreferencesManager
         $this->pref_rec = static::get_pref_rec($instanceid, $userid);
     }
 
+    public function show_scores()
+    {
+        if (empty($this->pref_rec)) {
+            return true;
+        }
+
+        $val = $this->pref_rec->show_scores;
+
+        if (is_null($val)) {
+            return true;
+        }
+        return $val;
+    }
+
     /**
      * Looks successively at global setting, activity level and preference to determine whether
      *      the review setting is enabled.
@@ -198,6 +212,7 @@ class PreferencesManager
     {
         $pref->allow_reviews_admin = $data->allow_reviews_admin;
         $pref->allow_reviews_peers = $data->allow_reviews_peers;
+        $pref->show_scores = $data->show_scores;
 
         foreach ($text_data as $key => $val) {
             $pref->$key = $val;

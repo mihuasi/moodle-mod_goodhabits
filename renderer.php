@@ -67,7 +67,8 @@ class mod_goodhabits_renderer extends plugin_renderer_base {
 
             $month = $unit->display_month();
 
-            $imploded_classes = implode(' ', $unit->get_classes());
+            $classes = $unit->get_classes();
+            $imploded_classes = implode(' ', $classes);
 
             $flexi_cal_unit = [];
             $flexi_cal_unit['top_line'] = $display['topLine'];
@@ -92,10 +93,10 @@ class mod_goodhabits_renderer extends plugin_renderer_base {
      * @param $userid
      * @return array
      */
-    protected function get_habits_data(gh\calendar\FlexiCalendar $calendar, $habits, $userid = null) {
+    protected function get_habits_data(gh\calendar\FlexiCalendar $calendar, $habits, $userid = null, $instanceid) {
         $data = [];
         foreach ($habits as $habit) {
-            $data[] = $this->get_habit_data($calendar, $habit, $userid);
+            $data[] = $this->get_habit_data($calendar, $habit, $userid, $instanceid);
         }
 
         return $data;
@@ -110,7 +111,7 @@ class mod_goodhabits_renderer extends plugin_renderer_base {
      * @return array
      * @throws coding_exception
      */
-    public function get_habit_data(gh\calendar\FlexiCalendar $calendar, gh\habit\Habit $habit, $userid = null) {
+    public function get_habit_data(gh\calendar\FlexiCalendar $calendar, gh\habit\Habit $habit, $userid = null, $instanceid) {
         $habit_data = [];
         $habit_data['id'] = $habit->id;
 
@@ -141,7 +142,7 @@ class mod_goodhabits_renderer extends plugin_renderer_base {
         $habit_data['habit_name'] = format_text($habit->name);
         $habit_data['habit_desc'] = format_text($habit->description);
 
-        $checkmarks = $this->get_checkmarks_data($calendar, $habit, $userid);
+        $checkmarks = $this->get_checkmarks_data($calendar, $habit, $userid, $instanceid);
         $habit_data['checkmarks'] = $checkmarks;
 
         return $habit_data;
@@ -157,7 +158,7 @@ class mod_goodhabits_renderer extends plugin_renderer_base {
      * @throws coding_exception
      * @throws dml_exception
      */
-    protected function get_checkmarks_data(gh\calendar\FlexiCalendar $calendar, gh\habit\Habit $habit, $userid = null) {
+    protected function get_checkmarks_data(gh\calendar\FlexiCalendar $calendar, gh\habit\Habit $habit, $userid = null, $instanceid) {
         global $USER;
 
         $data = [];
@@ -170,6 +171,9 @@ class mod_goodhabits_renderer extends plugin_renderer_base {
 
         $userid = ($userid) ? $userid : $USER->id;
         $entries = $habit->get_entries($userid, $calendar->get_period_duration());
+
+        $prefs_mgr = new gh\PreferencesManager($instanceid, $userid);
+        $show_scores = $prefs_mgr->show_scores();
 
         $canmanageentries = has_capability('mod/goodhabits:manage_entries', $this->page->context);
 
@@ -199,6 +203,10 @@ class mod_goodhabits_renderer extends plugin_renderer_base {
             $classes = 'checkmark ' . $caninteractclass . ' ' . $classxy;
             if ($isinbreak) {
                 $classes .= ' is-in-break';
+            }
+
+            if (!$show_scores) {
+                $classes .= ' hide-scores';
             }
 
             $data_checkmark['is_filled'] = $is_filled;
@@ -447,7 +455,7 @@ class mod_goodhabits_renderer extends plugin_renderer_base {
 
         $template_data['calendar'] = $this->get_calendar_data($calendar, $instanceid, $userid);
 
-        $template_data['habits'] = $this->get_habits_data($calendar, $habits, $userid);
+        $template_data['habits'] = $this->get_habits_data($calendar, $habits, $userid, $instanceid);
         $template_data['extra_classes'] = $extraclasses;
         $template_data['help'] = $this->get_help_data($calendar, $instanceid, $userid);
 

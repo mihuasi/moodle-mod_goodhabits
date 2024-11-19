@@ -46,10 +46,13 @@ class preferences extends \moodleform
         $allow_review_admin = $mgr->get_review_status('reviews_admin');
         $allow_review_peers = $mgr->get_review_status('reviews_peers');
 
+        $show_scores = $mgr->show_scores();
+
         $this->set_data(
             [
                 'allow_reviews_admin' => $allow_review_admin,
                 'allow_reviews_peers' => $allow_review_peers,
+                'show_scores' => $show_scores,
             ]
         );
 
@@ -75,7 +78,12 @@ class preferences extends \moodleform
 
 
 
-        $mform->addElement('header', 'gridboxheader', Helper::get_string('prefs_grid_box_header'));
+        // *** Appearance ***.
+
+        $mform->addElement('header', 'appearance_header', Helper::get_string('prefs_appearance'));
+
+        $mform->addElement('advcheckbox', 'show_scores', Helper::get_string('show_scores'));
+        $mform->addHelpButton('show_scores', 'show_scores', 'mod_goodhabits');
 
         $cells_text = [
             1 => $mgr->get_preferred_string('overlay_1_1'),
@@ -89,13 +97,9 @@ class preferences extends \moodleform
             9 => $mgr->get_preferred_string('overlay_3_3'),
         ];
 
-//        foreach ($cells_text as $key => $value) {
-//            $cells_text[$key] = '<textarea rows="3" cols="15" name="cell_text_' . $value . '">' . $value . '</textarea>';
-//        }
-
-
 
         $mform->addElement('html', '
+<br />
             <p>' . Helper::get_string('grid_box_wording_intro') . '</p>
             <table class="grid-box-wording">
     <tr>

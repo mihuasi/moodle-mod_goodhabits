@@ -367,6 +367,10 @@
     font-weight: bold;
 }
 
+.path-mod-goodhabits .hide-scores {
+    text-indent: -9999px;
+}
+
 .path-mod-goodhabits .arrow-left {
     width: 20px;
     height: 20px;

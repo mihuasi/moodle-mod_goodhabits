@@ -133,5 +133,15 @@ function xmldb_goodhabits_upgrade($oldversion) {
         }
     }
 
+    if ($oldversion < 2024111901) {
+        $table = new xmldb_table('mod_goodhabits_prefs');
+
+        $field = new xmldb_field('show_scores', XMLDB_TYPE_INTEGER, '9', null,
+            null, null, null, 'allow_reviews_peers');
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+    }
+
     return true;
 }

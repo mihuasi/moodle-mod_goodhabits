@@ -194,7 +194,7 @@ $string['allow_reviews_admin'] = 'Allow admin to review your tracker data';
 $string['allow_reviews_admin_help'] = 'Allows admin to review your tracker data. <br /><br />That is, the ratings you have given yourself.';
 $string['allow_review_others'] = 'Allow others who opt in to review your tracker data';
 $string['prefs_tracker_privacy_header'] = 'Tracker privacy';
-$string['prefs_grid_box_header'] = 'Grid box wording';
+$string['prefs_appearance'] = 'Appearance';
 $string['pref_updated'] = 'Preferences updated';
 $string['default_settings_desc'] = 'Determines the defaults when creating a new activity.';
 $string['disabled'] = 'Disabled';
@@ -229,3 +229,7 @@ $string['get_started'] = 'Need some help getting started? Answer questions about
 $string['get_started'] = 'Need some help getting started? Answer questions about the latest {$a}.';
 $string['answer_latest_questions'] = 'Answer questions about the latest {$a}.';
 $string['simple_all_complete'] = 'You have answered all questions about:';
+$string['show_scores'] = 'Show numbers in the tracker';
+$string['show_scores_help'] = 'Whether to show the numbers that you have entered in the grid.
+<br /><br />For example: <span style="font-weight: bold">6 / 7</span>.
+<br /><br />If you hide this, you can still get a general sense of the values from the colours.';
