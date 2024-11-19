@@ -469,14 +469,27 @@ class mod_goodhabits_renderer extends plugin_renderer_base {
 //        ];
         $data['show_help'] = 0;
 
+        // TODO: Switch types of duration string so that it can read: this week, today, etc...
         $data['period_string'] = $calendar->get_period_duration_string(false);
         $units_with_all_complete = gh\Helper::get_cal_units_with_all_complete($instanceid, $userid);
 
+        $url = new moodle_url('/mod/goodhabits/simple.php', ['g' => $instanceid]);
+
+        //TODO: Change this to check for just one entry.
         if (empty($units_with_all_complete)) {
-            $url = new moodle_url('/mod/goodhabits/simple.php', ['g' => $instanceid]);
+            // None are complete so give getting-started help.
+            $data['show_help'] = 1;
             $text = gh\Helper::get_string('get_started', $data['period_string']);
             $data['get_started'] = html_writer::link($url, $text);
+        } else {
             $data['show_help'] = 1;
+            $latest_unit = $calendar->get_latest();
+            $latest_complete = gh\Helper::unit_has_all_complete($instanceid, $latest_unit, $userid);
+            if (!$latest_complete) {
+                // The latest is not complete, so link to answer Qs about latest.
+                $text = gh\Helper::get_string('answer_latest_questions', $data['period_string']);
+                $data['answer_latest'] = html_writer::link($url, $text);
+            }
         }
 
         return $data;

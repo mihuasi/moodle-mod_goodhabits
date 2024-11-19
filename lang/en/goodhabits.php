@@ -227,3 +227,5 @@ Required - Peer review is enabled and students are not able to change this.
 ';
 $string['get_started'] = 'Need some help getting started? Answer questions about the latest {$a}.';
 $string['get_started'] = 'Need some help getting started? Answer questions about the latest {$a}.';
+$string['answer_latest_questions'] = 'Answer questions about the latest {$a}.';
+$string['simple_all_complete'] = 'You have answered all questions about:';

@@ -128,6 +128,7 @@ $template_data = [
     'heading' => $heading,
     'date' => $date,
     'timestamp' => $timestamp,
+    'has_remaining_habits' => !empty($habits),
     'habits' => $habits,
     'view-url' => $view_url->out(),
     'sesskey' => sesskey()
