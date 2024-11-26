@@ -88,6 +88,7 @@
         <FIELD NAME="allow_reviews_admin" TYPE="int" LENGTH="9" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
         <FIELD NAME="allow_reviews_peers" TYPE="int" LENGTH="9" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
         <FIELD NAME="show_scores" TYPE="int" LENGTH="9" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="enable_help" TYPE="int" LENGTH="9" NOTNULL="false" SEQUENCE="false"/>
         <FIELD NAME="text_overlay_1_1" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false"/>
         <FIELD NAME="text_overlay_1_2" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false"/>
         <FIELD NAME="text_overlay_1_3" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false"/>

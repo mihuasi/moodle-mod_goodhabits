@@ -54,15 +54,23 @@ class PreferencesManager
 
     public function show_scores()
     {
-        if (empty($this->pref_rec)) {
-            return true;
-        }
+//        if (empty($this->pref_rec)) {
+//            return true;
+//        }
+//
+//        $val = $this->pref_rec->show_scores;
+//
+//        if (is_null($val)) {
+//            return true;
+//        }
+//        return $val;
+        $val = static::default_yes_setting($this->pref_rec, 'show_scores');
+        return $val;
+    }
 
-        $val = $this->pref_rec->show_scores;
-
-        if (is_null($val)) {
-            return true;
-        }
+    public function enable_help()
+    {
+        $val = static::default_yes_setting($this->pref_rec, 'enable_help');
         return $val;
     }
 
@@ -213,6 +221,7 @@ class PreferencesManager
         $pref->allow_reviews_admin = $data->allow_reviews_admin;
         $pref->allow_reviews_peers = $data->allow_reviews_peers;
         $pref->show_scores = $data->show_scores;
+        $pref->enable_help = $data->enable_help;
 
         foreach ($text_data as $key => $val) {
             $pref->$key = $val;
@@ -347,6 +356,20 @@ class PreferencesManager
                 'instanceid' => $instanceid
             ]);
         return $userids;
+    }
+
+    public static function default_yes_setting($pref_rec, $setting)
+    {
+        if (empty($pref_rec)) {
+            return true;
+        }
+
+        $val = $pref_rec->$setting;
+
+        if (is_null($val)) {
+            return true;
+        }
+        return $val;
     }
 
 }

@@ -34,7 +34,7 @@ class preferences extends \moodleform
         
         $mgr = new PreferencesManager($instanceid, $USER->id);
 
-        $mform->addElement('header', 'gridboxheader', Helper::get_string('prefs_tracker_privacy_header'));
+        $mform->addElement('header', 'privacy_header', Helper::get_string('prefs_tracker_privacy_header'));
 
         $mform->addElement('advcheckbox', 'allow_reviews_admin', Helper::get_string('allow_reviews_admin'));
         $mform->addElement('advcheckbox', 'allow_reviews_peers', Helper::get_string('allow_reviews_peers'));
@@ -48,11 +48,14 @@ class preferences extends \moodleform
 
         $show_scores = $mgr->show_scores();
 
+        $enable_help = $mgr->enable_help();
+
         $this->set_data(
             [
                 'allow_reviews_admin' => $allow_review_admin,
                 'allow_reviews_peers' => $allow_review_peers,
                 'show_scores' => $show_scores,
+                'enable_help' => $enable_help,
             ]
         );
 
@@ -77,10 +80,12 @@ class preferences extends \moodleform
         }
 
 
-
         // *** Appearance ***.
 
         $mform->addElement('header', 'appearance_header', Helper::get_string('prefs_appearance'));
+
+        $mform->addElement('advcheckbox', 'enable_help', Helper::get_string('enable_help'));
+        $mform->addHelpButton('enable_help', 'enable_help', 'mod_goodhabits');
 
         $mform->addElement('advcheckbox', 'show_scores', Helper::get_string('show_scores'));
         $mform->addHelpButton('show_scores', 'show_scores', 'mod_goodhabits');

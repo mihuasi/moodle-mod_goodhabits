@@ -467,6 +467,9 @@ class mod_goodhabits_renderer extends plugin_renderer_base {
         global $USER;
         $userid = ($userid) ? $userid : $USER->id;
 
+        $prefs_mgr = new gh\PreferencesManager($instanceid, $userid);
+        $enable_help = $prefs_mgr->enable_help();
+
         $data = [];
 //        $latest_unit = $calendar->get_latest();
 //        $latest_complete = gh\Helper::unit_has_all_complete($instanceid, $latest_unit, $userid);
@@ -476,6 +479,10 @@ class mod_goodhabits_renderer extends plugin_renderer_base {
 //            'upper' => $upper,
 //        ];
         $data['show_help'] = 0;
+
+        if (!$enable_help) {
+            return $data;
+        }
 
         // TODO: Switch types of duration string so that it can read: this week, today, etc...
         $data['period_string'] = $calendar->get_period_duration_string(false);

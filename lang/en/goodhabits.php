@@ -233,3 +233,7 @@ $string['show_scores'] = 'Show numbers in the tracker';
 $string['show_scores_help'] = 'Whether to show the numbers that you have entered in the grid.
 <br /><br />For example: <span style="font-weight: bold">6 / 7</span>.
 <br /><br />If you hide this, you can still get a general sense of the values from the colours.';
+$string['enable_help'] = 'Enable help';
+$string['enable_help_help'] = 'Whether to provide additional links and guidance.<br /><br />
+This is designed to help you get familiar with how the tracker works.<br /><br />
+It also supports your engagement in the self-reflective practice.';
