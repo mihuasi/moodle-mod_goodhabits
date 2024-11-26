@@ -471,13 +471,7 @@ class mod_goodhabits_renderer extends plugin_renderer_base {
         $enable_help = $prefs_mgr->enable_help();
 
         $data = [];
-//        $latest_unit = $calendar->get_latest();
-//        $latest_complete = gh\Helper::unit_has_all_complete($instanceid, $latest_unit, $userid);
-//        $upper = $calendar->get_latest()->getTimestamp() + YEARSECS;
-//        $limits = [
-//            'lower' => 0,
-//            'upper' => $upper,
-//        ];
+
         $data['show_help'] = 0;
 
         if (!$enable_help) {

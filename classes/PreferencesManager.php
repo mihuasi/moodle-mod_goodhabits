@@ -54,16 +54,6 @@ class PreferencesManager
 
     public function show_scores()
     {
-//        if (empty($this->pref_rec)) {
-//            return true;
-//        }
-//
-//        $val = $this->pref_rec->show_scores;
-//
-//        if (is_null($val)) {
-//            return true;
-//        }
-//        return $val;
         $val = static::default_yes_setting($this->pref_rec, 'show_scores');
         return $val;
     }
