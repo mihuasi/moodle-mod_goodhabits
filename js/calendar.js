@@ -351,7 +351,7 @@ jQuery(window).on('load',function($) {
 
         var timestamp = el.data('timestamp');
         var timeUnitTxt = getLangString('entry_for') + " " + $('.time-unit-' + timestamp).data('text');
-        var habitTxt = $('.habit-' + habitId + ' .habit-name').text();
+        var habitTxt = $('.habit-' + habitId + ' .habit-name').text().trim();
         $('.habit-grid-container-' + habitId).append("" +
             "<div class='grid-heading'>"+timeUnitTxt+" ("+habitTxt+")</div>" +
             "<div class=\"talentgrid\">" +
