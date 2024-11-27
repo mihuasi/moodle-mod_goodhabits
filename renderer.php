@@ -51,12 +51,18 @@ class mod_goodhabits_renderer extends plugin_renderer_base {
         $to_date = $calendar->get_to_date();
 
         $backurl = $calendar->get_back_url($instanceid);
+        $backurl_small_screen = $calendar->get_back_url($instanceid, 4);
         $forwardurl = $calendar->get_forward_url($instanceid);
+        $forwardurl_small_screen = $calendar->get_forward_url($instanceid, 4);
 
         $data['year'] = $year;
         $data['backurl'] = $backurl;
+        $data['backurl_small_screen'] = $backurl_small_screen;
+        $data['forwardurl_small_screen'] = $forwardurl_small_screen;
         $data['forwardurl'] = $forwardurl;
         $data['flexi_cal_units'] = [];
+
+        $count = 1;
 
         foreach ($displayset as $k => $unit) {
             $display = $unit->display_unit();
@@ -68,6 +74,7 @@ class mod_goodhabits_renderer extends plugin_renderer_base {
             $month = $unit->display_month();
 
             $classes = $unit->get_classes();
+            $classes[] = 'count-' . $count;
             $imploded_classes = implode(' ', $classes);
 
             $flexi_cal_unit = [];
@@ -80,6 +87,8 @@ class mod_goodhabits_renderer extends plugin_renderer_base {
             $flexi_cal_unit['all_complete'] = $all_complete;
 
             $data['flexi_cal_units'][] = $flexi_cal_unit;
+
+            $count ++;
         }
 
         return $data;
@@ -179,6 +188,8 @@ class mod_goodhabits_renderer extends plugin_renderer_base {
 
         $isactivitylevel = $habit->is_activity_habit();
 
+        $count = 1;
+
         foreach ($displayset as $unit) {
             $data_checkmark = [];
             $timestamp = $unit->getTimestamp();
@@ -209,6 +220,8 @@ class mod_goodhabits_renderer extends plugin_renderer_base {
                 $classes .= ' hide-scores';
             }
 
+            $classes .= ' count-' . $count;
+
             $data_checkmark['is_filled'] = $is_filled;
             $data_checkmark['is_review'] = $isreview;
             $data_checkmark['title'] = $title;
@@ -218,6 +231,7 @@ class mod_goodhabits_renderer extends plugin_renderer_base {
             $data_checkmark['class'] = $classes;
 
             $data['units'][] = $data_checkmark;
+            $count ++;
         }
         $classes = 'checkmarks';
         if ($isactivitylevel) {

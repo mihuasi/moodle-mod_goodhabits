@@ -182,15 +182,24 @@ class FlexiCalendar {
     /**
      * Gets the URL for moving backwards through the calendar.
      *
-     * @param int $instanceid
+     * @param $instanceid
+     * @param $override_num_entries
      * @return \moodle_url
+     * @throws \coding_exception
      * @throws \moodle_exception
      */
-    public function get_back_url($instanceid) {
+    public function get_back_url($instanceid, $override_num_entries = 0) {
 //        $offset = $this->current_span() - 1;
 //        $backdate = Helper::new_date_time($this->basedate, '-' . $offset . ' day');
 //        $backdatemysql = Helper::date_time_to_mysql($backdate);
+        if ($override_num_entries) {
+            $pre_num_entries = $this->numentries;
+            $this->numentries = $override_num_entries;
+        }
         $backdatemysql = $this->get_back_date();
+        if ($override_num_entries) {
+            $this->numentries = $pre_num_entries;
+        }
         $params = array('toDate' => $backdatemysql, 'g' => $instanceid);
         $url = '/mod/goodhabits/view.php';
         if ($this->pluginarea == self::PLUGIN_AREA_REVIEW) {
@@ -225,12 +234,21 @@ class FlexiCalendar {
     /**
      * Gets the URL for moving forwards through the calendar.
      *
-     * @param int $instanceid
+     * @param $instanceid
+     * @param $override_num_entries
      * @return \moodle_url|null
+     * @throws \coding_exception
      * @throws \moodle_exception
      */
-    public function get_forward_url($instanceid) {
+    public function get_forward_url($instanceid, $override_num_entries = 0) {
+        if ($override_num_entries) {
+            $pre_num_entries = $this->numentries;
+            $this->numentries = $override_num_entries;
+        }
         $forwarddate = Helper::new_date_time($this->basedate, '+' . $this->current_span(). ' day');
+        if ($override_num_entries) {
+            $this->numentries = $pre_num_entries;
+        }
         $threshold = Helper::get_end_period_date_time($this->periodduration, new \DateTime());
         if ($forwarddate->getTimestamp() > $threshold->getTimestamp()) {
             $forwarddate = $threshold;

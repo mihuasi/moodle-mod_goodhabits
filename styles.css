@@ -443,6 +443,11 @@
     left: 390px;
 }
 
+.path-mod-goodhabits .arrow-left-small-screen,
+.path-mod-goodhabits .arrow-right-small-screen {
+    display: none;
+}
+
 @media only screen and (max-width: 927px) {
     .path-mod-goodhabits .talentgrid-controls {
         max-width: 66px;
@@ -548,7 +553,7 @@
 
 @media only screen and (max-width: 639px) {
     .path-mod-goodhabits .viewport-too-small {
-        display: block;
+        display: none;
         background-color: #faabab;
         margin: 20px;
         margin-top: 50px;
@@ -558,6 +563,35 @@
     .path-mod-goodhabits .goodhabits-container,
     .path-mod-goodhabits .simple-view {
         /*display: none;*/
+    }
+
+    .path-mod-goodhabits .time-unit.count-1,
+    .path-mod-goodhabits .time-unit.count-2,
+    .path-mod-goodhabits .time-unit.count-3,
+    .path-mod-goodhabits .time-unit.count-4,
+    .path-mod-goodhabits .checkmark.count-1,
+    .path-mod-goodhabits .checkmark.count-2,
+    .path-mod-goodhabits .checkmark.count-3,
+    .path-mod-goodhabits .checkmark.count-4 {
+        display: none !important;
+    }
+
+    .path-mod-goodhabits .arrow-left,
+    .path-mod-goodhabits .arrow-right {
+        display: none;
+    }
+
+    .path-mod-goodhabits .arrow-left.arrow-left-small-screen,
+    .path-mod-goodhabits .arrow-right.arrow-right-small-screen {
+        display: block;
+    }
+
+    .path-mod-goodhabits .arrow-right-container {
+        left: 186px;
+    }
+
+    .path-mod-goodhabits .calendar div.time-unit.time-unit-options {
+        width: 181px;
     }
 }
 
