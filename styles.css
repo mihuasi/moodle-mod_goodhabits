@@ -613,6 +613,13 @@
     }
 }
 
+@media only screen and (max-width: 400px) {
+
+    .path-mod-goodhabits span.prev-habit, .path-mod-goodhabits span.next-habit {
+        top: 56%;
+    }
+}
+
 @media only screen and (max-width: 360px) {
     .path-mod-goodhabits .habit-grid-container .talentgrid {
         margin-left: 12px;
@@ -738,7 +745,7 @@
 
 .path-mod-goodhabits .prev-habit, .path-mod-goodhabits .next-habit {
     position: absolute;
-    top: 56%; /* Vertically center the arrows */
+    top: 50%; /* Vertically center the arrows */
     transform: translateY(-50%); /* Center adjustment */
     font-size: 2rem; /* Size of the arrows */
     background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
