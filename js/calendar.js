@@ -214,6 +214,24 @@ jQuery(window).on('load',function($) {
                 },
             };
 
+
+            const mediaQuery = window.matchMedia("(max-width: 639px)");
+
+            function handleMediaQueryChange(e) {
+                if (e.matches) {
+                    // Media query matches, apply the setting
+                    options.tokenWidth = 30;
+                    console.log("Small screen: tokenWidth set to 30");
+                } else {
+                    // Media query does not match, you can handle other cases here if needed
+                    console.log("Screen is larger than 639px");
+                }
+            }
+
+            mediaQuery.addEventListener('change', handleMediaQueryChange);
+
+            handleMediaQueryChange(mediaQuery);
+
             // options.tokenWidth = 30;
 
             var talentgrid = $('.talentgrid').talentgriddle(options);

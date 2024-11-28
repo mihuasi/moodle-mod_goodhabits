@@ -498,8 +498,9 @@
     }
 
     .path-mod-goodhabits .simple-view .simple-main {
-        width: 500px;
-        margin-left: 60px;
+        width: 84%;
+        margin-left: 8%;
+        margin-right: 8%;
     }
 
     .path-mod-goodhabits .simple-view .next-habit {
@@ -552,18 +553,19 @@
 }
 
 @media only screen and (max-width: 639px) {
-    .path-mod-goodhabits .viewport-too-small {
-        display: none;
-        background-color: #faabab;
-        margin: 20px;
-        margin-top: 50px;
-        padding: 10px;
-    }
 
-    .path-mod-goodhabits .goodhabits-container,
-    .path-mod-goodhabits .simple-view {
-        /*display: none;*/
-    }
+    /*.path-mod-goodhabits .viewport-too-small {*/
+    /*    display: none;*/
+    /*    background-color: #faabab;*/
+    /*    margin: 20px;*/
+    /*    margin-top: 50px;*/
+    /*    padding: 10px;*/
+    /*}*/
+
+    /*.path-mod-goodhabits .goodhabits-container,*/
+    /*.path-mod-goodhabits .simple-view {*/
+    /*    !*display: none;*!*/
+    /*}*/
 
     .path-mod-goodhabits .time-unit.count-1,
     .path-mod-goodhabits .time-unit.count-2,
@@ -593,6 +595,51 @@
     .path-mod-goodhabits .calendar div.time-unit.time-unit-options {
         width: 181px;
     }
+
+    .path-mod-goodhabits .habit-grid-container .talentgrid {
+        margin-left: 40px;
+    }
+
+    .path-mod-goodhabits .simple-view .prev-habit {
+        left: -32px;
+    }
+
+    .path-mod-goodhabits .simple-view .next-habit {
+        right: -32px;
+    }
+
+    .path-mod-goodhabits div.habits-wrapper {
+        width: 90%;
+    }
+}
+
+@media only screen and (max-width: 360px) {
+    .path-mod-goodhabits .habit-grid-container .talentgrid {
+        margin-left: 12px;
+    }
+
+    .path-mod-goodhabits div.talentgrid-y-axis {
+        left: -21px;
+    }
+
+    .path-mod-goodhabits .table-plus-axis .talentgrid-y-axis.large-label.small-labels-also-used {
+        left: -73px;
+    }
+}
+
+@media only screen and (max-width: 340px) {
+    .path-mod-goodhabits .viewport-too-small {
+        display: block;
+        background-color: #faabab;
+        margin: 20px;
+        margin-top: 50px;
+        padding: 10px;
+    }
+
+    .path-mod-goodhabits .goodhabits-container,
+    .path-mod-goodhabits .simple-view {
+        display: none;
+    }
 }
 
 .path-mod-goodhabits .exit-mobile-view {
@@ -616,11 +663,19 @@
     margin-left: 180px;
     position: relative; /* Ensure positioning context for arrows */
     padding: 0 50px;
-    width: 650px;
+    /*width: 650px;*/
+    margin-left: 10%;
+    margin-right: 10%;
+
+    /* Add these lines */
+    display: flex;
+    flex-direction: column; /* For vertical alignment if needed */
+    align-items: center;    /* Horizontally center children */
+    justify-content: center; /* Optional: centers vertically */
 }
 
 .path-mod-goodhabits .sliders {
-    width: 400px;
+    width: 100%;
     margin-bottom: 30px;
 }
 
@@ -631,6 +686,7 @@
 
 .path-mod-goodhabits .discrete-slider {
     width: 100%;
+    max-width: 400px;
 }
 
 .path-mod-goodhabits input.outcome[type=range] {
@@ -682,7 +738,7 @@
 
 .path-mod-goodhabits .prev-habit, .path-mod-goodhabits .next-habit {
     position: absolute;
-    top: 50%; /* Vertically center the arrows */
+    top: 56%; /* Vertically center the arrows */
     transform: translateY(-50%); /* Center adjustment */
     font-size: 2rem; /* Size of the arrows */
     background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
@@ -701,7 +757,7 @@
 
 /* Right arrow positioning */
 .path-mod-goodhabits .next-habit {
-    right: 10px; /* Position on the right */
+    right: -50px; /* Position on the right */
 }
 
 /* Optional: Hover effect */
@@ -713,7 +769,7 @@
     /*position: fixed; !* Fixed position relative to the viewport *!*/
     /*bottom: 20px; !* Distance from the bottom of the viewport *!*/
     margin-top: 60px;
-    margin-left: 140px;
+    /*margin-left: 140px;*/
     margin-bottom: 20px;
     align-self: center; /* Center button horizontally within its container */
     padding: 15px 30px; /* Size of the button */
@@ -792,6 +848,13 @@
     display: none;
     color: #039103;
     margin-left: 12px;
+}
+
+.path-mod-goodhabits .habits-wrapper {
+    max-width: 400px;
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 
