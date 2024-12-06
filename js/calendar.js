@@ -39,6 +39,10 @@ jQuery(window).on('load',function($) {
                 return; // Do nothing if part of a break.
             }
 
+            if ($(this).hasClass('example')) {
+                return; // Do nothing if it is just an example.
+            }
+
             $(this).addClass('time-unit-options');
 
             $(this).children('.tuo-options').show();
@@ -135,6 +139,35 @@ jQuery(window).on('load',function($) {
     }
 
     timeUnitOptions();
+
+
+    function tips_showhide() {
+
+        $('.dyk-close-btn').click(function() {
+            $('.dyk-container').hide();
+        });
+
+        $(".tip-card").click(function() {
+            var content = $(this).children(".tip-content");
+
+            // Collapse all other tip contents
+            $(".tip-content").not(content).slideUp().css("padding", "0 15px");
+
+            // Toggle the clicked content
+            if (content.is(":visible")) {
+                content.slideUp().css("padding", "0 15px");
+                $(this).addClass('closed');
+                $(this).removeClass('open');
+            } else {
+                content.stop(true, true).slideDown().css("padding", "10px 15px");
+                $(this).addClass('open');
+                $(this).removeClass('closed');
+            }
+        });
+
+    }
+
+    tips_showhide();
 
     
     function initGrid(x, y) {

@@ -515,6 +515,11 @@ class mod_goodhabits_renderer extends plugin_renderer_base {
             }
         }
 
+        if (empty($data['get_started'] AND empty($data['answer_latest']))) {
+            // Then show: Did you know?
+
+        }
+
         return $data;
     }
 

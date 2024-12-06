@@ -66,7 +66,8 @@
 }
 
 .path-mod-goodhabits .calendar .time-unit.unselected .top-line,
-.path-mod-goodhabits .calendar .time-unit.unselected .bottom-line {
+.path-mod-goodhabits .calendar .time-unit.unselected .bottom-line
+{
     color: #9baec8;
 }
 
@@ -181,7 +182,8 @@
     width: calc(50px * 32);
 }
 
-.path-mod-goodhabits .habits .habit .time-line .checkmark {
+.path-mod-goodhabits .habits .habit .time-line .checkmark,
+.path-mod-goodhabits .example-checkmark {
     float: left;
     height: 40px;
     width: 40px;
@@ -202,7 +204,8 @@
     opacity: 0.65;
 }
 
-.path-mod-goodhabits .checkmark.noxy {
+.path-mod-goodhabits .checkmark.noxy,
+.path-mod-goodhabits .example-checkmark.noxy {
     background-color: #dcd0aa;
 }
 
@@ -839,7 +842,7 @@
     font-size: 18px;
     font-family: Arial, sans-serif;
     text-align: center;
-    line-height: 24px;
+    line-height: 21px;
     border: 2px solid white;
     border-radius: 3px;
     cursor: pointer;
@@ -905,21 +908,138 @@ body.pagelayout-embedded .activity-header {
     margin-bottom: 20px;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
 .path-mod-goodhabits .arrow-right .link-spanner {
     left: -10px;
 }
+
+
+
+
+
+
+.dyk-container {
+    /*font-family: 'Arial', sans-serif;*/
+    /*margin: 0;*/
+    /*padding: 0;*/
+    /*background-color: #f9f9f9;*/
+}
+
+.did-you-know-section .example-checkmark,
+.did-you-know-section .calendar .example {
+    cursor: default;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.path-mod-goodhabits .example-checkmark {
+    float: none;
+    display: block;
+    margin-bottom: 7px;
+}
+
+.path-mod-goodhabits .did-you-know-section .calendar {
+    margin: 0;
+    width: inherit;
+    max-width: inherit;
+}
+
+.tip-content {
+    display: none;
+}
+
+.tip-content.first {
+    display: block;
+}
+
+.tip-content p {
+    margin: 0;
+    padding: 10px 0;
+}
+
+.did-you-know-section {
+    background-color: #fff;
+    color: #333;
+    /*text-align: center;*/
+    padding: 20px;
+    border-radius: 12px;
+    margin: 20px auto;
+    max-width: 600px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.did-you-know-section h3 {
+    text-align: center;
+    cursor: pointer;
+}
+
+.tip-card.closed {
+    cursor: pointer;
+}
+
+.did-you-know-section h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #9d6dd5;
+    position: relative;
+}
+
+.path-mod-goodhabits .dyk-close-btn {
+    width: 24px;
+    height: 24px;
+    background-color: red;
+    color: white;
+    font-size: 18px;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    line-height: 21px;
+    border: 2px solid white;
+    border-radius: 3px;
+    cursor: pointer;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    user-select: none; /* Prevent text selection */
+    position: absolute;
+    top: 6px;
+    right: 12px;
+    opacity: 0.75;
+}
+
+.tips-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.tip-card {
+    background-color: #9d6dd5;
+    color: #fff;
+    padding: 15px 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.tip-card h3 {
+    margin: 0 0 10px;
+    font-size: 18px;
+}
+
+.tip-card p {
+    margin: 0;
+    /*font-size: 16px;*/
+    line-height: 1.4;
+}
+
+.tip-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+}
+
+
+
+
+
+
+/*TODO: rm below */
 
 .completion {
     display: flex;
@@ -975,4 +1095,6 @@ body.pagelayout-embedded .activity-header {
         width: 100%; /* Full width on smaller screens */
     }
 }
+
+
 
