@@ -147,7 +147,7 @@ class mod_goodhabits_renderer extends plugin_renderer_base {
         $titletextid = $activityclass . '_title_text';
 
         $titletext = get_string($titletextid, 'mod_goodhabits');
-        $habit_data['title_text'] = trim(format_text($titletext));
+        $habit_data['title_text'] = trim($titletext);
         $habit_data['habit_name'] = trim(format_text($habit->name));
         $habit_data['habit_desc'] = trim(format_text($habit->description));
 
