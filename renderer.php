@@ -417,6 +417,12 @@ class mod_goodhabits_renderer extends plugin_renderer_base {
         echo html_writer::div($link, 'no-habits');
     }
 
+    protected function print_review_no_habits($instanceid)
+    {
+        $string = get_string('review_no_habits', 'mod_goodhabits');
+        echo html_writer::div($string, 'no-habits');
+    }
+
     /**
      * Generates HTML for the activity name and intro.
      *
@@ -455,11 +461,16 @@ class mod_goodhabits_renderer extends plugin_renderer_base {
      * @throws coding_exception
      * @throws moodle_exception
      */
-    public function print_templated_calendar_area($calendar, $instanceid, $habits, $extraclasses = array(), $userid = null)
+    public function print_templated_calendar_area($calendar, $instanceid, $habits, $extraclasses = array(), $userid = null, $review = false)
     {
         global $OUTPUT;
         if (empty($habits)) {
-            $this->print_no_habits($instanceid);
+            if ($review) {
+                $this->print_review_no_habits($instanceid);
+            } else {
+                $this->print_no_habits($instanceid);
+            }
+
             return null;
         }
 
@@ -498,21 +509,23 @@ class mod_goodhabits_renderer extends plugin_renderer_base {
 
         $url = new moodle_url('/mod/goodhabits/simple.php', ['g' => $instanceid]);
 
+        $data['show_help'] = 1;
         //TODO: Change this to check for just one entry.
         if (empty($units_with_all_complete)) {
             // None are complete so give getting-started help.
-            $data['show_help'] = 1;
+
             $text = gh\Helper::get_string('get_started', $data['period_string']);
             $data['get_started'] = html_writer::link($url, $text);
         } else {
-            $data['show_help'] = 1;
-            $latest_unit = $calendar->get_latest();
-            $latest_complete = gh\Helper::unit_has_all_complete($instanceid, $latest_unit, $userid);
-            if (!$latest_complete) {
-                // The latest is not complete, so link to answer Qs about latest.
-                $text = gh\Helper::get_string('answer_latest_questions', $data['period_string']);
-                $data['answer_latest'] = html_writer::link($url, $text);
-            }
+            // TODO: Review whether we need this.
+//            $data['show_help'] = 1;
+//            $latest_unit = $calendar->get_latest();
+//            $latest_complete = gh\Helper::unit_has_all_complete($instanceid, $latest_unit, $userid);
+//            if (!$latest_complete) {
+//                // The latest is not complete, so link to answer Qs about latest.
+//                $text = gh\Helper::get_string('answer_latest_questions', $data['period_string']);
+//                $data['answer_latest'] = html_writer::link($url, $text);
+//            }
         }
 
         if (empty($data['get_started']) && empty($data['answer_latest'])) {

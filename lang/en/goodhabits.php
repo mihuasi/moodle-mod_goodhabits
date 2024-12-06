@@ -113,6 +113,7 @@ $string['edit'] = 'Edit';
 $string['break_deleted'] = 'Break deleted';
 $string['break_added'] = 'Break added';
 $string['no_habits'] = '[It looks like you don\'t have any habits set up yet - add some here]';
+$string['review_no_habits'] = '[It looks like this user doesn\'t have any habits set up yet]';
 $string['habit_level'] = 'Ownership';
 $string['new_habit_name'] = 'Habit name';
 $string['new_habit_desc'] = 'Habit description';
@@ -225,7 +226,6 @@ Optional [default: Don\'t allow] - Students control whether to allow peer review
 Optional [default: Allow] - As above, students can set whether to allow in their preferences page. By default, peer review is disabled.<br /><br />
 Required - Peer review is enabled and students are not able to change this.
 ';
-$string['get_started'] = 'Need some help getting started? Answer questions about the latest {$a}.';
 $string['get_started'] = 'Need some help getting started? Answer questions about the latest {$a}.';
 $string['answer_latest_questions'] = 'Answer questions about the latest {$a}.';
 $string['simple_all_complete'] = 'You have answered all questions about:';

@@ -105,7 +105,7 @@ if ($userid) {
     $habits = gh\habit\HabitItemsHelper::get_all_habits_for_user($instanceid, $userid);
 
     $extraclasses = array('review');
-    $renderer->print_templated_calendar_area($calendar, $instanceid, $habits, $extraclasses, $userid);
+    $renderer->print_templated_calendar_area($calendar, $instanceid, $habits, $extraclasses, $userid, true);
 }
 
 echo $renderer->print_home_link($name);
