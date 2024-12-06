@@ -237,3 +237,27 @@ $string['enable_help'] = 'Enable help';
 $string['enable_help_help'] = 'Whether to provide additional links and guidance.<br /><br />
 This is designed to help you get familiar with how the tracker works.<br /><br />
 It also supports your engagement in the self-reflective practice.';
+$string['example'] = 'Example';
+
+// Did you know? section.
+$string['dyk_heading'] = 'Did you know?';
+$string['dyk_add_entry_heading'] = 'Tap, reflect, save';
+$string['dyk_add_entry_1'] = 'You can tap/click the habit entry circle';
+$string['dyk_add_entry_2'] = 'This opens up a grid to allow you to reflect on a habit for a particular {$a}.';
+$string['dyk_add_entry_3'] = 'Think about an appropriate placement, considering effort and outcome.';
+$string['dyk_add_entry_4'] = 'To place, just double-tap (or click) the square on the grid.';
+$string['dyk_add_entry_5'] = 'Tap the same circle you used to open up the grid to save and close.';
+
+$string['dyk_cal_unit_options_heading'] = 'Explore options for each {$a}';
+$string['dyk_cal_unit_options_1'] = 'You can tap/click the {$a} button';
+$string['dyk_cal_unit_options_2'] = 'This will show you more options for the {$a}';
+$string['dyk_cal_unit_options_3'] = 'You can answer questions about each habit in sequence for the chosen {$a}';
+$string['dyk_cal_unit_options_4'] = 'Skipping a {$a} will grey it out, so you know you don\'t want to add any entries for that week, and it can be ignored.';
+$string['dyk_cal_unit_options_5'] = 'A skipped {$a} is an example of a break. These can be managed here. You can also add a longer break.';
+
+$string['dyk_prefs_heading'] = 'Manage your preferences';
+$string['dyk_prefs_1'] = 'See "Personal preferences", below.';
+$string['dyk_prefs_2'] = 'Choose whether anyone else can see your tracker data - and whether you want to see other people\'s data.';
+$string['dyk_prefs_3'] = 'You can turn off this help feature.';
+$string['dyk_prefs_4'] = 'Change things about the appearance of the tracker.';
+

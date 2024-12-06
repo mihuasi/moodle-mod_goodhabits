@@ -515,9 +515,12 @@ class mod_goodhabits_renderer extends plugin_renderer_base {
             }
         }
 
-        if (empty($data['get_started'] AND empty($data['answer_latest']))) {
+        if (empty($data['get_started']) && empty($data['answer_latest'])) {
             // Then show: Did you know?
-
+            global $OUTPUT;
+            $context = ['period_string' => $data['period_string']];
+            $dyk_help_text = $OUTPUT->render_from_template('mod_goodhabits/help', $context);
+            $data['did_you_know'] = $dyk_help_text;
         }
 
         return $data;
