@@ -914,18 +914,8 @@ body.pagelayout-embedded .activity-header {
 
 
 
-
-
-
-.dyk-container {
-    /*font-family: 'Arial', sans-serif;*/
-    /*margin: 0;*/
-    /*padding: 0;*/
-    /*background-color: #f9f9f9;*/
-}
-
-.did-you-know-section .example-checkmark,
-.did-you-know-section .calendar .example {
+.path-mod-goodhabits .did-you-know-section .example-checkmark,
+.path-mod-goodhabits .did-you-know-section .calendar .example {
     cursor: default;
     margin-top: 10px;
     margin-bottom: 10px;
@@ -943,20 +933,20 @@ body.pagelayout-embedded .activity-header {
     max-width: inherit;
 }
 
-.tip-content {
+.path-mod-goodhabits .tip-content {
     display: none;
 }
 
-.tip-content.first {
+.path-mod-goodhabits .tip-content.first {
     display: block;
 }
 
-.tip-content p {
+.path-mod-goodhabits .tip-content p {
     margin: 0;
     padding: 10px 0;
 }
 
-.did-you-know-section {
+.path-mod-goodhabits .did-you-know-section {
     background-color: #fff;
     color: #333;
     /*text-align: center;*/
@@ -967,16 +957,16 @@ body.pagelayout-embedded .activity-header {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-.did-you-know-section h3 {
+.path-mod-goodhabits .did-you-know-section h3 {
     text-align: center;
     cursor: pointer;
 }
 
-.tip-card.closed {
+.path-mod-goodhabits .tip-card.closed {
     cursor: pointer;
 }
 
-.did-you-know-section h2 {
+.path-mod-goodhabits .did-you-know-section h2 {
     font-size: 24px;
     margin-bottom: 20px;
     color: #9d6dd5;
@@ -1003,13 +993,13 @@ body.pagelayout-embedded .activity-header {
     opacity: 0.75;
 }
 
-.tips-container {
+.path-mod-goodhabits .tips-container {
     display: flex;
     flex-direction: column;
     gap: 15px;
 }
 
-.tip-card {
+.path-mod-goodhabits .tip-card {
     background-color: #9d6dd5;
     color: #fff;
     padding: 15px 20px;
@@ -1018,28 +1008,25 @@ body.pagelayout-embedded .activity-header {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.tip-card h3 {
+.path-mod-goodhabits .tip-card h3 {
     margin: 0 0 10px;
     font-size: 18px;
 }
 
-.tip-card p {
+.path-mod-goodhabits .tip-card p {
     margin: 0;
     /*font-size: 16px;*/
     line-height: 1.4;
 }
 
-.tip-card:hover {
+.path-mod-goodhabits .tip-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
 }
 
 
-.habit-desc {
+.path-mod-goodhabits .habit-desc {
     text-align: center;
     font-size: 14px;
     font-style: italic;
 }
-
-
-
