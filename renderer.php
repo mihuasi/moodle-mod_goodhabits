@@ -482,7 +482,9 @@ class mod_goodhabits_renderer extends plugin_renderer_base {
 
         $template_data['habits'] = $this->get_habits_data($calendar, $habits, $userid, $instanceid);
         $template_data['extra_classes'] = $extraclasses;
-        $template_data['help'] = $this->get_help_data($calendar, $instanceid, $userid);
+        if (!$review) {
+            $template_data['help'] = $this->get_help_data($calendar, $instanceid, $userid);
+        }
 
         echo $OUTPUT->render_from_template('mod_goodhabits/calendar_area', $template_data);
     }
