@@ -240,7 +240,7 @@ It also supports your engagement in the self-reflective practice.';
 $string['example'] = 'Example';
 
 // Did you know? section.
-$string['dyk_heading'] = 'Did you know?';
+$string['dyk_heading'] = 'Some basic tips';
 $string['dyk_add_entry_heading'] = 'Tap, reflect, save';
 $string['dyk_add_entry_1'] = 'You can tap/click the habit entry circle';
 $string['dyk_add_entry_2'] = 'This opens up a grid to allow you to reflect on a habit for a particular {$a}.';
@@ -260,4 +260,11 @@ $string['dyk_prefs_1'] = 'See "Personal preferences", below.';
 $string['dyk_prefs_2'] = 'Choose whether anyone else can see your tracker data - and whether you want to see other people\'s data.';
 $string['dyk_prefs_3'] = 'You can turn off this help feature.';
 $string['dyk_prefs_4'] = 'Change things about the appearance of the tracker.';
+
+$string['dyk_mng_habits_heading'] = 'Manage the habits you track';
+$string['dyk_mng_habits_1'] = 'Click on *Manage habits*, below, for the following:';
+$string['dyk_mng_habits_2'] = 'You can add, edit and delete habits';
+$string['dyk_mng_habits_3'] = 'You can hide a habit by changing *Show* to *Hide*';
+$string['dyk_mng_habits_4'] = 'You can delete all your entries for a specific habit';
+$string['dyk_mng_habits_5'] = 'Some habits may have been set up for the whole group, in which case you cannot or delete or edit the habit.';
 
