@@ -186,8 +186,8 @@ $string['completiondetail:min_habits'] = 'track at least {$a} habits';
 $string['completiondetail:min_entries'] = 'make at least {$a} entries';
 $string['completiondetail:min_cal_units'] = 'complete {$a->min} {$a->units}';
 $string['starting'] = 'starting';
-$string['simple_view_effort'] = 'Effort';
-$string['simple_view_outcome'] = 'Outcome';
+$string['simple_view_effort'] = 'Effort:';
+$string['simple_view_outcome'] = 'Outcome:';
 $string['simple_view_back'] = 'Back';
 $string['allow_reviews_peers'] = 'Allow peers to review your tracker data (and you to see theirs)';
 $string['allow_reviews_peers_help'] = 'Allows others on the course to see your tracker data. <br /><br />If you enable this, you will be able to see the habit tracker data of the other users who have opted in.';
@@ -267,4 +267,17 @@ $string['dyk_mng_habits_2'] = 'You can add, edit and delete habits';
 $string['dyk_mng_habits_3'] = 'You can hide a habit by changing *Show* to *Hide*';
 $string['dyk_mng_habits_4'] = 'You can delete all your entries for a specific habit';
 $string['dyk_mng_habits_5'] = 'Some habits may have been set up for the whole group, in which case you cannot or delete or edit the habit.';
+
+$string['simple_view_effort_0'] = 'Using the sliding scale, how much effort would you say you put in - go with a gut feel:';
+$string['simple_view_effort_1'] = 'How much do you feel you put in? Remember that it is normal for effort to fluctuate:';
+//$string['simple_view_effort_2'] = 'Think of all the things you have done that you might not have done for this habit. This can help you rate your effort:';
+$string['simple_view_effort_2'] = 'Imagine you did nothing at all for this habit. <br /><br /> Then think of all the things you did that you might not have done. This is one way to rate your effort:';
+$string['simple_view_effort_3'] = 'How much of a priority did you make this habit?';
+$string['simple_view_effort_4'] = 'How would you rate the energy and focus you’ve dedicated to this habit?';
+
+$string['simple_view_outcome_0'] = 'And what benefit did this bring? Were any goals achieved? Again, go with whatever makes intuitive sense:';
+$string['simple_view_outcome_1'] = 'Did you achieve your goals? Whatever rating feels right is simply a point of reflection, not a final grade:';
+$string['simple_view_outcome_2'] = 'Are you seeing results?';
+$string['simple_view_outcome_3'] = 'Sometimes you might have a clear marker of objective success, which makes it easy to rate the outcome highly. But it\'s ok to take a more subjective measure - simply feeling good about this habit at this time:';
+$string['simple_view_outcome_4'] = 'Sometimes objective measures of success are highly uncertain. You don\'t really know the final outcome until much later (think of taking a test).<br /><br /> This can be another reason to prefer rating your subjective level of satisfaction with the habit:';
 

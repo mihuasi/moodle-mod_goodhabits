@@ -87,6 +87,9 @@ if ($timestamp) {
     $calendar_unit = $calendar->get_latest_for_questions();
 }
 
+$all_complete = gh\Helper::get_cal_units_with_all_complete($instanceid, $USER->id);
+$questions = gh\Helper::get_simple_questions($all_complete);
+
 $heading = $calendar_unit->display_unit_inline();
 
 $date = null;
@@ -109,6 +112,8 @@ foreach ($habits_recs as $habits_rec) {
     $arr['name'] = $habits_rec->name;
     $arr['desc'] = $habits_rec->description;
     $arr['id'] = $habits_rec->id;
+    $arr['effort'] = $questions['effort'];
+    $arr['outcome'] = $questions['outcome'];
     $habits[] = $arr;
 }
 
@@ -132,7 +137,8 @@ $template_data = [
     'has_remaining_habits' => !empty($habits),
     'habits' => $habits,
     'view-url' => $view_url->out(),
-    'sesskey' => sesskey()
+    'sesskey' => sesskey(),
+    'questions' => $questions
 ];
 
 echo $OUTPUT->render_from_template('mod_goodhabits/simple', $template_data);

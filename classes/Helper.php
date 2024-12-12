@@ -529,4 +529,23 @@ HAVING COUNT(DISTINCT e.habit_id) >= (
         $mform->addElement('html', $html);
     }
 
+    public static function get_simple_questions($all_complete)
+    {
+        if (empty($all_complete)) {
+            $num_all_complete = 0;
+        } else {
+            $num_all_complete = count($all_complete);
+        }
+        $suffix = '_' . $num_all_complete;
+        $number_questions_in_sequence = 4;
+        if ($num_all_complete > $number_questions_in_sequence) {
+            $suffix = '_' . rand(0,4);
+        }
+        return [
+            'effort' => static::get_string('simple_view_effort' . $suffix),
+            'outcome' => static::get_string('simple_view_outcome' . $suffix),
+        ];
+
+    }
+
 }

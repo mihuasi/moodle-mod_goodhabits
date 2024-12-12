@@ -92,7 +92,9 @@ $(document).ready(function() {
             data: postData,
             success: function(response) {
                 // Handle the success response
+                $('.habits-wrapper .saved-' + habitId).fadeOut();
                 $('.habits-wrapper .saved-' + habitId).fadeIn();
+                // TODO: increment question version tracker.
             },
             error: function(xhr, status, error) {
                 // Handle any errors
