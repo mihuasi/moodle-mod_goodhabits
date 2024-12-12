@@ -536,14 +536,16 @@ HAVING COUNT(DISTINCT e.habit_id) >= (
         } else {
             $num_all_complete = count($all_complete);
         }
-        $suffix = '_' . $num_all_complete;
+        $suffix_1 = '_' . $num_all_complete;
+        $suffix_2 = $suffix_1;
         $number_questions_in_sequence = 4;
         if ($num_all_complete > $number_questions_in_sequence) {
-            $suffix = '_' . rand(0,4);
+            $suffix_1 = '_' . rand(0,5);
+            $suffix_2 = '_' . rand(0,5);
         }
         return [
-            'effort' => static::get_string('simple_view_effort' . $suffix),
-            'outcome' => static::get_string('simple_view_outcome' . $suffix),
+            'effort' => static::get_string('simple_view_effort' . $suffix_1),
+            'outcome' => static::get_string('simple_view_outcome' . $suffix_2),
         ];
 
     }

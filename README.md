@@ -14,10 +14,11 @@ The intention of this plugin is to help track habits over time. Within an e-lear
 - A simple view gives space for posing questions related to a particular entry.
 - Can be set up to allow for admin review of entries, or for peer review.
 - Student users have control over their own review preferences.
+- A help feature guides new users through the process from setting up habits to answering questions. After they complete a single set of questions, there is a general how-to guide.
 
 ## 2.0 Notes
 - Render using mustache templates - allows for easier UI changes.
-- Add "simple view".
+- Add "simple view". This progresses through different questions relating to effort and outcome.
 - Add "mobile view" (embedded page layout) and improve general responsiveness.
 - Improve UI for calendar view to access simple view and 'skip' days/weeks.
 - Add completion options / change implementation to use custom completion class.

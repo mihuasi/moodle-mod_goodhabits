@@ -157,6 +157,6 @@ if ($canmanageprefs) {
     $renderer->print_preferences($instanceid);
 }
 
-$renderer->print_mobile_view($instanceid);
+//$renderer->print_mobile_view($instanceid);
 
 echo $OUTPUT->footer();

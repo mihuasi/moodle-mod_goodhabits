@@ -253,7 +253,7 @@ $string['dyk_cal_unit_options_1'] = 'You can tap/click the {$a} button';
 $string['dyk_cal_unit_options_2'] = 'This will show you more options for the {$a}';
 $string['dyk_cal_unit_options_3'] = 'You can answer questions about each habit in sequence for the chosen {$a}';
 $string['dyk_cal_unit_options_4'] = 'Skipping a {$a} will grey it out, so you know you don\'t want to add any entries for that week, and it can be ignored.';
-$string['dyk_cal_unit_options_5'] = 'A skipped {$a} is an example of a break. These can be managed here. You can also add a longer break.';
+$string['dyk_cal_unit_options_5'] = 'A skipped {$a} is an example of a break. These can be managed under *Manage breaks*, below. You can also add a longer break.';
 
 $string['dyk_prefs_heading'] = 'Manage your preferences';
 $string['dyk_prefs_1'] = 'See "Personal preferences", below.';
@@ -270,14 +270,16 @@ $string['dyk_mng_habits_5'] = 'Some habits may have been set up for the whole gr
 
 $string['simple_view_effort_0'] = 'Using the sliding scale, how much effort would you say you put in - go with a gut feel:';
 $string['simple_view_effort_1'] = 'How much do you feel you put in? Remember that it is normal for effort to fluctuate:';
-//$string['simple_view_effort_2'] = 'Think of all the things you have done that you might not have done for this habit. This can help you rate your effort:';
 $string['simple_view_effort_2'] = 'Imagine you did nothing at all for this habit. <br /><br /> Then think of all the things you did that you might not have done. This is one way to rate your effort:';
 $string['simple_view_effort_3'] = 'How much of a priority did you make this habit?';
 $string['simple_view_effort_4'] = 'How would you rate the energy and focus you’ve dedicated to this habit?';
+$string['simple_view_effort_5'] = 'Effort:';
 
-$string['simple_view_outcome_0'] = 'And what benefit did this bring? Were any goals achieved? Again, go with whatever makes intuitive sense:';
+$string['simple_view_outcome_0'] = 'What benefit did this bring? Were any goals achieved? Go with whatever makes intuitive sense:';
 $string['simple_view_outcome_1'] = 'Did you achieve your goals? Whatever rating feels right is simply a point of reflection, not a final grade:';
 $string['simple_view_outcome_2'] = 'Are you seeing results?';
 $string['simple_view_outcome_3'] = 'Sometimes you might have a clear marker of objective success, which makes it easy to rate the outcome highly. But it\'s ok to take a more subjective measure - simply feeling good about this habit at this time:';
 $string['simple_view_outcome_4'] = 'Sometimes objective measures of success are highly uncertain. You don\'t really know the final outcome until much later (think of taking a test).<br /><br /> This can be another reason to prefer rating your subjective level of satisfaction with the habit:';
+$string['simple_view_outcome_5'] = 'Outcome:';
+
 
