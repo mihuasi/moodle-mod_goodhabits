@@ -375,7 +375,24 @@ class Helper {
         $recs = $DB->get_records_sql($sql, $params);
 
         return $recs;
+    }
 
+    public static function get_all_entries($instanceid, $userid) {
+        global $DB;
+        $sql = "SELECT e.*
+            FROM {mod_goodhabits_item} i
+            INNER JOIN {mod_goodhabits_entry} e ON e.habit_id = i.id 
+                AND e.userid = :userid 
+            WHERE i.instanceid = :instanceid";
+
+        $params = [
+            'instanceid' => $instanceid,
+            'userid' => $userid,
+        ];
+
+        $recs = $DB->get_records_sql($sql, $params);
+
+        return $recs;
     }
 
     public static function unit_has_all_complete($instanceid, FlexiCalendarUnit $unit, $userid)

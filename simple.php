@@ -84,7 +84,7 @@ $calendar = gh\ViewHelper::get_flexi_calendar($moduleinstance);
 if ($timestamp) {
     $calendar_unit = gh\Helper::get_flexi_cal_unit_from_timestamp($timestamp, $calendar->get_period_duration());
 } else {
-    $calendar_unit = $calendar->get_latest();
+    $calendar_unit = $calendar->get_latest_for_questions();
 }
 
 $heading = $calendar_unit->display_unit_inline();
@@ -107,6 +107,7 @@ $habits = [];
 foreach ($habits_recs as $habits_rec) {
     $arr = [];
     $arr['name'] = $habits_rec->name;
+    $arr['desc'] = $habits_rec->description;
     $arr['id'] = $habits_rec->id;
     $habits[] = $arr;
 }

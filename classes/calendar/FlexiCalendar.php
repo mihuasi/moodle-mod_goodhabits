@@ -50,7 +50,7 @@ class FlexiCalendar {
     private $numentries;
 
     /**
-     * @var array - An array of FlexiCalendarUnits. One for every Habit Entry date.
+     * @var FlexiCalendarUnit[] - An array of FlexiCalendarUnits. One for every Habit Entry date.
      */
     private $displayset;
 
@@ -96,6 +96,8 @@ class FlexiCalendar {
     }
 
     /**
+     * Returns the latest item from the set.
+     *
      * @return false|FlexiCalendarUnit
      */
     public function get_latest()
@@ -104,6 +106,28 @@ class FlexiCalendar {
         $latest = reset($reverse);
 
         return $latest;
+    }
+
+    /**
+     * Returns the latest item from the set that is at least mostly in the past.
+     *
+     * @return FlexiCalendarUnit
+     */
+    public function get_latest_for_questions()
+    {
+        $time = time();
+        $reverse = array_reverse($this->displayset);
+        foreach ($reverse as $unit) {
+            $timestamp = $unit->getTimestamp();
+            // If day/week/etc is 80% complete, then select it for questions.
+            $offset = $this->periodduration * 0.8;
+            $timestamp += ($offset * DAYSECS);
+            if ($timestamp < $time) {
+                return $unit;
+            }
+        }
+        // We shouldn't reach this, but make sure to return something.
+        return $unit;
     }
 
     /**
