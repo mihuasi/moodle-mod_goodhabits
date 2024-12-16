@@ -84,12 +84,12 @@ $string['y_select_label'] = 'Outcome';
 $string['x_default'] = 'Select';
 $string['y_default'] = 'Select';
 $string['overlay_1_1'] = 'Stars align';
-$string['overlay_1_2'] = 'Bang for buck!';
-$string['overlay_1_3'] = 'Putting in the miles';
+$string['overlay_1_2'] = 'Doing more with less';
+$string['overlay_1_3'] = 'Going far with effort';
 $string['overlay_2_1'] = 'Enjoy easy gains';
 $string['overlay_2_2'] = 'Going places at a solid pace';
-$string['overlay_2_3'] = 'Making headway against headwinds';
-$string['overlay_3_1'] = 'Never knock a single step';
+$string['overlay_2_3'] = 'Overcoming challenges';
+$string['overlay_3_1'] = 'Every step counts';
 $string['overlay_3_2'] = 'Sticking at it';
 $string['overlay_3_3'] = 'Persevering with a challenge';
 
