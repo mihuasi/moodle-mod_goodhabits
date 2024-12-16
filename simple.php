@@ -95,9 +95,9 @@ $heading = $calendar_unit->display_unit_inline();
 $date = null;
 if ($calendar->get_period_duration() == 7) {
     // Only show "starting on" for weeks.
-    $date = $calendar_unit->format('l, jS F, Y');
+    $date = $calendar_unit->get_moodle_user_date('%A, %d %B, %Y');
 } else if ($calendar->get_period_duration() === 1) {
-    $heading = $calendar_unit->format('l, jS F, Y');
+    $heading = $calendar_unit->get_moodle_user_date('%A, %d %B, %Y');
 }
 
 $timestamp = $calendar_unit->getTimestamp();

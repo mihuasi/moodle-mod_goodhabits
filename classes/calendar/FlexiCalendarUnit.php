@@ -68,9 +68,11 @@ class FlexiCalendarUnit extends \DateTime {
         $toplinedatatime = Helper::new_date_time($this, '-' . $offset . ' day');
         $topline = $toplinedatatime->format('d/m') . ' - ';
         $bottomline = $this->format('d/m');
+//        global $SESSION;
+//        print_object($SESSION);exit;
         switch ($this->periodduration) {
             case 1:
-                $topline = $this->format('D');
+                $topline = $this->get_moodle_user_date("%a");
                 $bottomline = $this->format('d');
                 break;
             case 7:
@@ -83,6 +85,14 @@ class FlexiCalendarUnit extends \DateTime {
             'bottomLine' => $bottomline,
         );
         return $display;
+    }
+
+    public function get_moodle_user_date($format)
+    {
+        $timestamp = $this->getTimestamp();
+        $date = userdate($timestamp, $format);
+
+        return $date;
     }
 
     public function display_unit_inline()
@@ -120,7 +130,7 @@ class FlexiCalendarUnit extends \DateTime {
         $previousmonth = $previousdatetime->format('M');
         $currentmonth = $this->format('M');
         if ($previousmonth != $currentmonth) {
-            return $currentmonth;
+            return $this->get_moodle_user_date("%b");
         }
         return '';
     }
