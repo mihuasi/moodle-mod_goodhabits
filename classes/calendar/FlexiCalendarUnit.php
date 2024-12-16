@@ -68,8 +68,6 @@ class FlexiCalendarUnit extends \DateTime {
         $toplinedatatime = Helper::new_date_time($this, '-' . $offset . ' day');
         $topline = $toplinedatatime->format('d/m') . ' - ';
         $bottomline = $this->format('d/m');
-//        global $SESSION;
-//        print_object($SESSION);exit;
         switch ($this->periodduration) {
             case 1:
                 $topline = $this->get_moodle_user_date("%a");
