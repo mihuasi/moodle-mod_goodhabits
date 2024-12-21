@@ -282,4 +282,6 @@ $string['simple_view_outcome_3'] = 'Sometimes you might have a clear marker of o
 $string['simple_view_outcome_4'] = 'Sometimes objective measures of success are highly uncertain. You don\'t really know the final outcome until much later (think of taking a test).<br /><br /> This can be another reason to prefer rating your subjective level of satisfaction with the habit:';
 $string['simple_view_outcome_5'] = 'Outcome:';
 
+$string['block_of_days'] = 'block of days';
+
 
