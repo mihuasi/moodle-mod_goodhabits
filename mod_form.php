@@ -195,6 +195,10 @@ class mod_goodhabits_mod_form extends moodleform_mod {
     }
 
     protected function get_suffixed_name(string $fieldname): string {
+        if (!method_exists($this, 'get_suffix')) {
+            // For compatibility with Moodle versions pre 4.3.
+            return $fieldname;
+        }
         return $fieldname . $this->get_suffix();
     }
 

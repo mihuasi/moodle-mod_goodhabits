@@ -1,4 +1,4 @@
-# Good Habits Activity Module (2.0) for Moodle #
+# Good Habits Activity Module (2.0.1) for Moodle #
 
 The intention of this plugin is to help track habits over time. Within an e-learning context this may help cultivate behaviours that improve learning outcomes.
 
@@ -15,6 +15,10 @@ The intention of this plugin is to help track habits over time. Within an e-lear
 - Can be set up to allow for admin review of entries, or for peer review.
 - Student users have control over their own review preferences.
 - A help feature guides new users through the process from setting up habits to answering questions. After they complete a single set of questions, there is a general how-to guide.
+
+## 2.0.1 Notes
+- Fix localisation of date strings
+- Fix backwards compatibility with previous versions and document Moodle/Totara compatibility.
 
 ## 2.0 Notes
 - Render using mustache templates - allows for easier UI changes.
@@ -47,6 +51,13 @@ The intention of this plugin is to help track habits over time. Within an e-lear
 - Add support for Completion Tracking.
 - Fix issues with Privacy API implementation.
 - Improve code documentation and style to fit guidelines.
+
+## Version compatibility
+
+| Plugin Area     | Compatible Totara Versions | Compatible Moodle Versions   |
+|-----------------|----------------------------|------------------------------|
+| Review entries  | None                       | 4.3, 4.4, 4.5                |
+| Everything else | 13, 14, 15, 16, 17, 18     | 4.0, 4.1, 4.2, 4.3, 4.4, 4.5 |                       |
 
 ## License ##
 
