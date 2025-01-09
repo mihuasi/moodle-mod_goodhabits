@@ -353,36 +353,81 @@ class HabitItemsHelper {
     public static function check_change_sort_order()
     {
         global $DB;
+        $move = null;
+        $habit_id = null;
         $moveup = optional_param('moveup', 0, PARAM_INT);
         if ($moveup) {
-            $item_to_move = static::get_habit_by_id($moveup);
-            static::ensure_sortorder_numbers($item_to_move->instanceid);
-
-            $adjacent = $DB->get_record_sql(
-                'SELECT * FROM {mod_goodhabits_item} WHERE sortorder < :sortorder AND level = :level ORDER BY sortorder DESC LIMIT 1',
-                ['sortorder' => $item_to_move->sortorder, 'level' => $item_to_move->level]
-            );
-
-            if ($adjacent) {
-                $DB->update_record('mod_goodhabits_item', ['id' => $item_to_move->id, 'sortorder' => $adjacent->sortorder]);
-                $DB->update_record('mod_goodhabits_item', ['id' => $adjacent->id, 'sortorder' => $item_to_move->sortorder]);
-            }
+            $move = 'up';
+            $habit_id = $moveup;
         }
         $movedown = optional_param('movedown', 0, PARAM_INT);
         if ($movedown) {
-            $item_to_move = static::get_habit_by_id($movedown);
-            static::ensure_sortorder_numbers($item_to_move->instanceid);
-
-            $adjacent = $DB->get_record_sql(
-                'SELECT * FROM {mod_goodhabits_item} WHERE sortorder > :sortorder AND level = :level ORDER BY sortorder ASC LIMIT 1',
-                ['sortorder' => $item_to_move->sortorder, 'level' => $item_to_move->level]
-            );
-
-            if ($adjacent) {
-                $DB->update_record('mod_goodhabits_item', ['id' => $item_to_move->id, 'sortorder' => $adjacent->sortorder]);
-                $DB->update_record('mod_goodhabits_item', ['id' => $adjacent->id, 'sortorder' => $item_to_move->sortorder]);
-            }
+            $move = 'down';
+            $habit_id = $movedown;
         }
+        if (!empty($move)) {
+            static::change_sort_order($move, $habit_id);
+        }
+//        if ($moveup) {
+//            $item_to_move = static::get_habit_by_id($moveup);
+//            static::ensure_sortorder_numbers($item_to_move->instanceid);
+//
+//            $adjacent = $DB->get_record_sql(
+//                'SELECT * FROM {mod_goodhabits_item} WHERE sortorder < :sortorder AND level = :level ORDER BY sortorder DESC LIMIT 1',
+//                ['sortorder' => $item_to_move->sortorder, 'level' => $item_to_move->level]
+//            );
+//
+//            if ($adjacent) {
+//                $DB->update_record('mod_goodhabits_item', ['id' => $item_to_move->id, 'sortorder' => $adjacent->sortorder]);
+//                $DB->update_record('mod_goodhabits_item', ['id' => $adjacent->id, 'sortorder' => $item_to_move->sortorder]);
+//            }
+//        }
+//        $movedown = optional_param('movedown', 0, PARAM_INT);
+//        if ($movedown) {
+//            $item_to_move = static::get_habit_by_id($movedown);
+//            static::ensure_sortorder_numbers($item_to_move->instanceid);
+//
+//            $adjacent = $DB->get_record_sql(
+//                'SELECT * FROM {mod_goodhabits_item} WHERE sortorder > :sortorder AND level = :level ORDER BY sortorder ASC LIMIT 1',
+//                ['sortorder' => $item_to_move->sortorder, 'level' => $item_to_move->level]
+//            );
+//
+//            if ($adjacent) {
+//                $DB->update_record('mod_goodhabits_item', ['id' => $item_to_move->id, 'sortorder' => $adjacent->sortorder]);
+//                $DB->update_record('mod_goodhabits_item', ['id' => $adjacent->id, 'sortorder' => $item_to_move->sortorder]);
+//            }
+//        }
+    }
+
+    public static function change_sort_order($updown, $habit_id)
+    {
+        global $DB;
+        $item_to_move = static::get_habit_by_id($habit_id);
+        static::ensure_sortorder_numbers($item_to_move->instanceid);
+        /**
+         * If we are moving the current item up, we need to check the previous item
+         *      (so the lesser, '<', sort order).
+         */
+        $operator = ($updown === 'up') ? '<' : '>';
+        $order_by_direction = ($updown === 'up') ? 'DESC' : 'ASC';
+
+        $sql = 'SELECT * FROM {mod_goodhabits_item} WHERE sortorder ' . $operator . ' :sortorder ';
+        $sql .= ' AND instanceid = :instanceid AND level = :level ORDER BY sortorder ' . $order_by_direction . ' LIMIT 1';
+
+        $adjacent = $DB->get_record_sql(
+            $sql,
+            [
+                'sortorder' => $item_to_move->sortorder,
+                'instanceid' => $item_to_move->instanceid,
+                'level' => $item_to_move->level
+            ]
+        );
+
+        if ($adjacent) {
+            $DB->update_record('mod_goodhabits_item', ['id' => $item_to_move->id, 'sortorder' => $adjacent->sortorder]);
+            $DB->update_record('mod_goodhabits_item', ['id' => $adjacent->id, 'sortorder' => $item_to_move->sortorder]);
+        }
+
     }
 
     public static function ensure_sortorder_numbers($instanceid, $return_activity_next = false)

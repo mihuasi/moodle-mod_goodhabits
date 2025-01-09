@@ -124,6 +124,7 @@ foreach ($habits as $habit) {
     $row[] = implode('<br />', $actions);
 
     $sortoptions = '';
+    $sortoptions = $habit->sortorder;
     if ($level == 'activity' AND $habit->level == 'activity') {
         if ($activity_count !== $num_activity_habits) {
             $sortoptions .= gh\habit\HabitItemsHelper::get_sort_arrow('down', $habit->id);

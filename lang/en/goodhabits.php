@@ -286,6 +286,5 @@ $string['simple_view_outcome_4'] = 'Sometimes objective measures of success are 
 $string['simple_view_outcome_5'] = 'Outcome:';
 
 $string['block_of_days'] = 'block of days';
-$string['sortorder'] = 'Order';
 
 
