@@ -505,6 +505,7 @@ class HabitItemsHelper {
      * @throws \moodle_exception
      */
     public static function table_actions_arr($habit, $isactivity, $level, $instanceid) {
+        global $OUTPUT;
         $actions = array();
         $allowhabitedit = ($habit->level == 'personal') || $isactivity;
         $jsconfirmtxt = get_string('js_confirm_deletehabit', 'mod_goodhabits', $habit->name);
@@ -512,15 +513,19 @@ class HabitItemsHelper {
         $delparams = array('action' => 'delete', 'habitid' => $habit->id, 'sesskey' => sesskey(), 'instance' => $instanceid);
         $delparams['level'] = $level;
         if ($allowhabitedit) {
-            $deleteurl = new \moodle_url('/mod/goodhabits/manage_habits.php', $delparams);
-            $deltext = get_string('delete', 'mod_goodhabits');
-            $actions[] = \html_writer::link($deleteurl, $deltext, $jsconfirm);
-
             $editparams = $delparams;
             $editparams['action'] = 'edit';
             $editurl = new \moodle_url('/mod/goodhabits/manage_habits.php', $editparams);
             $edittext = get_string('edit', 'mod_goodhabits');
+            $icon = $OUTPUT->pix_icon('t/edit', $edittext);
+            $edittext = $icon . $edittext;
             $actions[] = \html_writer::link($editurl, $edittext);
+
+            $deleteurl = new \moodle_url('/mod/goodhabits/manage_habits.php', $delparams);
+            $deltext = get_string('delete', 'mod_goodhabits');
+            $icon = $OUTPUT->pix_icon('t/block', $deltext);
+            $deltext = $icon . $deltext;
+            $actions[] = \html_writer::link($deleteurl, $deltext, $jsconfirm);
         }
 
         if ($level == 'personal') {
@@ -528,6 +533,8 @@ class HabitItemsHelper {
             $delentriesparams['action'] = 'delete_entries';
             $url = new \moodle_url('/mod/goodhabits/manage_habits.php', $delentriesparams);
             $text = get_string('delete_entries', 'mod_goodhabits');
+            $icon = $OUTPUT->pix_icon('t/delete', $text);
+            $text = $icon . $text;
             $jsconfirmtxt = get_string('js_confirm_deletehabitentries', 'mod_goodhabits', $habit->name);
             $jsconfirm = Helper::js_confirm_text($jsconfirmtxt);
             $actions[] = \html_writer::link($url, $text, $jsconfirm);
