@@ -82,6 +82,8 @@ foreach ($breaks as $break) {
     $delparams = array('action' => 'delete', 'breakid' => $break->id, 'sesskey' => sesskey(), 'instance' => $instanceid);
     $deleteurl = new moodle_url('/mod/goodhabits/manage_breaks.php', $delparams);
     $deltext = get_string('delete', 'mod_goodhabits');
+    $icon = $OUTPUT->pix_icon('t/delete', $deltext);
+    $deltext = $icon . $deltext;
     $row[] = html_writer::link($deleteurl, $deltext, $jsconfirm);
     $table->data[] = $row;
 }
