@@ -363,6 +363,9 @@
     color: darkblue;
     margin: auto;
     width: 50%;
+    border: solid #0f6cbf 3px;
+    border-radius: 10px;
+    padding: 8px;
 }
 
 .path-mod-goodhabits .answer-qs {
