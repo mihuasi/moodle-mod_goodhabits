@@ -547,4 +547,15 @@ class HabitItemsHelper {
 
         return $actions;
     }
+
+    public static function get_sort_arrow($updown, $habit_id)
+    {
+        global $OUTPUT, $PAGE;
+
+        $downurl = new \moodle_url($PAGE->url);
+        $downurl->param('move' . $updown, $habit_id);
+        return $OUTPUT->action_icon($downurl, new \pix_icon('/t/' . $updown, get_string('move' . $updown), 'moodle'), null,
+            array('class' => 'action-icon ' . $updown));
+
+    }
 }
