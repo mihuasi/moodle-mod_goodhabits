@@ -214,6 +214,7 @@ class mod_goodhabits_renderer extends plugin_renderer_base {
             $classes = 'checkmark ' . $caninteractclass . ' ' . $classxy;
             if ($isinbreak) {
                 $classes .= ' is-in-break';
+                $show_scores = false;
             }
 
             if (!$show_scores) {

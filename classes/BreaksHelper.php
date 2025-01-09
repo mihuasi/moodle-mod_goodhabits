@@ -97,7 +97,7 @@ class BreaksHelper {
             'userid' => $userid,
             'instanceid' => $instanceid
         );
-        $breaks = $DB->get_records('mod_goodhabits_break', $params);
+        $breaks = $DB->get_records('mod_goodhabits_break', $params, 'timeend DESC');
         return $breaks;
     }
 

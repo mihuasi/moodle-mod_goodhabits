@@ -205,7 +205,9 @@
 }
 
 .path-mod-goodhabits .checkmark.noxy,
-.path-mod-goodhabits .example-checkmark.noxy {
+.path-mod-goodhabits .time-line .checkmark.is-in-break,
+.path-mod-goodhabits .example-checkmark.noxy
+ {
     background-color: #dcd0aa;
 }
 
@@ -221,7 +223,8 @@
     padding-left: 10px;
 }
 
-.path-mod-goodhabits .activity .noxy {
+.path-mod-goodhabits .activity .noxy,
+.path-mod-goodhabits .time-line .activity .checkmark.is-in-break {
     background-color: #c1afd0;
 }
 
