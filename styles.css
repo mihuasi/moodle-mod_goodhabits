@@ -622,6 +622,21 @@
     }
 }
 
+@media only screen and (max-width: 525px) {
+    #page-mod-goodhabits-manage_habits .manage-habits-container th.c1,
+    #page-mod-goodhabits-manage_habits .manage-habits-container td.c1
+     {
+        display: none;
+    }
+}
+
+@media only screen and (max-width: 450px) {
+    #page-mod-goodhabits-manage_habits .manage-habits-container th.c2,
+    #page-mod-goodhabits-manage_habits .manage-habits-container td.c2 {
+        display: none;
+    }
+}
+
 @media only screen and (max-width: 400px) {
 
     .path-mod-goodhabits span.prev-habit, .path-mod-goodhabits span.next-habit {

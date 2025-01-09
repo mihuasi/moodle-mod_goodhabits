@@ -129,13 +129,14 @@ foreach ($habits as $habit) {
         if ($activity_count !== $num_activity_habits) {
             $downurl = new moodle_url($PAGE->url);
             $downurl->param('movedown', $habit->id);
-            $sortoptions .= $OUTPUT->action_icon($downurl, new pix_icon('/t/down', 'movedown', 'moodle'), null,
+            $sortoptions .= $OUTPUT->action_icon($downurl, new pix_icon('/t/down', get_string('movedown'), 'moodle'), null,
                 array('class' => 'action-icon down'));
         }
         if ($activity_count !== 1) {
             $upurl = new moodle_url($PAGE->url);
             $upurl->param('moveup', $habit->id);
-            $sortoptions .= $OUTPUT->action_icon($upurl, new pix_icon('/t/up', 'moveup', 'moodle'), null,
+
+            $sortoptions .= $OUTPUT->action_icon($upurl, new pix_icon('/t/up', get_string('moveup'), 'moodle'), null,
                 array('class' => 'action-icon up'));
         }
         $activity_count ++;
@@ -144,14 +145,14 @@ foreach ($habits as $habit) {
         if ($personal_count !== $num_personal_habits) {
             $downurl = new moodle_url($PAGE->url);
             $downurl->param('movedown', $habit->id);
-            $sortoptions .= $OUTPUT->action_icon($downurl, new pix_icon('/t/down', 'movedown', 'moodle'), null,
+            $sortoptions .= $OUTPUT->action_icon($downurl, new pix_icon('/t/down', get_string('movedown'), 'moodle'), null,
                 array('class' => 'action-icon down'));
         }
 
         if ($personal_count !== 1) {
             $upurl = new moodle_url($PAGE->url);
             $upurl->param('moveup', $habit->id);
-            $sortoptions .= $OUTPUT->action_icon($upurl, new pix_icon('/t/up', 'moveup', 'moodle'), null,
+            $sortoptions .= $OUTPUT->action_icon($upurl, new pix_icon('/t/up', get_string('moveup'), 'moodle'), null,
                 array('class' => 'action-icon up'));
         }
         $personal_count ++;
@@ -165,7 +166,8 @@ foreach ($habits as $habit) {
 echo $OUTPUT->header();
 
 if ($habits AND $action != 'edit') {
-    echo html_writer::table($table);
+    $rendered_table = html_writer::table($table);
+    echo html_writer::div($rendered_table, 'manage-habits-container');
 }
 
 echo html_writer::start_div('add_habit');

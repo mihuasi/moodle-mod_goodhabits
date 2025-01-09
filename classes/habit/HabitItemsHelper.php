@@ -457,6 +457,7 @@ class HabitItemsHelper {
      * @throws \coding_exception
      */
     public static function table_habit_name(Habit $habit, $ispersonal, $activityname) {
+        global $OUTPUT;
         $habitname = format_string($habit->name);
         $titles = array();
         $classes = array();
@@ -469,12 +470,16 @@ class HabitItemsHelper {
             $titles[] = get_string('habit_not_published_title', 'mod_goodhabits', $habitname);
             $classes[] = 'habit_is_hidden';
         }
+        $titlesstr = '';
         if (!empty($classes) || !empty($titles)) {
             $titlesstr = implode('&#10;', $titles);
             $classes = implode(' ', $classes);
             $habitname = \html_writer::span($habitname, $classes, array('title' => $titlesstr));
         }
-        return $habitname;
+        $icon_pix = ($habit->level == 'personal') ? 'i/user' : 'i/group';
+        $icon = $OUTPUT->pix_icon($icon_pix, $titlesstr);
+
+        return $icon . $habitname;
     }
 
     /**
@@ -489,7 +494,7 @@ class HabitItemsHelper {
         $type = Helper::get_string('habit_type');
         $numentriestext = Helper::get_string('habit_num_entries');
         $actionstext = Helper::get_string('actions');
-        $sortordertext = Helper::get_string('sortorder');
+        $sortordertext = get_string('order');
         $table->head = array($name, $desc, $type, $numentriestext, $actionstext, $sortordertext);
     }
 
