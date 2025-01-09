@@ -49,6 +49,8 @@ if ($level == 'activity') {
 
 $pagetitle = get_string($titleid, 'mod_goodhabits', $name);
 
+global $OUTPUT, $USER, $PAGE;
+
 $PAGE->set_context($context);
 $PAGE->set_pagelayout('standard');
 $PAGE->set_title($pagetitle);
@@ -72,6 +74,7 @@ $renderer = $PAGE->get_renderer('mod_goodhabits');
 
 gh\habit\HabitItemsHelper::check_delete_habit();
 gh\habit\HabitItemsHelper::check_delete_habit_entries();
+gh\habit\HabitItemsHelper::check_change_sort_order();
 
 $table = new html_table();
 
@@ -91,12 +94,20 @@ if ($data = $mform->get_data()) {
 $ispersonal = $level == 'personal';
 $showonlypublished = ($ispersonal) ? true : false;
 $habits = gh\habit\HabitItemsHelper::get_activity_habits($instanceid, $showonlypublished);
+$habits = gh\habit\HabitItemsHelper::order_by_sortorder($habits);
 
+$num_activity_habits = count($habits);
 $isactivity = !$ispersonal;
-
+$personal_habits = [];
 if ($ispersonal) {
-    $habits += gh\habit\HabitItemsHelper::get_personal_habits($instanceid, $USER->id);
+    $personal_habits = gh\habit\HabitItemsHelper::get_personal_habits($instanceid, $USER->id);
+    $personal_habits = gh\habit\HabitItemsHelper::order_by_sortorder($personal_habits);
+    $habits = array_merge($habits, $personal_habits);
 }
+
+$activity_count = 1;
+$personal_count = 1;
+$num_personal_habits = count($personal_habits);
 
 foreach ($habits as $habit) {
     $row = array();
@@ -105,11 +116,49 @@ foreach ($habits as $habit) {
 
     $row[] = $habitname;
     $row[] = format_text($habit->description);
+    $row[] = gh\Helper::get_string('habit_type_' . $habit->level);
     $row[] = gh\habit\HabitItemsHelper::get_num_entries($habit->id, $USER->id);
 
     $actions = gh\habit\HabitItemsHelper::table_actions_arr($habit, $isactivity, $level, $instanceid);
 
     $row[] = implode('<br />', $actions);
+
+//    $sortoptions = $habit->sortorder;
+    $sortoptions = '';
+    if ($level == 'activity' AND $habit->level == 'activity') {
+        if ($activity_count !== $num_activity_habits) {
+            $downurl = new moodle_url($PAGE->url);
+            $downurl->param('movedown', $habit->id);
+            $sortoptions .= $OUTPUT->action_icon($downurl, new pix_icon('/t/down', 'movedown', 'moodle'), null,
+                array('class' => 'action-icon down'));
+        }
+        if ($activity_count !== 1) {
+            $upurl = new moodle_url($PAGE->url);
+            $upurl->param('moveup', $habit->id);
+            $sortoptions .= $OUTPUT->action_icon($upurl, new pix_icon('/t/up', 'moveup', 'moodle'), null,
+                array('class' => 'action-icon up'));
+        }
+        $activity_count ++;
+    }
+    if ($habit->level == 'personal') {
+        if ($personal_count !== $num_personal_habits) {
+            $downurl = new moodle_url($PAGE->url);
+            $downurl->param('movedown', $habit->id);
+            $sortoptions .= $OUTPUT->action_icon($downurl, new pix_icon('/t/down', 'movedown', 'moodle'), null,
+                array('class' => 'action-icon down'));
+        }
+
+        if ($personal_count !== 1) {
+            $upurl = new moodle_url($PAGE->url);
+            $upurl->param('moveup', $habit->id);
+            $sortoptions .= $OUTPUT->action_icon($upurl, new pix_icon('/t/up', 'moveup', 'moodle'), null,
+                array('class' => 'action-icon up'));
+        }
+        $personal_count ++;
+    }
+
+    $row[] = $sortoptions;
+
     $table->data[] = $row;
 }
 

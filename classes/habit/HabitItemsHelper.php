@@ -61,9 +61,16 @@ class HabitItemsHelper {
      * @param int $userid
      * @return array
      */
-    public static function get_all_habits_for_user($instanceid, $userid) {
+    public static function get_all_habits_for_user($instanceid, $userid, $sort = false) {
         $habits = static::get_activity_habits($instanceid, true);
-        $habits += static::get_personal_habits($instanceid, $userid, true);
+        if ($sort) {
+            $habits = static::order_by_sortorder($habits);
+        }
+        $personal_habits = static::get_personal_habits($instanceid, $userid, true);
+        if ($sort) {
+            $personal_habits = static::order_by_sortorder($personal_habits);
+        }
+        $habits = array_merge($habits, $personal_habits);
         return $habits;
     }
 
@@ -128,6 +135,15 @@ class HabitItemsHelper {
         $records = $DB->get_records_sql($sql, $params);
         $habits = static::records_to_habit_objects($records);
         return $habits;
+    }
+
+    public static function order_by_sortorder($items)
+    {
+        usort($items, function($a, $b) {
+            return $a->sortorder <=> $b->sortorder;
+        });
+
+        return $items;
     }
 
     /**
@@ -208,6 +224,7 @@ class HabitItemsHelper {
         $record->name = $data->name;
         $record->description = $desc;
         $record->colour = '';
+        $record->sortorder = static::get_new_sortorder($instanceid, $level == 'activity');
         $record->timecreated = time();
         $record->timemodified = $record->timecreated;
 
@@ -218,6 +235,18 @@ class HabitItemsHelper {
         $cm = Helper::get_coursemodule_from_instance($instanceid, $goodhabits->course);
 
         Helper::check_to_update_completion_state($course, $cm, $goodhabits, $USER->id, $rules);
+    }
+
+    public static function get_new_sortorder($instanceid, $return_activity_next = false)
+    {
+        global $DB;
+        $count = static::ensure_sortorder_numbers($instanceid, $return_activity_next);
+
+        while ($DB->record_exists('mod_goodhabits_item', ['sortorder' => $count])) {
+            $count ++;
+        }
+
+        return $count;
     }
 
     /**
@@ -315,6 +344,74 @@ class HabitItemsHelper {
         }
     }
 
+    public static function get_habit_by_id($id)
+    {
+        global $DB;
+        return $DB->get_record('mod_goodhabits_item', ['id' => $id]);
+    }
+
+    public static function check_change_sort_order()
+    {
+        global $DB;
+        $moveup = optional_param('moveup', 0, PARAM_INT);
+        if ($moveup) {
+            $item_to_move = static::get_habit_by_id($moveup);
+            static::ensure_sortorder_numbers($item_to_move->instanceid);
+
+            $adjacent = $DB->get_record_sql(
+                'SELECT * FROM {mod_goodhabits_item} WHERE sortorder < :sortorder AND level = :level ORDER BY sortorder DESC LIMIT 1',
+                ['sortorder' => $item_to_move->sortorder, 'level' => $item_to_move->level]
+            );
+
+            if ($adjacent) {
+                $DB->update_record('mod_goodhabits_item', ['id' => $item_to_move->id, 'sortorder' => $adjacent->sortorder]);
+                $DB->update_record('mod_goodhabits_item', ['id' => $adjacent->id, 'sortorder' => $item_to_move->sortorder]);
+            }
+        }
+        $movedown = optional_param('movedown', 0, PARAM_INT);
+        if ($movedown) {
+            $item_to_move = static::get_habit_by_id($movedown);
+            static::ensure_sortorder_numbers($item_to_move->instanceid);
+
+            $adjacent = $DB->get_record_sql(
+                'SELECT * FROM {mod_goodhabits_item} WHERE sortorder > :sortorder AND level = :level ORDER BY sortorder ASC LIMIT 1',
+                ['sortorder' => $item_to_move->sortorder, 'level' => $item_to_move->level]
+            );
+
+            if ($adjacent) {
+                $DB->update_record('mod_goodhabits_item', ['id' => $item_to_move->id, 'sortorder' => $adjacent->sortorder]);
+                $DB->update_record('mod_goodhabits_item', ['id' => $adjacent->id, 'sortorder' => $item_to_move->sortorder]);
+            }
+        }
+    }
+
+    public static function ensure_sortorder_numbers($instanceid, $return_activity_next = false)
+    {
+        global $DB;
+        $items = static::get_all_activity_instance_habits($instanceid);
+        $count = 1;
+        $activity_count = 1;
+        $activity_offset = -1000;
+        foreach ($items as $item) {
+            $sortorder = $item->sortorder;
+            if (empty($sortorder)) {
+                $item->sortorder = $count;
+                if ($item->level === 'activity') {
+                    $item->sortorder = $activity_offset + $activity_count;
+                }
+                $DB->update_record('mod_goodhabits_item', $item);
+            }
+
+            if ($item->level === 'activity') {
+                $activity_count ++;
+            } else {
+                $count ++;
+            }
+        }
+        $to_return = ($return_activity_next) ? ($activity_offset + $activity_count) : $count;
+        return $to_return;
+    }
+
     /**
      * Returns the number of entries for a user/habit.
      *
@@ -387,11 +484,13 @@ class HabitItemsHelper {
      * @throws \coding_exception
      */
     public static function set_table_head($table) {
-        $fromtext = get_string('new_habit_name', 'mod_goodhabits');
-        $totext = get_string('new_habit_desc', 'mod_goodhabits');
-        $numentriestext = get_string('habit_num_entries', 'mod_goodhabits');
-        $actionstext = get_string('actions', 'mod_goodhabits');
-        $table->head = array($fromtext, $totext, $numentriestext, $actionstext);
+        $name = Helper::get_string('new_habit_name');
+        $desc = Helper::get_string('new_habit_desc');
+        $type = Helper::get_string('habit_type');
+        $numentriestext = Helper::get_string('habit_num_entries');
+        $actionstext = Helper::get_string('actions');
+        $sortordertext = Helper::get_string('sortorder');
+        $table->head = array($name, $desc, $type, $numentriestext, $actionstext, $sortordertext);
     }
 
     /**

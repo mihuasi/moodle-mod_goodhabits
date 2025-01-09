@@ -104,7 +104,9 @@ $timestamp = $calendar_unit->getTimestamp();
 
 $limits = $calendar_unit->get_limits();
 $item_ids = gh\Helper::get_habits_with_missing_entries($instanceid, $USER->id, $limits);
+
 $habits_recs = gh\habit\HabitItemsHelper::habit_item_ids_to_recs($item_ids);
+$habits_recs = gh\habit\HabitItemsHelper::order_by_sortorder($habits_recs);
 $habits = [];
 
 foreach ($habits_recs as $habits_rec) {

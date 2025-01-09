@@ -97,7 +97,7 @@ if ($is_basic_mobile) {
 
 $renderer = $PAGE->get_renderer('mod_goodhabits');
 
-$habits = gh\habit\HabitItemsHelper::get_all_habits_for_user($instanceid, $USER->id);
+$habits = gh\habit\HabitItemsHelper::get_all_habits_for_user($instanceid, $USER->id, 1);
 
 echo $OUTPUT->header();
 

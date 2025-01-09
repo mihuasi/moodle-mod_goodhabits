@@ -116,7 +116,10 @@ $string['no_habits'] = '[It looks like you don\'t have any habits set up yet - a
 $string['review_no_habits'] = '[It looks like this user doesn\'t have any habits set up yet]';
 $string['habit_level'] = 'Ownership';
 $string['new_habit_name'] = 'Habit name';
-$string['new_habit_desc'] = 'Habit description';
+$string['new_habit_desc'] = 'Description';
+$string['habit_type'] = 'Type';
+$string['habit_type_activity'] = 'Activity';
+$string['habit_type_personal'] = 'Personal';
 $string['habit_deleted'] = 'Habit deleted';
 $string['habit_edited'] = 'Habit edited';
 $string['habit_entries_deleted'] = 'Habit entries deleted';
@@ -283,5 +286,6 @@ $string['simple_view_outcome_4'] = 'Sometimes objective measures of success are 
 $string['simple_view_outcome_5'] = 'Outcome:';
 
 $string['block_of_days'] = 'block of days';
+$string['sortorder'] = 'Order';
 
 
