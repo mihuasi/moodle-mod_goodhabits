@@ -126,36 +126,19 @@ foreach ($habits as $habit) {
     $sortoptions = '';
     if ($level == 'activity' AND $habit->level == 'activity') {
         if ($activity_count !== $num_activity_habits) {
-//            $downurl = new moodle_url($PAGE->url);
-//            $downurl->param('movedown', $habit->id);
-//            $sortoptions .= $OUTPUT->action_icon($downurl, new pix_icon('/t/down', get_string('movedown'), 'moodle'), null,
-//                array('class' => 'action-icon down'));
             $sortoptions .= gh\habit\HabitItemsHelper::get_sort_arrow('down', $habit->id);
         }
         if ($activity_count !== 1) {
-//            $upurl = new moodle_url($PAGE->url);
-//            $upurl->param('moveup', $habit->id);
-//
-//            $sortoptions .= $OUTPUT->action_icon($upurl, new pix_icon('/t/up', get_string('moveup'), 'moodle'), null,
-//                array('class' => 'action-icon up'));
             $sortoptions .= gh\habit\HabitItemsHelper::get_sort_arrow('up', $habit->id);
         }
         $activity_count ++;
     }
     if ($habit->level == 'personal') {
         if ($personal_count !== $num_personal_habits) {
-//            $downurl = new moodle_url($PAGE->url);
-//            $downurl->param('movedown', $habit->id);
-//            $sortoptions .= $OUTPUT->action_icon($downurl, new pix_icon('/t/down', get_string('movedown'), 'moodle'), null,
-//                array('class' => 'action-icon down'));
             $sortoptions .= gh\habit\HabitItemsHelper::get_sort_arrow('down', $habit->id);
         }
 
         if ($personal_count !== 1) {
-//            $upurl = new moodle_url($PAGE->url);
-//            $upurl->param('moveup', $habit->id);
-//            $sortoptions .= $OUTPUT->action_icon($upurl, new pix_icon('/t/up', get_string('moveup'), 'moodle'), null,
-//                array('class' => 'action-icon up'));
             $sortoptions .= gh\habit\HabitItemsHelper::get_sort_arrow('up', $habit->id);
         }
         $personal_count ++;
