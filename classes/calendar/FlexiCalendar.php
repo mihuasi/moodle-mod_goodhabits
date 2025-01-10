@@ -70,6 +70,15 @@ class FlexiCalendar {
 
     const PLUGIN_AREA_REVIEW = 'review';
 
+    const STRING_TYPE_SINGULAR = 'singular';
+    const STRING_TYPE_PLURAL = 'plural';
+    const STRING_TYPE_DEFINITE_ARTICLE = 'def_article';
+    const STRING_TYPE_ANSWER_LATEST = 'answer_latest';
+    const STRING_TYPE_CHOSEN = 'chosen';
+    const STRING_TYPE_SKIPPED = 'skipped';
+    const STRING_TYPE_SKIP_HELP = 'skip_help';
+    const STRING_TYPE_GRID_OPEN_HELP = 'grid_open_help';
+
     /**
      * FlexiCalendar constructor.
      * @param int $periodduration
@@ -146,27 +155,60 @@ class FlexiCalendar {
         return $this->periodduration;
     }
 
-    public function get_period_duration_string($plural = true)
+    public function get_period_duration_string($string_type = false)
     {
-        if ($plural) {
-            switch ($this->periodduration) {
-                case 1:
-                    return Helper::get_string('days');
-                case 7:
-                    return Helper::get_string('weeks');
-                default:
-                    return Helper::get_string('blocks_of_days');
-            }
-        } else {
-            switch ($this->periodduration) {
-                case 1:
-                    return Helper::get_string('day');
-                case 7:
-                    return Helper::get_string('week');
-                default:
-                    return Helper::get_string('block_of_days');
-            }
+        if (empty($string_type)) {
+            $string_type = static::STRING_TYPE_PLURAL;
         }
+        $prefix = $string_type;
+        switch ($this->periodduration) {
+            case 1:
+                $singular_id = 'day';
+                $other_id = $prefix . '_' . $singular_id;
+                $plural_id = 'days';
+                break;
+            case 7:
+                $singular_id = 'week';
+                $other_id = $prefix . '_' . $singular_id;
+                $plural_id = 'weeks';
+                break;
+            default:
+                $singular_id = 'block_of_days';
+                $other_id = $prefix . '_' . $singular_id;
+                $plural_id = 'blocks_of_days';
+        }
+        if ($string_type == static::STRING_TYPE_SINGULAR) {
+            return Helper::get_string($singular_id);
+        }
+        if ($string_type == static::STRING_TYPE_PLURAL) {
+            return Helper::get_string($plural_id);
+        }
+        return Helper::get_string($other_id);
+
+//        if ($plural) {
+//            switch ($this->periodduration) {
+//                case 1:
+//                    return Helper::get_string('days');
+//                case 7:
+//                    return Helper::get_string('weeks');
+//                default:
+//                    return Helper::get_string('blocks_of_days');
+//            }
+//        } else {
+//            switch ($this->periodduration) {
+//                case 1:
+//                    return Helper::get_string('day');
+//                case 7:
+//                    return Helper::get_string('week');
+//                default:
+//                    return Helper::get_string('block_of_days');
+//            }
+//        }
+    }
+
+    private function get_period_duration_string_for_type($string_type)
+    {
+
     }
 
     /**

@@ -507,7 +507,8 @@ class mod_goodhabits_renderer extends plugin_renderer_base {
         }
 
         // TODO: Switch types of duration string so that it can read: this week, today, etc...
-        $data['period_string'] = $calendar->get_period_duration_string(false);
+        $data['period_string'] = $calendar->get_period_duration_string($calendar::STRING_TYPE_SINGULAR);
+        $answer_latest_string = $calendar->get_period_duration_string($calendar::STRING_TYPE_ANSWER_LATEST);
         $units_with_all_complete = gh\Helper::get_cal_units_with_all_complete($instanceid, $userid);
 
         $url = new moodle_url('/mod/goodhabits/simple.php', ['g' => $instanceid]);
@@ -517,7 +518,7 @@ class mod_goodhabits_renderer extends plugin_renderer_base {
         if (empty($units_with_all_complete)) {
             // None are complete so give getting-started help.
 
-            $text = gh\Helper::get_string('get_started', $data['period_string']);
+            $text = gh\Helper::get_string('get_started', $answer_latest_string);
             $data['get_started'] = html_writer::link($url, $text);
         } else {
             // TODO: Review whether we need this.
@@ -534,7 +535,14 @@ class mod_goodhabits_renderer extends plugin_renderer_base {
         if (empty($data['get_started']) && empty($data['answer_latest'])) {
             // Then show: Did you know?
             global $OUTPUT;
-            $context = ['period_string' => $data['period_string']];
+            $context = [
+                'period_string' => $data['period_string'],
+                'def_article_string' => $calendar->get_period_duration_string($calendar::STRING_TYPE_DEFINITE_ARTICLE),
+                'chosen_string' => $calendar->get_period_duration_string($calendar::STRING_TYPE_CHOSEN),
+                'skipped_string' => $calendar->get_period_duration_string($calendar::STRING_TYPE_SKIPPED),
+                'skip_help_string' => $calendar->get_period_duration_string($calendar::STRING_TYPE_SKIP_HELP),
+                'grid_open_help_string' => $calendar->get_period_duration_string($calendar::STRING_TYPE_GRID_OPEN_HELP),
+            ];
             $dyk_help_text = $OUTPUT->render_from_template('mod_goodhabits/help', $context);
             $data['did_you_know'] = $dyk_help_text;
         }

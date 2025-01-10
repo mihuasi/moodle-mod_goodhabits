@@ -229,8 +229,11 @@ Optional [default: Don\'t allow] - Students control whether to allow peer review
 Optional [default: Allow] - As above, students can set whether to allow in their preferences page. By default, peer review is disabled.<br /><br />
 Required - Peer review is enabled and students are not able to change this.
 ';
-$string['get_started'] = 'Need some help getting started? Answer questions about the latest {$a}.';
+$string['get_started'] = 'Need some help getting started? {$a}';
 $string['answer_latest_questions'] = 'Answer questions about the latest {$a}.';
+$string['answer_latest_day'] = 'Answer questions about the latest day.';
+$string['answer_latest_week'] = 'Answer questions about the latest week.';
+$string['answer_latest_block_of_days'] = 'Answer questions about the most recent days.';
 $string['simple_all_complete'] = 'You have answered all questions about:';
 $string['show_scores'] = 'Show numbers in the tracker';
 $string['show_scores_help'] = 'Whether to show the numbers that you have entered in the grid.
@@ -246,17 +249,17 @@ $string['example'] = 'Example';
 $string['dyk_heading'] = 'Some basic tips';
 $string['dyk_add_entry_heading'] = 'Tap, reflect, save';
 $string['dyk_add_entry_1'] = 'You can tap/click the habit entry circle';
-$string['dyk_add_entry_2'] = 'This opens up a grid to allow you to reflect on a habit for a particular {$a}.';
+//$string['dyk_add_entry_2'] = 'This opens up a grid to allow you to reflect on a habit for a particular {$a}.';
 $string['dyk_add_entry_3'] = 'Think about an appropriate placement, considering effort and outcome.';
 $string['dyk_add_entry_4'] = 'To place, just double-tap (or click) the square on the grid.';
 $string['dyk_add_entry_5'] = 'Tap the same circle you used to open up the grid to save and close.';
 
 $string['dyk_cal_unit_options_heading'] = 'Explore options for each {$a}';
 $string['dyk_cal_unit_options_1'] = 'You can tap/click the {$a} button';
-$string['dyk_cal_unit_options_2'] = 'This will show you more options for the {$a}';
-$string['dyk_cal_unit_options_3'] = 'You can answer questions about each habit in sequence for the chosen {$a}';
-$string['dyk_cal_unit_options_4'] = 'Skipping a {$a} will grey it out, so you know you don\'t want to add any entries for that week, and it can be ignored.';
-$string['dyk_cal_unit_options_5'] = 'A skipped {$a} is an example of a break. These can be managed under *Manage breaks*, below. You can also add a longer break.';
+$string['dyk_cal_unit_options_2'] = 'This will show you more options for {$a}';
+$string['dyk_cal_unit_options_3'] = 'You can answer questions about each habit in sequence for {$a}';
+//$string['dyk_cal_unit_options_4'] = 'Skipping a {$a} will grey it out, so you know you don\'t want to add any entries for that week, and it can be ignored.';
+$string['dyk_cal_unit_options_5'] = '{$a} is an example of a break. These can be managed under *Manage breaks*, below. You can also add a longer break.';
 
 $string['dyk_prefs_heading'] = 'Manage your preferences';
 $string['dyk_prefs_1'] = 'See "Personal preferences", below.';
@@ -286,5 +289,21 @@ $string['simple_view_outcome_4'] = 'Sometimes objective measures of success are 
 $string['simple_view_outcome_5'] = 'Outcome:';
 
 $string['block_of_days'] = 'block of days';
+$string['def_article_day'] = 'the day';
+$string['def_article_week'] = 'the week';
+$string['def_article_block_of_days'] = 'the block-of-days';
+$string['chosen_day'] = 'the chosen day';
+$string['chosen_week'] = 'the chosen week';
+$string['chosen_block_of_days'] = 'the chosen block-of-days';
+$string['skipped_day'] = 'A skipped day';
+$string['skipped_week'] = 'A skipped week';
+$string['skipped_block_of_days'] = 'A skipped block-of-days';
+$string['skip_help_day'] = 'Skipping a day will grey it out, so you know you don\'t want to add any entries for that day, and it can be ignored.';
+$string['skip_help_week'] = 'Skipping a week will grey it out, so you know you don\'t want to add any entries for that week, and it can be ignored.';
+$string['skip_help_block_of_days'] = 'Skipping a block-of-days will grey it out, so you know you don\'t want to add any entries for that block-of-days, and it can be ignored.';
+$string['grid_open_help_day'] = 'This opens up a grid to allow you to reflect on a habit for a particular day.';
+$string['grid_open_help_week'] = 'This opens up a grid to allow you to reflect on a habit for a particular week.';
+$string['grid_open_help_block_of_days'] = 'This opens up a grid to allow you to reflect on a habit for a particular block-of-days.';
+
 
 
