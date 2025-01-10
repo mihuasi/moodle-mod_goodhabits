@@ -101,6 +101,7 @@ if ($userid) {
     $renderer->print_review_intro($fullname, $access_as_string);
 
     $calendar = gh\ViewHelper::get_flexi_calendar($moduleinstance, $userid);
+    $calendar->add_body_classes();
 
     $habits = gh\habit\HabitItemsHelper::get_all_habits_for_user($instanceid, $userid, 1);
 

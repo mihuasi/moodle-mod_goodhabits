@@ -88,6 +88,15 @@ class FlexiCalendar {
         $this->generate_display_set();
     }
 
+    public function add_body_classes()
+    {
+        global $PAGE;
+        $PAGE->add_body_class('period-duration-' . $this->periodduration);
+        if ($this->periodduration !== 1 AND $this->periodduration !== 7) {
+            $PAGE->add_body_class('period-duration-multi-day');
+        }
+    }
+
     /**
      * @return FlexiCalendarUnit[]
      */

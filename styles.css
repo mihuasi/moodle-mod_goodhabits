@@ -59,6 +59,30 @@
     color: #616f84;
 }
 
+.path-mod-goodhabits.period-duration-multi-day .calendar .time-unit {
+    padding-top: 8px;
+}
+
+.path-mod-goodhabits.period-duration-multi-day .calendar .time-unit .top-line {
+    font-size: 11px;
+}
+
+.path-mod-goodhabits.period-duration-multi-day .dyk-container .calendar .time-unit .top-line {
+    font-size: 8px;
+}
+
+.path-mod-goodhabits.period-duration-multi-day .dyk-container .calendar .time-unit {
+    padding-top: 12px;
+}
+
+.path-mod-goodhabits.period-duration-multi-day .calendar .time-unit.time-unit-options {
+    padding-top: 4px;
+}
+
+.path-mod-goodhabits.period-duration-multi-day .calendar .time-unit.time-unit-options .top-line {
+    font-size: 13px;
+}
+
 .path-mod-goodhabits .calendar .time-unit .bottom-line {
     font-size: 15px;
     line-height: 15px;

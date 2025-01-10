@@ -70,6 +70,7 @@ $completion = new completion_info($course);
 $completion->set_module_viewed($cm);
 
 $calendar = gh\ViewHelper::get_flexi_calendar($moduleinstance);
+$calendar->add_body_classes();
 
 if ($skip) {
     gh\BreaksHelper::process_skip($instanceid, $skip, $calendar);
