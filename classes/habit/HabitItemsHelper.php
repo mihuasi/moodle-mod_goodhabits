@@ -38,6 +38,8 @@ class HabitItemsHelper {
     const HABIT_NAME_MAXLENGTH = 24;
     const HABIT_DESC_MAXLENGTH = 62;
 
+    const ACTIVITY_SORT_ORDER_OFFSET = -1000;
+
     /**
      * Returns the number of entries for a user within an activity.
      *
@@ -224,7 +226,7 @@ class HabitItemsHelper {
         $record->name = $data->name;
         $record->description = $desc;
         $record->colour = '';
-        $record->sortorder = static::get_new_sortorder($instanceid, $level == 'activity');
+        $record->sortorder = static::get_new_sortorder($instanceid, $level);
         $record->timecreated = time();
         $record->timemodified = $record->timecreated;
 
@@ -237,16 +239,21 @@ class HabitItemsHelper {
         Helper::check_to_update_completion_state($course, $cm, $goodhabits, $USER->id, $rules);
     }
 
-    public static function get_new_sortorder($instanceid, $return_activity_next = false)
+    public static function get_new_sortorder($instanceid, $level)
     {
         global $DB;
-        $count = static::ensure_sortorder_numbers($instanceid, $return_activity_next);
-
-        while ($DB->record_exists('mod_goodhabits_item', ['sortorder' => $count])) {
-            $count ++;
+        $base = ($level === 'activity') ? static::ACTIVITY_SORT_ORDER_OFFSET : 0;
+        $sql = "SELECT MAX(sortorder) FROM {mod_goodhabits_item}
+                    WHERE instanceid = :instanceid AND level = :level";
+        $params = [
+            'instanceid' => $instanceid,
+            'level' => $level
+        ];
+        $prev_sortorder = $DB->get_field_sql($sql, $params);
+        if (!$prev_sortorder) {
+            $prev_sortorder = $base;
         }
-
-        return $count;
+        return $prev_sortorder + 1;
     }
 
     /**
@@ -405,7 +412,7 @@ class HabitItemsHelper {
         $items = static::get_all_activity_instance_habits($instanceid);
         $count = 1;
         $activity_count = 1;
-        $activity_offset = -1000;
+        $activity_offset = static::ACTIVITY_SORT_ORDER_OFFSET;
         foreach ($items as $item) {
             $sortorder = $item->sortorder;
             if (empty($sortorder)) {
