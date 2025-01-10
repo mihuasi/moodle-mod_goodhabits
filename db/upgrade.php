@@ -153,5 +153,15 @@ function xmldb_goodhabits_upgrade($oldversion) {
         }
     }
 
+    if ($oldversion < 2025010902) {
+        $table = new xmldb_table('mod_goodhabits_item');
+
+        $field = new xmldb_field('sortorder', XMLDB_TYPE_INTEGER, '10', null,
+            null, null, null, 'colour');
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+    }
+
     return true;
 }
