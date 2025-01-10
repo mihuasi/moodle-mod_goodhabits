@@ -184,31 +184,6 @@ class FlexiCalendar {
             return Helper::get_string($plural_id);
         }
         return Helper::get_string($other_id);
-
-//        if ($plural) {
-//            switch ($this->periodduration) {
-//                case 1:
-//                    return Helper::get_string('days');
-//                case 7:
-//                    return Helper::get_string('weeks');
-//                default:
-//                    return Helper::get_string('blocks_of_days');
-//            }
-//        } else {
-//            switch ($this->periodduration) {
-//                case 1:
-//                    return Helper::get_string('day');
-//                case 7:
-//                    return Helper::get_string('week');
-//                default:
-//                    return Helper::get_string('block_of_days');
-//            }
-//        }
-    }
-
-    private function get_period_duration_string_for_type($string_type)
-    {
-
     }
 
     /**
