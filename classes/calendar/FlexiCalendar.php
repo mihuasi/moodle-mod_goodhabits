@@ -309,6 +309,10 @@ class FlexiCalendar {
         }
         $forwarddatemysql = Helper::date_time_to_mysql($forwarddate);
         $params = array('toDate' => $forwarddatemysql, 'g' => $instanceid);
+        if ($forwarddate->getTimestamp() > time()) {
+            // No toDate param to display latest.
+            unset($params['toDate']);
+        }
         $url = '/mod/goodhabits/view.php';
         if ($this->pluginarea == self::PLUGIN_AREA_REVIEW) {
             $url = '/mod/goodhabits/review.php';
