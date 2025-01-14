@@ -68,16 +68,15 @@ $PAGE->navbar->add($pagetitle, $pageurl);
 
 $renderer = $PAGE->get_renderer('mod_goodhabits');
 
+if ($userid) {
+    $calendar = gh\ViewHelper::get_flexi_calendar($moduleinstance, $userid);
+    $calendar->add_body_classes();
+}
+
 echo $OUTPUT->header();
 
 $params['courseid'] = $course->id;
 
-//$reviewer = new gh\review\Reviewer($instanceid, $userid, $context);
-//$reviewer->init();
-//$reviewer->set_query('St');
-//$subjects = $reviewer->get_subjects();
-//print_object($subjects);
-//exit;
 $selectform = new gh\select_user_review(null, $params);
 
 $selectform->display();
@@ -99,9 +98,6 @@ if ($userid) {
     $fullname = gh\ViewHelper::get_name($userid);
 
     $renderer->print_review_intro($fullname, $access_as_string);
-
-    $calendar = gh\ViewHelper::get_flexi_calendar($moduleinstance, $userid);
-    $calendar->add_body_classes();
 
     $habits = gh\habit\HabitItemsHelper::get_all_habits_for_user($instanceid, $userid, 1);
 
