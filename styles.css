@@ -1196,6 +1196,7 @@ body.pagelayout-embedded .activity-header {
     padding-top: 15px;
     padding-bottom: 15px;
     margin-bottom: 20px; /* Ensure the streak doesn't overlap */
+    position: relative;
 }
 
 .path-mod-goodhabits .habit.streak-open .streak {
