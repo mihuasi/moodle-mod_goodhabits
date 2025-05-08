@@ -41,30 +41,22 @@ jQuery(window).on('load',function($) {
         var $habit = $streak.closest('.habit');
 
         // Reset all other .streak elements
-        $('.streak.expanded').not($streak).removeClass('expanded').css({
-            width: '',
-            position: '',
-            zIndex: '',
-            borderRadius: '',
-            paddingTop: '',
-            paddingBottom: '',
-        }).siblings().show();
+        $('.streak.expanded').not($streak).removeClass('expanded').removeAttr('style').siblings().show();
 
-        // Toggle this one
         if (!$streak.hasClass('expanded')) {
             $streak.addClass('expanded').css({
-                width: '90%',
-                position: 'absolute',
+                width: '95%',
+                position: '',
                 zIndex: 10,
                 borderRadius: '12px',
                 paddingTop: '15px',
                 paddingBottom: '15px',
-                marginBottom: '20px'
+                // marginBottom: '20px'
             });
 
             $mainContainer.addClass('streak-open');
             $habit.addClass('streak-open');
-            $habit.css('padding-bottom', '80px');
+            $habit.css('padding-bottom', '10px');
 
             $habit.children().not($streak).hide();
         }
@@ -75,14 +67,8 @@ jQuery(window).on('load',function($) {
         const $habit = $streak.closest('.habit');
         const $mainContainer = $('#goodhabits-container');
 
-        $streak.removeClass('expanded').css({
-            width: '',
-            position: '',
-            zIndex: '',
-            borderRadius: '',
-            paddingTop: '',
-            paddingBottom: '',
-        });
+        $streak.removeClass('expanded');
+        $streak.removeAttr('style');
 
         $mainContainer.removeClass('streak-open');
         $habit.css('padding-bottom', '2px');
