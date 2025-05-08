@@ -84,7 +84,7 @@ class Helper {
         $days = static::unix_days($timestamp);
         $fraction = $days / $periodduration;
         $endperiodnumdays = floor($fraction) * ($periodduration);
-        if ($endperiodnumdays < $days) {
+        if ($endperiodnumdays <= $days) {
             $endperiodnumdays += $periodduration;
         }
         $endperiodtime = static::days_to_time($endperiodnumdays);
