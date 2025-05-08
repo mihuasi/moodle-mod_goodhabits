@@ -26,6 +26,63 @@ jQuery(window).on('load',function($) {
 
     var $ = jQuery;
 
+    $('.streak').on('click', function () {
+        var $mainContainer = $('#goodhabits-container');
+        var gridIsOpen = $mainContainer.hasClass('grid-is-open');
+        if (gridIsOpen) {
+            return;
+        }
+
+        var $streak = $(this);
+        var $habit = $streak.closest('.habit');
+
+        // Reset all other .streak elements
+        $('.streak.expanded').not($streak).removeClass('expanded').css({
+            width: '',
+            position: '',
+            zIndex: '',
+            borderRadius: '',
+            paddingTop: '',
+            paddingBottom: '',
+        }).siblings().show();
+
+        // Toggle this one
+        if ($streak.hasClass('expanded')) {
+            $streak.removeClass('expanded').css({
+                width: '',
+                position: '',
+                zIndex: '',
+                borderRadius: '',
+                paddingTop: '',
+                paddingBottom: '',
+            })
+                .empty();
+
+            $mainContainer.removeClass('streak-open');
+            $habit.css('padding-bottom', '2px');
+            $habit.removeClass('streak-open');
+
+            $habit.children().not($streak).show();
+        } else {
+            const habitName = $habit.find('.habit-name').text();
+            $streak.addClass('expanded').css({
+                width: '90%',
+                position: 'absolute',
+                zIndex: 10,
+                borderRadius: '12px',
+                paddingTop: '15px',
+                paddingBottom: '15px',
+                marginBottom: '20px'
+            })
+                .html('<div class="streak-habit-name">' + habitName + '</div>');
+            $mainContainer.addClass('streak-open');
+            $habit.addClass('streak-open');
+            $habit.css('padding-bottom', '80px');
+
+            $habit.children().not($streak).hide();
+        }
+    });
+
     function timeUnitOptions() {
 
         // Event handler for clicks on elements with class 'time-unit'

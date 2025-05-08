@@ -1075,3 +1075,47 @@ body.pagelayout-embedded .activity-header {
     font-size: 14px;
     font-style: italic;
 }
+
+.path-mod-goodhabits .habit {
+    position: relative;
+}
+
+.path-mod-goodhabits .streak {
+    transition: width 0.3s ease;
+    cursor: pointer;
+}
+
+.path-mod-goodhabits #goodhabits-container.grid-is-open .streak {
+    cursor: default;
+}
+
+.habit-grid-container {
+    /*display: none;*/
+}
+
+.path-mod-goodhabits .habit.expanded {
+    background-color: #f9f9f9;
+    transition: all 0.3s ease-in-out;
+    border-left: 4px solid #0073e6;
+    padding-left: 10px;
+}
+
+.path-mod-goodhabits .habits .habit .streak.expanded {
+    height: auto;
+    line-height: normal;
+    min-height: 60px;
+}
+
+.path-mod-goodhabits .habits .habit .streak .streak-habit-name {
+    margin-left: 40px;
+    font-size: 16px;
+    text-align: left;
+    color: black;
+}
+
+.path-mod-goodhabits #goodhabits-container.streak-open .habit {
+    opacity: 0.5;
+}
+.path-mod-goodhabits #goodhabits-container.streak-open .habit.streak-open {
+    opacity: 1;
+}
