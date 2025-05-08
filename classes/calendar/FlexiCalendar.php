@@ -205,8 +205,12 @@ class FlexiCalendar {
      *
      * @return int
      */
-    private function current_span() {
-        return ($this->numentries * $this->periodduration);
+    private function current_span($numentries_offset = 0) {
+        $numentries = $this->numentries;
+        if ($numentries_offset) {
+            $numentries += $numentries_offset;
+        }
+        return ($numentries * $this->periodduration);
     }
 
     /**
@@ -295,7 +299,9 @@ class FlexiCalendar {
             $pre_num_entries = $this->numentries;
             $this->numentries = $override_num_entries;
         }
-        $forwarddate = Helper::new_date_time($this->basedate, '+' . $this->current_span(). ' day');
+
+        $add_days = $this->current_span(-1);
+        $forwarddate = Helper::new_date_time($this->basedate, '+' . $add_days . ' day');
         if ($override_num_entries) {
             $this->numentries = $pre_num_entries;
         }
