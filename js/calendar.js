@@ -26,13 +26,13 @@ jQuery(window).on('load',function($) {
 
     var $ = jQuery;
 
-    $('.streak').on('click', function () {
+    $('.streak, .habits .habit-name').on('click', function () {
         const $mainContainer = $('#goodhabits-container');
         if ($mainContainer.hasClass('grid-is-open') || $mainContainer.hasClass('streak-open')) {
             return;
         }
 
-        const $streak = $(this);
+        const $streak = $(this).closest('.habit').find('.streak');
         const $habit = $streak.closest('.habit');
 
         // Collapse any previously expanded streaks
