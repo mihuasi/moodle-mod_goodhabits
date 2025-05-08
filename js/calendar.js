@@ -55,8 +55,7 @@ jQuery(window).on('load',function($) {
                 borderRadius: '',
                 paddingTop: '',
                 paddingBottom: '',
-            })
-                .empty();
+            });
 
             $mainContainer.removeClass('streak-open');
             $habit.css('padding-bottom', '2px');
@@ -73,8 +72,8 @@ jQuery(window).on('load',function($) {
                 paddingTop: '15px',
                 paddingBottom: '15px',
                 marginBottom: '20px'
-            })
-                .html('<div class="streak-habit-name">' + habitName + '</div>');
+            });
+
             $mainContainer.addClass('streak-open');
             $habit.addClass('streak-open');
             $habit.css('padding-bottom', '80px');

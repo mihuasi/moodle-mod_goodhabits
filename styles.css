@@ -1106,6 +1106,23 @@ body.pagelayout-embedded .activity-header {
     min-height: 60px;
 }
 
+.path-mod-goodhabits .habits .habit .streak .streak-habit-name,
+.path-mod-goodhabits .habits .habit .streak .streak-close-option {
+    display: none;
+}
+
+.path-mod-goodhabits .habits .habit.streak-open .streak .streak-habit-name,
+.path-mod-goodhabits .habits .habit.streak-open .streak .streak-close-option {
+    display: block;
+}
+
+.path-mod-goodhabits .habits .habit.streak-open .streak .streak-close-option {
+    position: absolute;
+    top: 6px;
+    right: 12px;
+    opacity: 75%;
+}
+
 .path-mod-goodhabits .habits .habit .streak .streak-habit-name {
     margin-left: 40px;
     font-size: 16px;

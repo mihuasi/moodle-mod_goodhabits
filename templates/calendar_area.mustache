@@ -69,7 +69,10 @@
         {{#habits}}
             <div class='habit habit-{{id}}'>
                 <div title="{{title_text}}" class="streak {{can_manage_class}} {{activity_class}}"
-                     data-habit-id="{{id}}" data-is-global="{{is_activity_level}}"></div>
+                     data-habit-id="{{id}}" data-is-global="{{is_activity_level}}">
+                    <div class="streak-habit-name">{{{habit_name}}}</div>
+                    <div class="streak-close-option close-btn">X</div>
+                </div>
                     <div class="title">
                         <div class="habit-name">{{{habit_name}}}</div>
                         <div class="description">{{{habit_desc}}}</div>
