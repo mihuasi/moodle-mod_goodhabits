@@ -174,9 +174,9 @@
     line-height: 40px;
     border-radius: 10px;
     background: #dcd0aa85;
-    color: #9baec8;
+    color: #3a3a3a;
     margin-right: 10px;
-    font-size: 40px;
+    /*font-size: 40px;*/
 }
 
 .path-mod-goodhabits .habits .habit .streak:last-child {
@@ -1109,16 +1109,25 @@ body.pagelayout-embedded .activity-header {
     height: auto;
     line-height: normal;
     min-height: 60px;
+    float: none;
+}
+
+.path-mod-goodhabits .habit {
+    display: block;
+    margin-bottom: 200px;
+    clear: both; /* helps if .streak used to float */
 }
 
 .path-mod-goodhabits .habits .habit .streak .streak-habit-name,
 .path-mod-goodhabits .habits .habit .streak .streak-avg,
+.path-mod-goodhabits .habits .habit .streak .streak-first-entry,
 .path-mod-goodhabits .habits .habit .streak .streak-close-option {
     display: none;
 }
 
 .path-mod-goodhabits .habits .habit.streak-open .streak .streak-habit-name,
 .path-mod-goodhabits .habits .habit.streak-open .streak .streak-avg,
+.path-mod-goodhabits .habits .habit.streak-open .streak .streak-first-entry,
 .path-mod-goodhabits .habits .habit.streak-open .streak .streak-close-option {
     display: block;
 }

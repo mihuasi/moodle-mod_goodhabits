@@ -573,4 +573,28 @@ HAVING COUNT(DISTINCT e.habit_id) >= (
         return (float) $DB->get_field_sql($sql, $params) ?: 0.0;
     }
 
+    public static function get_first_entry($habit, $userid, $instanceid) {
+        global $DB, $USER;
+        if (!$userid) {
+            $userid = $USER->id;
+        }
+
+        $sql = "SELECT e.*
+              FROM {mod_goodhabits_entry} e
+              JOIN {mod_goodhabits_item} i ON e.habit_id = i.id
+             WHERE e.userid = :userid
+               AND e.habit_id = :habit
+               AND i.instanceid = :instanceid
+          ORDER BY e.endofperiod_timestamp ASC
+             LIMIT 1";
+
+        $params = [
+            'userid' => $userid,
+            'habit' => $habit->id,
+            'instanceid' => $instanceid
+        ];
+
+        return $DB->get_record_sql($sql, $params);
+    }
+
 }

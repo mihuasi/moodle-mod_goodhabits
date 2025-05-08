@@ -158,6 +158,19 @@ class mod_goodhabits_renderer extends plugin_renderer_base {
         $habit_data['effort_avg_rounded'] = round($effort_avg);
         $habit_data['outcome_avg_rounded'] = round($outcome_avg);
 
+        $first_entry = gh\Helper::get_first_entry($habit, $userid, $instanceid);
+        $timestamp = $first_entry->endofperiod_timestamp;
+
+        $formatteddisplay = date('d/m/y', $timestamp);
+        $mysqldate = date('Y-m-d', $timestamp);
+        $url = new moodle_url('/mod/goodhabits/view.php', [
+            'g' => $instanceid,
+            'toDate' => $mysqldate
+        ]);
+
+        $habit_data['first_entry_display'] = $formatteddisplay;
+        $habit_data['first_entry_url'] = $url->out();
+
         $checkmarks = $this->get_checkmarks_data($calendar, $habit, $userid, $instanceid);
         $habit_data['checkmarks'] = $checkmarks;
 
