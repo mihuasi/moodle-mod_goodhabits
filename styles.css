@@ -1157,6 +1157,8 @@ body.pagelayout-embedded .activity-header {
 }
 .path-mod-goodhabits #goodhabits-container.streak-open .habit.streak-open {
     opacity: 1;
+    padding-bottom: 10px; /* Adjust padding when expanded */
+    margin-bottom: 0px; /* Increase margin between expanded habit and the next one */
 }
 
 .path-mod-goodhabits .habit.streak-open .checkmark {
@@ -1168,4 +1170,41 @@ body.pagelayout-embedded .activity-header {
     margin-right: 10px;
     padding: 2px;
     text-align: center;
+}
+
+
+
+
+
+/* Default (collapsed) state for .habit */
+.path-mod-goodhabits .habit {
+    margin-bottom: 20px; /* Set the margin between habits here */
+    padding-bottom: 2px; /* This can be adjusted to your needs */
+    transition: margin-bottom 0.3s ease-in-out, padding-bottom 0.3s ease-in-out;
+}
+
+/* Expanded state */
+.path-mod-goodhabits .habit.streak-open {
+    padding-bottom: 10px; /* Padding when expanded */
+}
+
+/* .streak expanded state */
+.path-mod-goodhabits .habit .streak.expanded {
+    width: 95%;
+    z-index: 10;
+    border-radius: 12px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    margin-bottom: 20px; /* Ensure the streak doesn't overlap */
+}
+
+.path-mod-goodhabits .habit.streak-open .streak {
+    display: block;
+}
+
+.path-mod-goodhabits .habit.streak-open .streak-close-option {
+    position: absolute;
+    top: 6px;
+    right: 12px;
+    opacity: 75%;
 }

@@ -27,39 +27,23 @@ jQuery(window).on('load',function($) {
     var $ = jQuery;
 
     $('.streak').on('click', function () {
-        var $mainContainer = $('#goodhabits-container');
-        var gridIsOpen = $mainContainer.hasClass('grid-is-open');
-        var streakIsOpen = $mainContainer.hasClass('streak-open');
-        if (gridIsOpen) {
-            return;
-        }
-        if (streakIsOpen) {
+        const $mainContainer = $('#goodhabits-container');
+        if ($mainContainer.hasClass('grid-is-open') || $mainContainer.hasClass('streak-open')) {
             return;
         }
 
-        var $streak = $(this);
-        var $habit = $streak.closest('.habit');
+        const $streak = $(this);
+        const $habit = $streak.closest('.habit');
 
-        // Reset all other .streak elements
-        $('.streak.expanded').not($streak).removeClass('expanded').removeAttr('style').siblings().show();
+        // Collapse any previously expanded streaks
+        $('.streak.expanded').removeClass('expanded').siblings().show();
+        $('.habit.streak-open').removeClass('streak-open');
 
-        if (!$streak.hasClass('expanded')) {
-            $streak.addClass('expanded').css({
-                width: '95%',
-                position: '',
-                zIndex: 10,
-                borderRadius: '12px',
-                paddingTop: '15px',
-                paddingBottom: '15px',
-                // marginBottom: '20px'
-            });
-
-            $mainContainer.addClass('streak-open');
-            $habit.addClass('streak-open');
-            $habit.css('padding-bottom', '10px');
-
-            $habit.children().not($streak).hide();
-        }
+        // Expand this one
+        $streak.addClass('expanded');
+        $mainContainer.addClass('streak-open');
+        $habit.addClass('streak-open');
+        $habit.children().not($streak).hide();
     });
 
     $(document).on('click', '.streak-close-option', function () {
@@ -68,14 +52,12 @@ jQuery(window).on('load',function($) {
         const $mainContainer = $('#goodhabits-container');
 
         $streak.removeClass('expanded');
-        $streak.removeAttr('style');
-
         $mainContainer.removeClass('streak-open');
-        $habit.css('padding-bottom', '2px');
         $habit.removeClass('streak-open');
 
         $habit.children().not($streak).show();
     });
+
 
     // $('.streak-close-option').on('click', function () {
     //
