@@ -73,7 +73,7 @@ class mod_goodhabits_renderer extends plugin_renderer_base {
 
             $month = $unit->display_month();
 
-            $classes = $unit->get_classes();
+            $classes = $unit->get_classes($userid);
             $classes[] = 'count-' . $count;
             $imploded_classes = implode(' ', $classes);
 
@@ -193,7 +193,7 @@ class mod_goodhabits_renderer extends plugin_renderer_base {
         foreach ($displayset as $unit) {
             $data_checkmark = [];
             $timestamp = $unit->getTimestamp();
-            $isinbreak = gh\BreaksHelper::is_in_a_break($timestamp);
+            $isinbreak = gh\BreaksHelper::is_in_a_break($timestamp, $userid);
             $classxy = 'noxy';
             $title = get_string('checkmark_title_empty', 'mod_goodhabits');
             $is_filled = false;

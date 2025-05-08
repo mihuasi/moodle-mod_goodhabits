@@ -140,11 +140,11 @@ class FlexiCalendarUnit extends \DateTime {
      * @throws \coding_exception
      * @throws \dml_exception
      */
-    public function get_classes() {
+    public function get_classes($userid = null) {
         $month = $this->format('F');
         $month = strtolower($month);
         $timestamp = $this->getTimestamp();
-        $isinbreak = BreaksHelper::is_in_a_break($timestamp);
+        $isinbreak = BreaksHelper::is_in_a_break($timestamp, $userid);
         $classes = array($month, 'time-unit-' . $timestamp);
         if ($isinbreak) {
             $classes[] = 'is-in-break';

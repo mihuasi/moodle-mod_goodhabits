@@ -90,9 +90,9 @@ class BreaksHelper {
      * @return array
      * @throws \dml_exception
      */
-    public static function get_personal_breaks($instanceid) {
+    public static function get_personal_breaks($instanceid, $userid = null) {
         global $DB, $USER;
-        $userid = $USER->id;
+        $userid = ($userid) ? $userid : $USER->id;
         $params = array(
             'userid' => $userid,
             'instanceid' => $instanceid
@@ -138,10 +138,10 @@ class BreaksHelper {
      * @throws \coding_exception
      * @throws \dml_exception
      */
-    public static function is_in_a_break($timestamp) {
+    public static function is_in_a_break($timestamp, $userid = null) {
         $instanceid = Helper::get_instance_id_from_url();
         $error_margin = Helper::get_timestamp_error_margin();
-        $breaks = static::get_personal_breaks($instanceid);
+        $breaks = static::get_personal_breaks($instanceid, $userid);
         foreach ($breaks as $break) {
             $start = $break->timestart - $error_margin;
             $end = $break->timeend + $error_margin;
