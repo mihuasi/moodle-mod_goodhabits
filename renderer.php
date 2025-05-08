@@ -150,11 +150,41 @@ class mod_goodhabits_renderer extends plugin_renderer_base {
         $habit_data['title_text'] = trim($titletext);
         $habit_data['habit_name'] = trim(format_text($habit->name));
         $habit_data['habit_desc'] = trim(format_text($habit->description));
+        $effort_avg = $this->get_avg('x_axis_val', $habit, $userid, $instanceid);
+        $outcome_avg = $this->get_avg('y_axis_val', $habit, $userid, $instanceid);
+
+        $habit_data['effort_avg'] = round($effort_avg, 1);
+        $habit_data['outcome_avg'] = round($outcome_avg, 1);
+        $habit_data['effort_avg_rounded'] = round($effort_avg);
+        $habit_data['outcome_avg_rounded'] = round($outcome_avg);
 
         $checkmarks = $this->get_checkmarks_data($calendar, $habit, $userid, $instanceid);
         $habit_data['checkmarks'] = $checkmarks;
 
         return $habit_data;
+    }
+
+    protected function get_avg($column = 'x_axis_val', $habit, $userid, $instanceid)
+    {
+        global $DB, $USER;
+        if (!$userid) {
+            $userid = $USER->id;
+        }
+
+        $sql = "SELECT AVG( e.$column )
+              FROM {mod_goodhabits_entry} e
+              JOIN {mod_goodhabits_item} i ON e.habit_id = i.id
+             WHERE e.habit_id = :habitid
+               AND e.userid = :userid
+               AND i.instanceid = :instanceid";
+
+        $params = [
+            'habitid' => $habit->id,
+            'userid' => $userid,
+            'instanceid' => $instanceid
+        ];
+
+        return (float) $DB->get_field_sql($sql, $params) ?: 0.0;
     }
 
     /**

@@ -340,6 +340,10 @@
     color: black;
 }
 
+.path-mod-goodhabits .habits .habit .streak {
+    border: solid #c6c6c6 1px;
+}
+
 .path-mod-goodhabits .habits .habit .streak.activity,
 .path-mod-goodhabits .habits .habit .streak.add-new-habit.activity.clicked {
     border: solid brown 1px;
@@ -1108,11 +1112,13 @@ body.pagelayout-embedded .activity-header {
 }
 
 .path-mod-goodhabits .habits .habit .streak .streak-habit-name,
+.path-mod-goodhabits .habits .habit .streak .streak-avg,
 .path-mod-goodhabits .habits .habit .streak .streak-close-option {
     display: none;
 }
 
 .path-mod-goodhabits .habits .habit.streak-open .streak .streak-habit-name,
+.path-mod-goodhabits .habits .habit.streak-open .streak .streak-avg,
 .path-mod-goodhabits .habits .habit.streak-open .streak .streak-close-option {
     display: block;
 }
@@ -1131,9 +1137,26 @@ body.pagelayout-embedded .activity-header {
     color: black;
 }
 
+.path-mod-goodhabits .habits .habit .streak .streak-avg {
+    font-size: 14px;
+    /*text-align: left;*/
+    color: #3a3a3a;
+}
+
 .path-mod-goodhabits #goodhabits-container.streak-open .habit {
     opacity: 0.5;
 }
 .path-mod-goodhabits #goodhabits-container.streak-open .habit.streak-open {
     opacity: 1;
+}
+
+.path-mod-goodhabits .habit.streak-open .checkmark {
+    display: inline-block;
+    height: 40px;
+    /*width: 40px;*/
+    line-height: 40px;
+    border-radius: 20px;
+    margin-right: 10px;
+    padding: 2px;
+    text-align: center;
 }
