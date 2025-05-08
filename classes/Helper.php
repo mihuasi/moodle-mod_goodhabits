@@ -550,4 +550,27 @@ HAVING COUNT(DISTINCT e.habit_id) >= (
 
     }
 
+    public static function get_avg($column = 'x_axis_val', $habit, $userid, $instanceid)
+    {
+        global $DB, $USER;
+        if (!$userid) {
+            $userid = $USER->id;
+        }
+
+        $sql = "SELECT AVG( e.$column )
+              FROM {mod_goodhabits_entry} e
+              JOIN {mod_goodhabits_item} i ON e.habit_id = i.id
+             WHERE e.habit_id = :habitid
+               AND e.userid = :userid
+               AND i.instanceid = :instanceid";
+
+        $params = [
+            'habitid' => $habit->id,
+            'userid' => $userid,
+            'instanceid' => $instanceid
+        ];
+
+        return (float) $DB->get_field_sql($sql, $params) ?: 0.0;
+    }
+
 }
