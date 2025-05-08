@@ -304,6 +304,7 @@ $string['skip_help_block_of_days'] = 'Skipping a block-of-days will grey it out,
 $string['grid_open_help_day'] = 'This opens up a grid to allow you to reflect on a habit for a particular day.';
 $string['grid_open_help_week'] = 'This opens up a grid to allow you to reflect on a habit for a particular week.';
 $string['grid_open_help_block_of_days'] = 'This opens up a grid to allow you to reflect on a habit for a particular block-of-days.';
+$string['average'] = 'Average';
 
 
 
