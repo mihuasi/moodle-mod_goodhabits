@@ -305,6 +305,7 @@ $string['grid_open_help_day'] = 'This opens up a grid to allow you to reflect on
 $string['grid_open_help_week'] = 'This opens up a grid to allow you to reflect on a habit for a particular week.';
 $string['grid_open_help_block_of_days'] = 'This opens up a grid to allow you to reflect on a habit for a particular block-of-days.';
 $string['average_eff_out'] = 'Average (effort / outcome)';
+$string['first_entry'] = 'First entry';
 
 
 
