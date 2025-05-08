@@ -1085,7 +1085,8 @@ body.pagelayout-embedded .activity-header {
     cursor: pointer;
 }
 
-.path-mod-goodhabits #goodhabits-container.grid-is-open .streak {
+.path-mod-goodhabits #goodhabits-container.grid-is-open .streak,
+.path-mod-goodhabits #goodhabits-container.streak-open .streak {
     cursor: default;
 }
 

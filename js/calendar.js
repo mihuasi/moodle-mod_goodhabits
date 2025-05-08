@@ -29,7 +29,11 @@ jQuery(window).on('load',function($) {
     $('.streak').on('click', function () {
         var $mainContainer = $('#goodhabits-container');
         var gridIsOpen = $mainContainer.hasClass('grid-is-open');
+        var streakIsOpen = $mainContainer.hasClass('streak-open');
         if (gridIsOpen) {
+            return;
+        }
+        if (streakIsOpen) {
             return;
         }
 
@@ -47,23 +51,7 @@ jQuery(window).on('load',function($) {
         }).siblings().show();
 
         // Toggle this one
-        if ($streak.hasClass('expanded')) {
-            $streak.removeClass('expanded').css({
-                width: '',
-                position: '',
-                zIndex: '',
-                borderRadius: '',
-                paddingTop: '',
-                paddingBottom: '',
-            });
-
-            $mainContainer.removeClass('streak-open');
-            $habit.css('padding-bottom', '2px');
-            $habit.removeClass('streak-open');
-
-            $habit.children().not($streak).show();
-        } else {
-            const habitName = $habit.find('.habit-name').text();
+        if (!$streak.hasClass('expanded')) {
             $streak.addClass('expanded').css({
                 width: '90%',
                 position: 'absolute',
@@ -81,6 +69,31 @@ jQuery(window).on('load',function($) {
             $habit.children().not($streak).hide();
         }
     });
+
+    $(document).on('click', '.streak-close-option', function () {
+        const $streak = $(this).closest('.streak');
+        const $habit = $streak.closest('.habit');
+        const $mainContainer = $('#goodhabits-container');
+
+        $streak.removeClass('expanded').css({
+            width: '',
+            position: '',
+            zIndex: '',
+            borderRadius: '',
+            paddingTop: '',
+            paddingBottom: '',
+        });
+
+        $mainContainer.removeClass('streak-open');
+        $habit.css('padding-bottom', '2px');
+        $habit.removeClass('streak-open');
+
+        $habit.children().not($streak).show();
+    });
+
+    // $('.streak-close-option').on('click', function () {
+    //
+    // });
 
     function timeUnitOptions() {
 
