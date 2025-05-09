@@ -22,6 +22,7 @@
 
 namespace mod_goodhabits;
 
+use mod_goodhabits\calendar\FlexiCalendar;
 use mod_goodhabits\calendar\FlexiCalendarUnit;
 use mod_goodhabits\habit\HabitItemsHelper;
 
@@ -573,16 +574,18 @@ HAVING COUNT(DISTINCT e.habit_id) >= (
         return (float) $DB->get_field_sql($sql, $params) ?: 0.0;
     }
 
-    public static function get_first_entry($habit, $userid, $instanceid) {
+    public static function get_first_entry($habit, $userid, $instanceid, FlexiCalendar $calendar) {
         global $DB, $USER;
         if (!$userid) {
             $userid = $USER->id;
         }
+        $periodduration = $calendar->get_period_duration();
 
         $sql = "SELECT e.*
               FROM {mod_goodhabits_entry} e
               JOIN {mod_goodhabits_item} i ON e.habit_id = i.id
              WHERE e.userid = :userid
+               AND e.period_duration = :period_duration
                AND e.habit_id = :habit
                AND i.instanceid = :instanceid
           ORDER BY e.endofperiod_timestamp ASC
@@ -591,6 +594,7 @@ HAVING COUNT(DISTINCT e.habit_id) >= (
         $params = [
             'userid' => $userid,
             'habit' => $habit->id,
+            'period_duration' => $periodduration,
             'instanceid' => $instanceid
         ];
 

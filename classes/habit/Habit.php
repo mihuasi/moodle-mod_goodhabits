@@ -97,7 +97,7 @@ class Habit {
 
         $sql = "SELECT * FROM {mod_goodhabits_entry}
         WHERE habit_id = :habit_id
-          AND userid = :userid
+          AND userid = :userid AND period_duration = :period_duration
           AND endofperiod_timestamp > :from AND endofperiod_timestamp < :to
         ORDER BY endofperiod_timestamp ASC";
 

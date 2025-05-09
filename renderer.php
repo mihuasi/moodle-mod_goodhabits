@@ -158,7 +158,7 @@ class mod_goodhabits_renderer extends plugin_renderer_base {
         $habit_data['effort_avg_rounded'] = round($effort_avg);
         $habit_data['outcome_avg_rounded'] = round($outcome_avg);
 
-        $first_entry = gh\Helper::get_first_entry($habit, $userid, $instanceid);
+        $first_entry = gh\Helper::get_first_entry($habit, $userid, $instanceid, $calendar);
         $timestamp = $first_entry->endofperiod_timestamp;
 
         $formatteddisplay = date('d/m/y', $timestamp);
