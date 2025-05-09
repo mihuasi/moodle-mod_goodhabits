@@ -72,14 +72,21 @@
                      data-habit-id="{{id}}" data-is-global="{{is_activity_level}}">
                     <div class="streak-habit-name">{{{habit_name}}}</div>
                     <div class="streak-close-option close-btn">X</div>
-                    <div class="streak-first-entry">
-                        {{#str}} first_entry, mod_goodhabits {{/str}}: <a href="{{{first_entry_url}}}">{{{first_entry_display}}}</a>
-                    </div>
-                    <div class="streak-avg">
-                        {{#str}} average_eff_out, mod_goodhabits {{/str}}: <span class="checkmark x-val-{{effort_avg_rounded}} y-val-{{outcome_avg_rounded}}">
-                            {{effort_avg}} / {{outcome_avg}}
-                        </span>
-                    </div>
+                    {{#has_first_entry}}
+                        <div class="streak-first-entry">
+                            {{#str}} first_entry, mod_goodhabits {{/str}}: <a href="{{{first_entry_url}}}">{{{first_entry_display}}}</a>
+                        </div>
+                        <div class="streak-avg">
+                            {{#str}} average_eff_out, mod_goodhabits {{/str}}: <span class="checkmark x-val-{{effort_avg_rounded}} y-val-{{outcome_avg_rounded}}">
+                                {{effort_avg}} / {{outcome_avg}}
+                            </span>
+                        </div>
+                    {{/has_first_entry}}
+                    {{^has_first_entry}}
+                        <div class="no-entries">
+                            {{#str}} no_entries, mod_goodhabits {{/str}}
+                        </div>
+                    {{/has_first_entry}}
                 </div>
                     <div class="title">
                         <div class="habit-name">{{{habit_name}}}</div>

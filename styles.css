@@ -1121,6 +1121,7 @@ body.pagelayout-embedded .activity-header {
 .path-mod-goodhabits .habits .habit .streak .streak-habit-name,
 .path-mod-goodhabits .habits .habit .streak .streak-avg,
 .path-mod-goodhabits .habits .habit .streak .streak-first-entry,
+.path-mod-goodhabits .habits .habit .streak .no-entries,
 .path-mod-goodhabits .habits .habit .streak .streak-close-option {
     display: none;
 }
@@ -1128,6 +1129,7 @@ body.pagelayout-embedded .activity-header {
 .path-mod-goodhabits .habits .habit.streak-open .streak .streak-habit-name,
 .path-mod-goodhabits .habits .habit.streak-open .streak .streak-avg,
 .path-mod-goodhabits .habits .habit.streak-open .streak .streak-first-entry,
+.path-mod-goodhabits .habits .habit.streak-open .streak .no-entries,
 .path-mod-goodhabits .habits .habit.streak-open .streak .streak-close-option {
     display: block;
 }
@@ -1178,24 +1180,23 @@ body.pagelayout-embedded .activity-header {
 
 /* Default (collapsed) state for .habit */
 .path-mod-goodhabits .habit {
-    margin-bottom: 20px; /* Set the margin between habits here */
-    padding-bottom: 2px; /* This can be adjusted to your needs */
+    margin-bottom: 20px;
+    padding-bottom: 2px;
     transition: margin-bottom 0.3s ease-in-out, padding-bottom 0.3s ease-in-out;
 }
 
 /* Expanded state */
 .path-mod-goodhabits .habit.streak-open {
-    padding-bottom: 10px; /* Padding when expanded */
+    padding-bottom: 10px;
 }
 
-/* .streak expanded state */
 .path-mod-goodhabits .habit .streak.expanded {
     width: 95%;
     z-index: 10;
     border-radius: 12px;
     padding-top: 15px;
     padding-bottom: 15px;
-    margin-bottom: 20px; /* Ensure the streak doesn't overlap */
+    margin-bottom: 20px;
     position: relative;
 }
 
