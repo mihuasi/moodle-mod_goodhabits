@@ -1094,10 +1094,6 @@ body.pagelayout-embedded .activity-header {
     cursor: default;
 }
 
-.habit-grid-container {
-    /*display: none;*/
-}
-
 .path-mod-goodhabits .habit.expanded {
     background-color: #f9f9f9;
     transition: all 0.3s ease-in-out;
@@ -1160,7 +1156,7 @@ body.pagelayout-embedded .activity-header {
 .path-mod-goodhabits #goodhabits-container.streak-open .habit.streak-open {
     opacity: 1;
     padding-bottom: 10px; /* Adjust padding when expanded */
-    margin-bottom: 0px; /* Increase margin between expanded habit and the next one */
+    margin-bottom: 0px;
 }
 
 .path-mod-goodhabits .habit.streak-open .checkmark {
@@ -1173,9 +1169,6 @@ body.pagelayout-embedded .activity-header {
     padding: 2px;
     text-align: center;
 }
-
-
-
 
 
 /* Default (collapsed) state for .habit */
