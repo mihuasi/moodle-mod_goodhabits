@@ -199,7 +199,7 @@ class mod_goodhabits_renderer extends plugin_renderer_base {
         $isreview = (int) $userid;
 
         $userid = ($userid) ? $userid : $USER->id;
-        $entries = $habit->get_entries($userid, $calendar->get_period_duration());
+        $entries = $habit->get_entries($userid, $calendar);
 
         $prefs_mgr = new gh\PreferencesManager($instanceid, $userid);
         $show_scores = $prefs_mgr->show_scores();

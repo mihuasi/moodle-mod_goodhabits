@@ -22,6 +22,7 @@
 
 namespace mod_goodhabits\habit;
 
+use mod_goodhabits\calendar\FlexiCalendar;
 use mod_goodhabits\Helper;
 
 defined('MOODLE_INTERNAL') || die();
@@ -84,14 +85,32 @@ class Habit {
      * Returns all of the entries for this Habit for a particular user, given their calendar setting.
      *
      * @param int $userid
-     * @param int $periodduration
+     * @param FlexiCalendar $calendar
      * @return array
      * @throws \dml_exception
      */
-    public function get_entries($userid, $periodduration) {
+    public function get_entries($userid, FlexiCalendar $calendar) {
         global $DB;
-        $params = array('habit_id' => $this->id, 'userid' => $userid, 'period_duration' => $periodduration);
-        $entries = $DB->get_records('mod_goodhabits_entry', $params);
+        $periodduration = $calendar->get_period_duration();
+        $from = $calendar->get_earliest_limit();
+        $to = $calendar->get_latest_limit();
+
+        $sql = "SELECT * FROM {mod_goodhabits_entry}
+        WHERE habit_id = :habit_id
+          AND userid = :userid
+          AND endofperiod_timestamp > :from AND endofperiod_timestamp < :to
+        ORDER BY endofperiod_timestamp ASC";
+
+        $params = [
+            'habit_id' => $this->id,
+            'period_duration' => $periodduration,
+            'userid' => $userid,
+            'from' => $from,
+            'to' => $to
+        ];
+
+        $entries = $DB->get_records_sql($sql, $params);
+
         $entriesbytime = array();
         foreach ($entries as $entry) {
             $entriesbytime[$entry->endofperiod_timestamp] = $entry;

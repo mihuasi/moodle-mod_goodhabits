@@ -114,9 +114,32 @@ class FlexiCalendar {
     }
 
     /**
+     * Returns the earliest item from the set.
+     *
+     * @return FlexiCalendarUnit
+     */
+    public function get_earliest()
+    {
+        $earliest = reset($this->displayset);
+        return $earliest;
+    }
+
+    /**
+     * Returns the lower limit for the display set (timestamp).
+     *
+     * @return int
+     */
+    public function get_earliest_limit()
+    {
+        $earliest = $this->get_earliest();
+        $earliest_limits = $earliest->get_limits();
+        return $earliest_limits['lower'];
+    }
+
+    /**
      * Returns the latest item from the set.
      *
-     * @return false|FlexiCalendarUnit
+     * @return FlexiCalendarUnit
      */
     public function get_latest()
     {
@@ -124,6 +147,18 @@ class FlexiCalendar {
         $latest = reset($reverse);
 
         return $latest;
+    }
+
+    /**
+     * Returns the lower limit for the display set (timestamp).
+     *
+     * @return int
+     */
+    public function get_latest_limit()
+    {
+        $latest = $this->get_latest();
+        $latest_limits = $latest->get_limits();
+        return $latest_limits['upper'];
     }
 
     /**
