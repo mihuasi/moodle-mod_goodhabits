@@ -116,32 +116,8 @@ $dates = gh\insights\Helper::get_graph_dates();
 
 $chart = new \core\chart_bar();
 
-$x_series = [];
-$y_series = [];
-
-foreach ($entries_data as $name => $habit_entries) {
-    $measures = ['x', 'y'];
-    foreach ($measures as $measure) {
-        $series_data = [];
-        foreach ($dates as $date) {
-            if (isset($habit_entries[$date])) {
-                $series_data[] = $habit_entries[$date][$measure];
-            } else {
-                $series_data[] = null;
-            }
-        }
-        $string_id = $measure . 'label';
-        $measure_name = gh\Helper::get_string($string_id);
-        $series = new \core\chart_series($name . ' - ' . $measure_name, $series_data);
-        if ($measure == 'y') {
-            $series->set_type(\core\chart_series::TYPE_LINE);
-        }
-//        print_object($series_data);
-//        $chart->add_series($series);
-        ${$measure . '_series'}[] = $series;
-    }
-
-}
+$x_series = gh\insights\Helper::populate_effort_outcome_series($entries_data, 'x');
+$y_series = gh\insights\Helper::populate_effort_outcome_series($entries_data, 'y');
 
 foreach ($y_series as $series_item) {
     $chart->add_series($series_item);

@@ -75,9 +75,30 @@ class Helper {
         return $data;
     }
 
-    public static function populate_chart_data()
+    public static function populate_effort_outcome_series($entries_data, $measure)
     {
+        $series_arr = [];
+        $dates = static::$graph_dates;
 
+        foreach ($entries_data as $name => $habit_entries) {
+                $series_data = [];
+                foreach ($dates as $date) {
+                    if (isset($habit_entries[$date])) {
+                        $series_data[] = $habit_entries[$date][$measure];
+                    } else {
+                        $series_data[] = null;
+                    }
+                }
+                $string_id = $measure . 'label';
+                $measure_name = \mod_goodhabits\Helper::get_string($string_id);
+                $series = new \core\chart_series($name . ' - ' . $measure_name, $series_data);
+                if ($measure == 'y') {
+                    $series->set_type(\core\chart_series::TYPE_LINE);
+                }
+                $series_arr[] = $series;
+        }
+
+        return $series_arr;
     }
 
     /**
