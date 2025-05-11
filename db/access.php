@@ -109,5 +109,14 @@ $capabilities = array(
             'student' => CAP_ALLOW,
             'user' => CAP_ALLOW
         )
+    ),
+
+    'mod/goodhabits:view_own_insights' => array(
+        'captype' => 'read',
+        'contextlevel' => CONTEXT_MODULE,
+        'archetypes' => array(
+            'student' => CAP_ALLOW,
+            'user' => CAP_ALLOW,
+        )
     )
 );

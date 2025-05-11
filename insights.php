@@ -37,9 +37,11 @@ $name = $moduleinstance->name;
 
 $userid = $USER->id;
 
-$habits = HabitItemsHelper::get_all_habits_for_user($instanceid, $userid);
-
 $context = context_module::instance($cm->id);
+
+require_capability('mod/goodhabits:view_own_insights', $context);
+
+$habits = HabitItemsHelper::get_all_habits_for_user($instanceid, $userid);
 
 $titleid = 'insights';
 $pagetitle = gh\Helper::get_string($titleid);

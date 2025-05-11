@@ -311,6 +311,7 @@ $string['insights'] = 'Insights';
 $string['select_habits'] = 'Select habits';
 $string['startdate'] = 'Start date';
 $string['enddate'] = 'End date';
+$string['goodhabits:view_own_insights'] = 'View own insights';
 
 
 
