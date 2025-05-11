@@ -148,59 +148,12 @@ foreach ($x_series as $series_item) {
 }
 
 
-
-
-
-
-//$effort = new \core\chart_series('Effort', [3, 4, 5, 2]);
-//$outcome = new \core\chart_series('Outcome', [2, 5, 3, 4]);
-//
-//$chart->add_series($effort);
-//$chart->add_series($outcome);
-
 $labels = $dates;
 
 $chart->set_labels($labels);
 
 $chart->set_title('Effort and Outcome Over Time');
 $chart->set_legend_options(['display' => true, 'position' => 'top']);
-
-
-
-
-
-
-//$chart = new \core\chart_line();
-//
-//$effort = new \core\chart_series('Effort', [3, 4, 5, 2]);
-//$outcome = new \core\chart_series('Outcome', [2, 5, 3, 4]);
-//
-//$chart->add_series($effort);
-//$chart->add_series($outcome);
-//
-//$labels = ['2025-05-01', '2025-05-02', '2025-05-03', '2025-05-04'];
-//$chart->set_labels($labels);
-//
-//$chart->set_title('Effort and Outcome Over Time');
-//$chart->set_legend_options(['display' => true, 'position' => 'top']);
-
-
-
-
-
-//$sales = new \core\chart_series('Sales', [1000, 1170, 660, 1030]);
-//$expenses = new \core\chart_series('Expenses', [400, 460, 1120, 540]);
-//$labels = ['2004', '2005', '2006', '2007'];
-//
-//$chart = new \core\chart_bar();
-//$chart->set_title('BAR CHART COMBINED WITH LINE CHART');
-//$expensesline = new \core\chart_series('Expenses', [400, 460, 1120, 540]);
-//$expensesline->set_type(\core\chart_series::TYPE_LINE);
-//$chart->add_series($expensesline);
-//$chart->add_series($sales);
-//$chart->set_labels($labels);
-
-
 
 
 echo $OUTPUT->render($chart);
