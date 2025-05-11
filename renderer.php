@@ -177,7 +177,7 @@ class mod_goodhabits_renderer extends plugin_renderer_base {
         $url = new moodle_url('/mod/goodhabits/insights.php', [
             'instance' => $instanceid,
             'habit_id' => $habit->id,
-            'end' => $current_period_end
+            'end_time' => $current_period_end
         ]);
 
         $habit_data['insights_url'] = $url->out();

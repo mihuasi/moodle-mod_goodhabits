@@ -9,7 +9,7 @@ class insights_filter extends \moodleform {
 
     protected function definition() {
         $mform = $this->_form;
-        $habits = $this->_customdata['habits'];
+        $habits = $this->_customdata['selectable_habits'];
         $selected = $this->_customdata['selected'];
         $start = $this->_customdata['start'];
         $end = $this->_customdata['end'];
@@ -24,9 +24,9 @@ class insights_filter extends \moodleform {
         foreach ($habits as $habit) {
             $habitoptions[$habit->id] = $habit->name;
         }
-        $mform->addElement('select', 'habits', get_string('select_habits', 'mod_goodhabits'), $habitoptions);
-        $mform->getElement('habits')->setMultiple(true);
-        $mform->setDefault('habits', $selected);
+        $mform->addElement('select', 'habit', get_string('select_habit', 'mod_goodhabits'), $habitoptions);
+//        $mform->getElement('habit')->setMultiple(true);
+        $mform->setDefault('habit', $selected);
 
         // Date range
         $mform->addElement('date_selector', 'start', get_string('startdate', 'mod_goodhabits'));

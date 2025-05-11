@@ -31,7 +31,7 @@ require_login();
 
 $instanceid = required_param('instance', PARAM_INT);
 $habit_id = optional_param('habit_id', 0, PARAM_INT);
-$end = optional_param('end', time(), PARAM_INT);
+$end = optional_param('end_time', time(), PARAM_INT);
 $moduleinstance = gh\Helper::get_module_instance($instanceid);
 $course = get_course($moduleinstance->course);
 $cm = get_coursemodule_from_instance('goodhabits', $moduleinstance->id, $course->id, false, MUST_EXIST);
@@ -68,19 +68,23 @@ echo $OUTPUT->header();
 $start = strtotime('-30 day', $end);
 
 
-if (empty($habit_ids)) {
-    if ($habit_id) {
-        $habit_ids = [$habit_id];
-    } else {
-        $first_habit = reset($habits);
-        $habit_ids = [$first_habit->id];
-    }
+//if (empty($habit_ids)) {
+//    if ($habit_id) {
+//        $habit_ids = [$habit_id];
+//    } else {
+//        $first_habit = reset($habits);
+//        $habit_ids = [$first_habit->id];
+//    }
+//}
+if (!$habit_id) {
+    $first_habit = reset($habits);
+    $habit_id = $first_habit->id;
 }
 
 // Prepare form data
 $formdata = [
-    'habits' => $habits,
-    'selected' => $habit_ids,
+    'selectable_habits' => $habits,
+    'selected' => $habit_id,
     'start' => $start,
     'end' => $end,
     'instanceid' => $instanceid
@@ -92,7 +96,7 @@ if ($mform->is_cancelled()) {
     redirect(new moodle_url('/mod/goodhabits/insights.php', ['instance' => $instanceid]));
 } else if ($data = $mform->get_data()) {
     // Use submitted data
-    $habit_ids = $data->habits;
+    $habit_id = $data->habit;
     $start = $data->start;
     $end = $data->end;
 }
@@ -102,7 +106,7 @@ $limits = [
 ];
 
 
-$entries = gh\insights\Helper::get_habit_entries($instanceid, $userid, $limits, $habit_ids);
+$entries = gh\insights\Helper::get_habit_entries($instanceid, $userid, $limits, [$habit_id]);
 
 $entries_data = gh\insights\Helper::structure_data($entries);
 

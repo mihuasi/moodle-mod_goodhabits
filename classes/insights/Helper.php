@@ -75,6 +75,11 @@ class Helper {
         return $data;
     }
 
+    public static function populate_chart_data()
+    {
+
+    }
+
     /**
      * @return array
      */
