@@ -346,6 +346,13 @@ class mod_goodhabits_renderer extends plugin_renderer_base {
         echo $this->print_link_as_form($url, $text);
     }
 
+    public function print_see_insights($instanceid) {
+        $params = array('instance' => $instanceid);
+        $url = new moodle_url('/mod/goodhabits/insights.php', $params);
+        $text = gh\Helper::get_string('insights');
+        echo $this->print_link_as_form($url, $text);
+    }
+
     public function print_exit_mobile_view($instanceid) {
         $params = array('g' => $instanceid);
         $url = new moodle_url('/mod/goodhabits/view.php', $params);

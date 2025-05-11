@@ -307,6 +307,10 @@ $string['grid_open_help_block_of_days'] = 'This opens up a grid to allow you to 
 $string['average_eff_out'] = 'Average (effort / outcome)';
 $string['first_entry'] = 'First entry';
 $string['no_entries'] = 'No entries.';
+$string['insights'] = 'Insights';
+$string['select_habits'] = 'Select habits';
+$string['startdate'] = 'Start date';
+$string['enddate'] = 'End date';
 
 
 

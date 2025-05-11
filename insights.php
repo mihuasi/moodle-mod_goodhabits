@@ -1,0 +1,202 @@
+<?php
+// This file is part of Moodle - http://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+
+/**
+ * @package   mod_goodhabits
+ * @copyright 2021 Joe Cape
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+
+use mod_goodhabits as gh;
+use mod_goodhabits\habit\HabitItemsHelper;
+
+require_once('../../config.php');
+require_once("{$CFG->libdir}/formslib.php");
+require_once($CFG->dirroot . '/mod/goodhabits/classes/form/select_user_review.php');
+
+require_login();
+
+$instanceid = required_param('instance', PARAM_INT);
+$moduleinstance = gh\Helper::get_module_instance($instanceid);
+$course = get_course($moduleinstance->course);
+$cm = get_coursemodule_from_instance('goodhabits', $moduleinstance->id, $course->id, false, MUST_EXIST);
+$name = $moduleinstance->name;
+
+$userid = $USER->id;
+
+$habits = HabitItemsHelper::get_all_habits_for_user($instanceid, $userid);
+
+$context = context_module::instance($cm->id);
+
+$titleid = 'insights';
+$pagetitle = gh\Helper::get_string($titleid);
+
+$PAGE->set_context($context);
+$PAGE->set_pagelayout('standard');
+$PAGE->set_title($pagetitle);
+$PAGE->set_heading($pagetitle);
+$PAGE->set_course($course);
+$PAGE->set_cm($cm);
+
+$params = array('instance' => $instanceid);
+
+$pageurl = new moodle_url('/mod/goodhabits/insights.php', $params);
+
+$PAGE->set_url($pageurl);
+
+$PAGE->navbar->add($pagetitle, $pageurl);
+
+echo $OUTPUT->header();
+
+$start = strtotime('-30 day');
+$end = time();
+
+if (empty($habit_ids)) {
+    $first_habit = reset($habits);
+    $habit_ids = [$first_habit->id];
+}
+
+// Prepare form data
+$formdata = [
+    'habits' => $habits,
+    'selected' => $habit_ids,
+    'start' => $start,
+    'end' => $end,
+    'instanceid' => $instanceid
+];
+
+$mform = new \mod_goodhabits\form\insights_filter(null, $formdata);
+
+if ($mform->is_cancelled()) {
+    redirect(new moodle_url('/mod/goodhabits/insights.php', ['instance' => $instanceid]));
+} else if ($data = $mform->get_data()) {
+    // Use submitted data
+    $habit_ids = $data->habits;
+    $start = $data->start;
+    $end = $data->end;
+}
+$limits = [
+    'lower' => $start,
+    'upper' => $end
+];
+
+
+$entries = gh\insights\Helper::get_habit_entries($instanceid, $userid, $limits, $habit_ids);
+
+$entries_data = gh\insights\Helper::structure_data($entries);
+
+$dates = gh\insights\Helper::get_graph_dates();
+
+//print_object($entries_data);
+
+$chart = new \core\chart_bar();
+
+$x_series = [];
+$y_series = [];
+
+foreach ($entries_data as $name => $habit_entries) {
+    $measures = ['x', 'y'];
+    foreach ($measures as $measure) {
+        $series_data = [];
+        foreach ($dates as $date) {
+            if (isset($habit_entries[$date])) {
+                $series_data[] = $habit_entries[$date][$measure];
+            } else {
+                $series_data[] = null;
+            }
+        }
+        $string_id = $measure . 'label';
+        $measure_name = gh\Helper::get_string($string_id);
+        $series = new \core\chart_series($name . ' - ' . $measure_name, $series_data);
+        if ($measure == 'y') {
+            $series->set_type(\core\chart_series::TYPE_LINE);
+        }
+//        print_object($series_data);
+//        $chart->add_series($series);
+        ${$measure . '_series'}[] = $series;
+    }
+
+}
+
+foreach ($y_series as $series_item) {
+    $chart->add_series($series_item);
+}
+
+foreach ($x_series as $series_item) {
+    $chart->add_series($series_item);
+}
+
+
+
+
+
+
+//$effort = new \core\chart_series('Effort', [3, 4, 5, 2]);
+//$outcome = new \core\chart_series('Outcome', [2, 5, 3, 4]);
+//
+//$chart->add_series($effort);
+//$chart->add_series($outcome);
+
+$labels = $dates;
+
+$chart->set_labels($labels);
+
+$chart->set_title('Effort and Outcome Over Time');
+$chart->set_legend_options(['display' => true, 'position' => 'top']);
+
+
+
+
+
+
+//$chart = new \core\chart_line();
+//
+//$effort = new \core\chart_series('Effort', [3, 4, 5, 2]);
+//$outcome = new \core\chart_series('Outcome', [2, 5, 3, 4]);
+//
+//$chart->add_series($effort);
+//$chart->add_series($outcome);
+//
+//$labels = ['2025-05-01', '2025-05-02', '2025-05-03', '2025-05-04'];
+//$chart->set_labels($labels);
+//
+//$chart->set_title('Effort and Outcome Over Time');
+//$chart->set_legend_options(['display' => true, 'position' => 'top']);
+
+
+
+
+
+//$sales = new \core\chart_series('Sales', [1000, 1170, 660, 1030]);
+//$expenses = new \core\chart_series('Expenses', [400, 460, 1120, 540]);
+//$labels = ['2004', '2005', '2006', '2007'];
+//
+//$chart = new \core\chart_bar();
+//$chart->set_title('BAR CHART COMBINED WITH LINE CHART');
+//$expensesline = new \core\chart_series('Expenses', [400, 460, 1120, 540]);
+//$expensesline->set_type(\core\chart_series::TYPE_LINE);
+//$chart->add_series($expensesline);
+//$chart->add_series($sales);
+//$chart->set_labels($labels);
+
+
+
+
+echo $OUTPUT->render($chart);
+
+$mform->display();
+
+echo $OUTPUT->footer();
