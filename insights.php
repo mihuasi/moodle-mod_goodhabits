@@ -30,6 +30,8 @@ require_once($CFG->dirroot . '/mod/goodhabits/classes/form/select_user_review.ph
 require_login();
 
 $instanceid = required_param('instance', PARAM_INT);
+$habit_id = optional_param('habit_id', 0, PARAM_INT);
+$end = optional_param('end', time(), PARAM_INT);
 $moduleinstance = gh\Helper::get_module_instance($instanceid);
 $course = get_course($moduleinstance->course);
 $cm = get_coursemodule_from_instance('goodhabits', $moduleinstance->id, $course->id, false, MUST_EXIST);
@@ -63,12 +65,16 @@ $PAGE->navbar->add($pagetitle, $pageurl);
 
 echo $OUTPUT->header();
 
-$start = strtotime('-30 day');
-$end = time();
+$start = strtotime('-30 day', $end);
+
 
 if (empty($habit_ids)) {
-    $first_habit = reset($habits);
-    $habit_ids = [$first_habit->id];
+    if ($habit_id) {
+        $habit_ids = [$habit_id];
+    } else {
+        $first_habit = reset($habits);
+        $habit_ids = [$first_habit->id];
+    }
 }
 
 // Prepare form data

@@ -172,6 +172,16 @@ class mod_goodhabits_renderer extends plugin_renderer_base {
         $habit_data['first_entry_display'] = $formatteddisplay;
         $habit_data['first_entry_url'] = $url->out();
 
+        $current_period_end = $calendar->get_latest_limit();
+
+        $url = new moodle_url('/mod/goodhabits/insights.php', [
+            'instance' => $instanceid,
+            'habit_id' => $habit->id,
+            'end' => $current_period_end
+        ]);
+
+        $habit_data['insights_url'] = $url->out();
+
         $checkmarks = $this->get_checkmarks_data($calendar, $habit, $userid, $instanceid);
         $habit_data['checkmarks'] = $checkmarks;
 
