@@ -67,15 +67,6 @@ echo $OUTPUT->header();
 
 $start = strtotime('-30 day', $end);
 
-
-//if (empty($habit_ids)) {
-//    if ($habit_id) {
-//        $habit_ids = [$habit_id];
-//    } else {
-//        $first_habit = reset($habits);
-//        $habit_ids = [$first_habit->id];
-//    }
-//}
 if (!$habit_id) {
     $first_habit = reset($habits);
     $habit_id = $first_habit->id;

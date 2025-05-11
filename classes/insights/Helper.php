@@ -58,19 +58,7 @@ class Helper {
                 'x' => $record->x_axis_val,
                 'y' => $record->y_axis_val,
             ];
-
-//            if (!isset($data[$habit_id])) {
-//                $data[$habit_id] = [
-//                    'effort' => [],
-//                    'outcome' => [],
-//                    'dates' => []
-//                ];
-//            }
-//
-//            $data[$habit_id][$record->id][$date] = $record->y_axis_val;
-//            $data[$habit_id]['dates'][$date] = $date;
         }
-//        print_object($data);
 
         return $data;
     }
