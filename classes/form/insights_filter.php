@@ -46,7 +46,6 @@ class insights_filter extends \moodleform {
     {
         // Advanced section: Custom graph source checkbox.
         $mform->addElement('header', 'advancedsettingshdr', Helper::get_string('advancedsettings'));
-//        $mform->setAdvanced('advancedsettingshdr');
         $mform->setExpanded('advancedsettingshdr', false);
 
         $mform->addElement(
@@ -55,9 +54,7 @@ class insights_filter extends \moodleform {
             Helper::get_string('customgraphsource')
         );
 
-//        $mform->setAdvanced('customgraphsource');
-
-// Prepare options for bar and line data selects.
+        // Prepare options for bar and line data selects.
         $graphoptions = [];
         foreach ($habits as $habit) {
             $graphoptions[$habit->id . '_effort'] = $habit->name . ' - ' . Helper::get_string('effort');
@@ -65,21 +62,19 @@ class insights_filter extends \moodleform {
             $graphoptions[$habit->id . '_difference'] = $habit->name . ' - ' . Helper::get_string('difference');
         }
 
-// Bar data select.
         $mform->addElement(
             'select',
             'bardata',
             Helper::get_string('bardata'),
             $graphoptions
         );
-// Default: selected habit - Effort.
 
+        // Default: selected habit - Effort.
         $selected = $this->optional_param('habit', 0, PARAM_INT);
         if ($selected) {
             $mform->setDefault('bardata', $selected . '_effort');
         }
 
-// Line data select.
         $mform->addElement(
             'select',
             'linedata',
@@ -87,16 +82,12 @@ class insights_filter extends \moodleform {
             $graphoptions
         );
 
-// Disable bar/line selects unless custom graph source is checked.
+        // Disable bar/line selects unless custom graph source is checked.
         $mform->disabledIf('bardata', 'customgraphsource', 'notchecked');
         $mform->disabledIf('linedata', 'customgraphsource', 'notchecked');
 
-// Disable the main habit select if custom graph source is checked.
+        // Disable the main habit select if custom graph source is checked.
         $mform->disabledIf('habit', 'customgraphsource', 'checked');
-
-//        $mform->setAdvanced('customgraphsource');
-//        $mform->setAdvanced('bardata');
-//        $mform->setAdvanced('linedata');
 
     }
 }
