@@ -63,11 +63,11 @@ class Helper {
         return $data;
     }
 
-    public static function populate_effort_outcome_series($entries_data, $measure, $chart_type = '')
+    public static function populate_effort_outcome_series($entries_data, $metric, $chart_type = '')
     {
         $series_arr = [];
         $dates = static::$graph_dates;
-        if (!$chart_type AND $measure == 'y') {
+        if (!$chart_type AND $metric == 'y') {
             $chart_type = \core\chart_series::TYPE_LINE;
         }
 
@@ -75,14 +75,14 @@ class Helper {
                 $series_data = [];
                 foreach ($dates as $date) {
                     if (isset($habit_entries[$date])) {
-                        $series_data[] = $habit_entries[$date][$measure];
+                        $series_data[] = static::get_metric_value($habit_entries, $date, $metric);
                     } else {
                         $series_data[] = null;
                     }
                 }
-                $string_id = $measure . 'label';
-                $measure_name = \mod_goodhabits\Helper::get_string($string_id);
-                $series = new \core\chart_series($name . ' - ' . $measure_name, $series_data);
+                $string_id = $metric . 'label';
+                $metric_name = \mod_goodhabits\Helper::get_string($string_id);
+                $series = new \core\chart_series($name . ' - ' . $metric_name, $series_data);
                 if ($chart_type == \core\chart_series::TYPE_LINE) {
                     $series->set_type(\core\chart_series::TYPE_LINE);
                 }
@@ -90,6 +90,26 @@ class Helper {
         }
 
         return $series_arr;
+    }
+
+    public static function map_metric_term($form_term)
+    {
+        switch ($form_term) {
+            case 'effort':
+                return 'x';
+            case 'outcome':
+                return 'y';
+            case 'difference':
+                return 'diff';
+        }
+    }
+
+    private static function get_metric_value($habit_entries, $date, $metric)
+    {
+        if ($metric == 'diff') {
+            return $habit_entries[$date]['x'] - $habit_entries[$date]['y'];
+        }
+        return $habit_entries[$date][$metric];
     }
 
     /**

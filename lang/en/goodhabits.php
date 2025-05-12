@@ -319,6 +319,7 @@ $string['outcome'] = 'outcome';
 $string['difference'] = 'difference';
 $string['bardata'] = 'Bar data';
 $string['linedata'] = 'Line data';
+$string['difflabel'] = 'Difference';
 
 
 

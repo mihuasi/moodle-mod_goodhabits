@@ -123,11 +123,11 @@ if ($custom AND $data) {
 
     $dates = gh\insights\Helper::get_graph_dates();
 
-    $metric = ($bar_metric == 'effort') ? 'x' : 'y';
+    $metric = gh\insights\Helper::map_metric_term($bar_metric);
 
     $bar_series = gh\insights\Helper::populate_effort_outcome_series($bar_data, $metric, 'bar');
 
-    $metric = ($line_metric == 'effort') ? 'x' : 'y';
+    $metric = gh\insights\Helper::map_metric_term($line_metric);
 
     $line_series = gh\insights\Helper::populate_effort_outcome_series($line_data, $metric, \core\chart_series::TYPE_LINE);
 
