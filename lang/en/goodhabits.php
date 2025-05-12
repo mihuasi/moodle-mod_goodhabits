@@ -312,6 +312,13 @@ $string['select_habit'] = 'Select habit';
 $string['startdate'] = 'Start date';
 $string['enddate'] = 'End date';
 $string['goodhabits:view_own_insights'] = 'View own insights';
+$string['advancedsettings'] = 'Advanced';
+$string['customgraphsource'] = 'Custom graph source';
+$string['effort'] = 'effort';
+$string['outcome'] = 'outcome';
+$string['difference'] = 'difference';
+$string['bardata'] = 'Bar data';
+$string['linedata'] = 'Line data';
 
 
 
