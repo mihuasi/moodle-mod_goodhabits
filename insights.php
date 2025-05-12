@@ -111,6 +111,7 @@ $x_series = gh\insights\Helper::populate_effort_outcome_series($entries_data, 'x
 $y_series = gh\insights\Helper::populate_effort_outcome_series($entries_data, 'y');
 
 foreach ($y_series as $series_item) {
+    // Add Y series first so that lines appear over bars.
     $chart->add_series($series_item);
 }
 
