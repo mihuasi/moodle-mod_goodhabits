@@ -90,25 +90,63 @@ if ($mform->is_cancelled()) {
     $habit_id = $data->habit;
     $start = $data->start;
     $end = $data->end;
+    $custom = $data->customgraphsource;
 }
+
 $limits = [
     'lower' => $start,
     'upper' => $end
 ];
 
-
-$entries = gh\insights\Helper::get_habit_entries($instanceid, $userid, $limits, [$habit_id]);
-
-$entries_data = gh\insights\Helper::structure_data($entries);
-
-$dates = gh\insights\Helper::get_graph_dates();
-
-//print_object($entries_data);
-
 $chart = new \core\chart_bar();
 
-$x_series = gh\insights\Helper::populate_effort_outcome_series($entries_data, 'x');
-$y_series = gh\insights\Helper::populate_effort_outcome_series($entries_data, 'y');
+if ($custom AND $data) {
+    $bar_option = $data->bardata;
+    $line_option = $data->linedata;
+
+    $bar_parts = explode('_', $bar_option);
+    $bar_habit_id = (int) $bar_parts[0];
+    $bar_metric = $bar_parts[1]; // effort/outcome/difference
+
+    $line_parts = explode('_', $line_option);
+    $line_habit_id = (int)$line_parts[0];
+    $line_metric = $line_parts[1];
+
+    $bar_entries = gh\insights\Helper::get_habit_entries($instanceid, $userid, $limits, [$bar_habit_id]);
+    $line_entries = gh\insights\Helper::get_habit_entries($instanceid, $userid, $limits, [$line_habit_id]);
+
+    $bar_data = gh\insights\Helper::structure_data($bar_entries);
+    $line_data = gh\insights\Helper::structure_data($line_entries);
+
+//    print_object($bar_data);
+//    print_object($line_data);
+
+    $dates = gh\insights\Helper::get_graph_dates();
+
+    $metric = ($bar_metric == 'effort') ? 'x' : 'y';
+
+    $bar_series = gh\insights\Helper::populate_effort_outcome_series($bar_data, $metric, 'bar');
+
+    $metric = ($line_metric == 'effort') ? 'x' : 'y';
+
+    $line_series = gh\insights\Helper::populate_effort_outcome_series($line_data, $metric, \core\chart_series::TYPE_LINE);
+
+    $x_series = $bar_series;
+    $y_series = $line_series;
+
+
+
+} else {
+    $entries = gh\insights\Helper::get_habit_entries($instanceid, $userid, $limits, [$habit_id]);
+
+    $entries_data = gh\insights\Helper::structure_data($entries);
+
+    $dates = gh\insights\Helper::get_graph_dates();
+
+    $x_series = gh\insights\Helper::populate_effort_outcome_series($entries_data, 'x');
+    $y_series = gh\insights\Helper::populate_effort_outcome_series($entries_data, 'y');
+}
+
 
 foreach ($y_series as $series_item) {
     // Add Y series first so that lines appear over bars.

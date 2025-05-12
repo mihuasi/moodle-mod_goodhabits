@@ -63,10 +63,13 @@ class Helper {
         return $data;
     }
 
-    public static function populate_effort_outcome_series($entries_data, $measure)
+    public static function populate_effort_outcome_series($entries_data, $measure, $chart_type = '')
     {
         $series_arr = [];
         $dates = static::$graph_dates;
+        if (!$chart_type AND $measure == 'y') {
+            $chart_type = \core\chart_series::TYPE_LINE;
+        }
 
         foreach ($entries_data as $name => $habit_entries) {
                 $series_data = [];
@@ -80,7 +83,7 @@ class Helper {
                 $string_id = $measure . 'label';
                 $measure_name = \mod_goodhabits\Helper::get_string($string_id);
                 $series = new \core\chart_series($name . ' - ' . $measure_name, $series_data);
-                if ($measure == 'y') {
+                if ($chart_type == \core\chart_series::TYPE_LINE) {
                     $series->set_type(\core\chart_series::TYPE_LINE);
                 }
                 $series_arr[] = $series;
