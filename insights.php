@@ -122,8 +122,6 @@ if ($custom AND $data) {
 
     gh\insights\Helper::add_missing_dates($calendar, $start, $end);
 
-    $dates = gh\insights\Helper::get_graph_dates();
-
     $metric = gh\insights\Helper::map_metric_term($bar_metric);
 
     $bar_series = gh\insights\Helper::populate_effort_outcome_series($bar_data, $metric, 'bar');
@@ -131,6 +129,10 @@ if ($custom AND $data) {
     $metric = gh\insights\Helper::map_metric_term($line_metric);
 
     $line_series = gh\insights\Helper::populate_effort_outcome_series($line_data, $metric, \core\chart_series::TYPE_LINE);
+
+    gh\insights\Helper::remove_redundant_years();
+
+    $dates = gh\insights\Helper::get_graph_dates();
 
     $x_series = $bar_series;
     $y_series = $line_series;
@@ -142,10 +144,12 @@ if ($custom AND $data) {
 
     gh\insights\Helper::add_missing_dates($calendar, $start, $end);
 
-    $dates = gh\insights\Helper::get_graph_dates();
-
     $x_series = gh\insights\Helper::populate_effort_outcome_series($entries_data, 'x');
     $y_series = gh\insights\Helper::populate_effort_outcome_series($entries_data, 'y');
+
+    gh\insights\Helper::remove_redundant_years();
+
+    $dates = gh\insights\Helper::get_graph_dates();
 }
 
 

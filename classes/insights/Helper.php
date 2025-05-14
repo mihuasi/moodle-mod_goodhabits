@@ -135,6 +135,27 @@ class Helper {
         static::$graph_dates = $merged;
     }
 
+    public static function remove_redundant_years() {
+        $graph_dates = &static::$graph_dates;
+        $seen_years = [];
+        foreach ($graph_dates as &$date_str) {
+            // Split date into parts (d-m-y format)
+            $parts = explode('-', $date_str);
+            if (count($parts) !== 3) continue; // Skip invalid formats
+
+            $year = end($parts);
+            if (!in_array($year, $seen_years)) {
+                // First occurrence of this year - keep full format
+                $seen_years[] = $year;
+            } else {
+                // Subsequent occurrence - remove year
+                $date_str = $parts[0] . '-' . $parts[1];
+            }
+        }
+        unset($date_str); // Break the reference
+    }
+
+
 
     public static function populate_effort_outcome_series($entries_data, $metric, $chart_type = '')
     {
