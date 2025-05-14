@@ -45,7 +45,7 @@ class Helper {
     public static function structure_data(array $records) {
         $data = [];
         foreach ($records as $record) {
-            $date = date('d-m', $record->endofperiod_timestamp);
+            $date = date('d-m-y', $record->endofperiod_timestamp);
             if (!in_array($date, static::$graph_dates)) {
                 static::$graph_dates[] = $date;
             }
@@ -70,43 +70,68 @@ class Helper {
         $period = $calendar->get_period_duration();
         $graph_dates = &static::$graph_dates;
 
-        // Convert timestamps to DateTime objects.
+        // Convert timestamps to DateTime objects
         $start_date = (new \DateTime())->setTimestamp($start)->setTime(0, 0);
         $end_date = (new \DateTime())->setTimestamp($end)->setTime(23, 59, 59);
         $year = $start_date->format('Y');
 
-        // Create full sequence of expected dates.
-        $expected_dates = [];
-        $current_date = clone $start_date;
-        while ($current_date <= $end_date) {
-            $expected_dates[] = $current_date->format('d-m');
-            $current_date->modify("+$period days");
-        }
-
-        // Convert existing dates to DateTime objects with correct year.
+        // Parse and validate existing dates
         $existing_dates = [];
         foreach ($graph_dates as $date_str) {
             $date = \DateTime::createFromFormat('d-m-Y', "$date_str-$year");
             if ($date && $date >= $start_date && $date <= $end_date) {
-                $existing_dates[$date_str] = $date;
+                $existing_dates[] = $date;
             }
         }
 
-        // Add missing dates from expected sequence.
-        foreach ($expected_dates as $date_str) {
-            if (!isset($existing_dates[$date_str])) {
-                $graph_dates[] = $date_str;
+        // Calculate base date for sequence generation
+        if (!empty($existing_dates) AND $period > 1) {
+            $earliest_existing = min($existing_dates);
+            $diff = $earliest_existing->diff($start_date);
+            $diff_days = (int) $diff->format('%a');
+            $k = floor($diff_days / $period);
+
+            $base_date = clone $earliest_existing;
+            $base_date->modify("-" . ($k * $period) . " days");
+
+            // Ensure base_date >= start_date
+            while ($base_date < $start_date) {
+                $base_date->modify("+$period days");
+            }
+        } else {
+            $base_date = clone $start_date;
+        }
+
+        // Generate full date sequence
+        $sequence = [];
+        $current = clone $base_date;
+
+        // Forward generation
+        while ($current <= $end_date) {
+            $sequence[] = $current->format('d-m-y');
+            $current->modify("+$period days");
+        }
+
+        // Backward generation (only if needed)
+        if (!empty($existing_dates)) {
+            $current = clone $base_date;
+            $current->modify("- $period days");
+            while ($current >= $start_date) {
+                array_unshift($sequence, $current->format('d-m-y'));
+                $current->modify("-$period days");
             }
         }
 
-        // Remove duplicates and sort chronologically.
-        $unique_dates = array_unique($graph_dates);
-        usort($unique_dates, function($a, $b) use ($year) {
+        // Merge and deduplicate
+        $merged = array_unique(array_merge($graph_dates, $sequence));
+
+        // Sort chronologically
+        usort($merged, function($a, $b) use ($year) {
             return \DateTime::createFromFormat('d-m-Y', "$a-$year") <=>
                 \DateTime::createFromFormat('d-m-Y', "$b-$year");
         });
 
-        static::$graph_dates = $unique_dates;
+        static::$graph_dates = $merged;
     }
 
 
