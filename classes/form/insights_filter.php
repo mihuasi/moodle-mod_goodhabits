@@ -55,7 +55,9 @@ class insights_filter extends \moodleform {
         );
 
         // Prepare options for bar and line data selects.
-        $graphoptions = [];
+        $graphoptions = [
+            0 => '--' . get_string('hide') . '--'
+        ];
         foreach ($habits as $habit) {
             $graphoptions[$habit->id . '_effort'] = $habit->name . ' - ' . Helper::get_string('effort');
             $graphoptions[$habit->id . '_outcome'] = $habit->name . ' - ' . Helper::get_string('outcome');

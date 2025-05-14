@@ -106,11 +106,11 @@ if ($custom AND $data) {
 
     $bar_parts = explode('_', $bar_option);
     $bar_habit_id = (int) $bar_parts[0];
-    $bar_metric = $bar_parts[1]; // effort/outcome/difference
+    $bar_metric = $bar_parts[1] ?? ''; // effort/outcome/difference
 
     $line_parts = explode('_', $line_option);
     $line_habit_id = (int)$line_parts[0];
-    $line_metric = $line_parts[1];
+    $line_metric = $line_parts[1] ?? '';
 
     $bar_entries = gh\insights\Helper::get_habit_entries($instanceid, $userid, $limits, [$bar_habit_id]);
     $line_entries = gh\insights\Helper::get_habit_entries($instanceid, $userid, $limits, [$line_habit_id]);

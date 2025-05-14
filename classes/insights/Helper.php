@@ -107,7 +107,7 @@ class Helper {
     private static function get_metric_value($habit_entries, $date, $metric)
     {
         if ($metric == 'diff') {
-            return $habit_entries[$date]['x'] - $habit_entries[$date]['y'];
+            return $habit_entries[$date]['y'] - $habit_entries[$date]['x'];
         }
         return $habit_entries[$date][$metric];
     }
