@@ -203,7 +203,12 @@ class Helper {
     private static function get_metric_value($habit_entries, $date, $metric)
     {
         if ($metric == 'diff') {
-            return $habit_entries[$date]['y'] - $habit_entries[$date]['x'];
+            $diff = $habit_entries[$date]['y'] - $habit_entries[$date]['x'];
+            if ($diff === 0) {
+                // So that it can be seen on the chart.
+                $diff = 0.1;
+            }
+            return $diff;
         }
         return $habit_entries[$date][$metric];
     }
