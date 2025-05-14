@@ -1205,3 +1205,7 @@ body.pagelayout-embedded .activity-header {
     right: 12px;
     opacity: 75%;
 }
+
+.path-mod-goodhabits .chart-area canvas {
+    min-height: 280px;
+}
