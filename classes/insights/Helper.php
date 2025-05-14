@@ -1,6 +1,8 @@
 <?php
 namespace mod_goodhabits\insights;
 
+use mod_goodhabits\calendar\FlexiCalendar;
+
 defined('MOODLE_INTERNAL') || die();
 
 class Helper {
@@ -63,6 +65,51 @@ class Helper {
         return $data;
     }
 
+    public static function add_missing_dates(FlexiCalendar $calendar, $start, $end)
+    {
+        $period = $calendar->get_period_duration();
+        $graph_dates = &static::$graph_dates;
+
+        // Convert timestamps to DateTime objects.
+        $start_date = (new \DateTime())->setTimestamp($start)->setTime(0, 0);
+        $end_date = (new \DateTime())->setTimestamp($end)->setTime(23, 59, 59);
+        $year = $start_date->format('Y');
+
+        // Create full sequence of expected dates.
+        $expected_dates = [];
+        $current_date = clone $start_date;
+        while ($current_date <= $end_date) {
+            $expected_dates[] = $current_date->format('d-m');
+            $current_date->modify("+$period days");
+        }
+
+        // Convert existing dates to DateTime objects with correct year.
+        $existing_dates = [];
+        foreach ($graph_dates as $date_str) {
+            $date = \DateTime::createFromFormat('d-m-Y', "$date_str-$year");
+            if ($date && $date >= $start_date && $date <= $end_date) {
+                $existing_dates[$date_str] = $date;
+            }
+        }
+
+        // Add missing dates from expected sequence.
+        foreach ($expected_dates as $date_str) {
+            if (!isset($existing_dates[$date_str])) {
+                $graph_dates[] = $date_str;
+            }
+        }
+
+        // Remove duplicates and sort chronologically.
+        $unique_dates = array_unique($graph_dates);
+        usort($unique_dates, function($a, $b) use ($year) {
+            return \DateTime::createFromFormat('d-m-Y', "$a-$year") <=>
+                \DateTime::createFromFormat('d-m-Y', "$b-$year");
+        });
+
+        static::$graph_dates = $unique_dates;
+    }
+
+
     public static function populate_effort_outcome_series($entries_data, $metric, $chart_type = '')
     {
         $series_arr = [];
@@ -73,6 +120,7 @@ class Helper {
 
         foreach ($entries_data as $name => $habit_entries) {
                 $series_data = [];
+
                 foreach ($dates as $date) {
                     if (isset($habit_entries[$date])) {
                         $series_data[] = static::get_metric_value($habit_entries, $date, $metric);
@@ -80,9 +128,10 @@ class Helper {
                         $series_data[] = null;
                     }
                 }
+
                 $string_id = $metric . 'label';
                 $metric_name = \mod_goodhabits\Helper::get_string($string_id);
-                $series = new \core\chart_series($name . ' - ' . $metric_name, $series_data);
+                $series = new \core\chart_series($name . ': ' . $metric_name, $series_data);
                 if ($chart_type == \core\chart_series::TYPE_LINE) {
                     $series->set_type(\core\chart_series::TYPE_LINE);
                 }

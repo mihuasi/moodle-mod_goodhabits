@@ -98,6 +98,8 @@ $limits = [
     'upper' => $end
 ];
 
+$calendar = gh\ViewHelper::get_flexi_calendar($moduleinstance);
+
 $chart = new \core\chart_bar();
 
 if ($custom AND $data) {
@@ -118,8 +120,7 @@ if ($custom AND $data) {
     $bar_data = gh\insights\Helper::structure_data($bar_entries);
     $line_data = gh\insights\Helper::structure_data($line_entries);
 
-//    print_object($bar_data);
-//    print_object($line_data);
+    gh\insights\Helper::add_missing_dates($calendar, $start, $end);
 
     $dates = gh\insights\Helper::get_graph_dates();
 
@@ -134,12 +135,12 @@ if ($custom AND $data) {
     $x_series = $bar_series;
     $y_series = $line_series;
 
-
-
 } else {
     $entries = gh\insights\Helper::get_habit_entries($instanceid, $userid, $limits, [$habit_id]);
 
     $entries_data = gh\insights\Helper::structure_data($entries);
+
+    gh\insights\Helper::add_missing_dates($calendar, $start, $end);
 
     $dates = gh\insights\Helper::get_graph_dates();
 
