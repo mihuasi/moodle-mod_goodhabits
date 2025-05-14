@@ -73,19 +73,19 @@ class Helper {
         // Convert timestamps to DateTime objects
         $start_date = (new \DateTime())->setTimestamp($start)->setTime(0, 0);
         $end_date = (new \DateTime())->setTimestamp($end)->setTime(23, 59, 59);
-        $year = $start_date->format('Y');
 
-        // Parse and validate existing dates
+        // Parse existing dates with YEAR
         $existing_dates = [];
         foreach ($graph_dates as $date_str) {
-            $date = \DateTime::createFromFormat('d-m-Y', "$date_str-$year");
+            // Changed to d-m-y format parsing
+            $date = \DateTime::createFromFormat('d-m-y', $date_str);
             if ($date && $date >= $start_date && $date <= $end_date) {
                 $existing_dates[] = $date;
             }
         }
 
         // Calculate base date for sequence generation
-        if (!empty($existing_dates) AND $period > 1) {
+        if (!empty($existing_dates) && $period > 1) {
             $earliest_existing = min($existing_dates);
             $diff = $earliest_existing->diff($start_date);
             $diff_days = (int) $diff->format('%a');
@@ -106,9 +106,9 @@ class Helper {
         $sequence = [];
         $current = clone $base_date;
 
-        // Forward generation
+        // Forward generation with YEAR
         while ($current <= $end_date) {
-            $sequence[] = $current->format('d-m-y');
+            $sequence[] = $current->format('d-m-y'); // Include year
             $current->modify("+$period days");
         }
 
@@ -117,7 +117,7 @@ class Helper {
             $current = clone $base_date;
             $current->modify("- $period days");
             while ($current >= $start_date) {
-                array_unshift($sequence, $current->format('d-m-y'));
+                array_unshift($sequence, $current->format('d-m-y')); // Include year
                 $current->modify("-$period days");
             }
         }
@@ -125,10 +125,11 @@ class Helper {
         // Merge and deduplicate
         $merged = array_unique(array_merge($graph_dates, $sequence));
 
-        // Sort chronologically
-        usort($merged, function($a, $b) use ($year) {
-            return \DateTime::createFromFormat('d-m-Y', "$a-$year") <=>
-                \DateTime::createFromFormat('d-m-Y', "$b-$year");
+        // Sort chronologically with proper year parsing
+        usort($merged, function($a, $b) {
+            $dateA = \DateTime::createFromFormat('d-m-y', $a);
+            $dateB = \DateTime::createFromFormat('d-m-y', $b);
+            return $dateA <=> $dateB;
         });
 
         static::$graph_dates = $merged;
