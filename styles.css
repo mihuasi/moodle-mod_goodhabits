@@ -1115,8 +1115,8 @@ body.pagelayout-embedded .activity-header {
 }
 
 .path-mod-goodhabits .habits .habit .streak .streak-habit-name,
-.path-mod-goodhabits .habits .habit .streak .streak-avg,
-.path-mod-goodhabits .habits .habit .streak .streak-first-entry,
+.path-mod-goodhabits .habits .habit .streak .streak-second-line,
+.path-mod-goodhabits .habits .habit .streak .streak-first-line,
 .path-mod-goodhabits .habits .habit .streak .no-entries,
 .path-mod-goodhabits .habits .habit .streak .streak-insights,
 .path-mod-goodhabits .habits .habit .streak .streak-close-option {
@@ -1124,8 +1124,8 @@ body.pagelayout-embedded .activity-header {
 }
 
 .path-mod-goodhabits .habits .habit.streak-open .streak .streak-habit-name,
-.path-mod-goodhabits .habits .habit.streak-open .streak .streak-avg,
-.path-mod-goodhabits .habits .habit.streak-open .streak .streak-first-entry,
+.path-mod-goodhabits .habits .habit.streak-open .streak .streak-second-line,
+.path-mod-goodhabits .habits .habit.streak-open .streak .streak-first-line,
 .path-mod-goodhabits .habits .habit.streak-open .streak .no-entries,
 .path-mod-goodhabits .habits .habit.streak-open .streak .streak-insights,
 .path-mod-goodhabits .habits .habit.streak-open .streak .streak-close-option {
@@ -1146,7 +1146,7 @@ body.pagelayout-embedded .activity-header {
     color: black;
 }
 
-.path-mod-goodhabits .habits .habit .streak .streak-avg {
+.path-mod-goodhabits .habits .habit .streak .streak-second-line {
     font-size: 14px;
     /*text-align: left;*/
     color: #3a3a3a;

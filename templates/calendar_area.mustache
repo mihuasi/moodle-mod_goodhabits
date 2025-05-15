@@ -73,10 +73,10 @@
                     <div class="streak-habit-name">{{{habit_name}}}</div>
                     <div class="streak-close-option close-btn">X</div>
                     {{#has_first_entry}}
-                        <div class="streak-first-entry">
+                        <div class="streak-first-line">
                             {{#str}} first_entry, mod_goodhabits {{/str}}: <a href="{{{first_entry_url}}}">{{{first_entry_display}}}</a>
                         </div>
-                        <div class="streak-avg">
+                        <div class="streak-second-line">
                             {{#str}} average_eff_out, mod_goodhabits {{/str}}: <span class="checkmark x-val-{{effort_avg_rounded}} y-val-{{outcome_avg_rounded}}">
                                 {{effort_avg}} / {{outcome_avg}}
                             </span>
