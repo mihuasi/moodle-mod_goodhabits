@@ -213,7 +213,7 @@ class mod_goodhabits_renderer extends plugin_renderer_base {
         $entries = $habit->get_entries($userid, $calendar);
 
         $prefs_mgr = new gh\PreferencesManager($instanceid, $userid);
-        $show_scores = $prefs_mgr->show_scores();
+        $pref_show_scores = $prefs_mgr->show_scores();
 
         $canmanageentries = has_capability('mod/goodhabits:manage_entries', $this->page->context);
 
@@ -222,6 +222,7 @@ class mod_goodhabits_renderer extends plugin_renderer_base {
         $count = 1;
 
         foreach ($displayset as $unit) {
+            $show_scores = $pref_show_scores;
             $data_checkmark = [];
             $timestamp = $unit->getTimestamp();
             $isinbreak = gh\BreaksHelper::is_in_a_break($timestamp, $userid);
