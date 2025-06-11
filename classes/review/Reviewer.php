@@ -61,6 +61,19 @@ class Reviewer
         return $this->userid;
     }
 
+    public function can_review($userid)
+    {
+        $subjects = $this->get_subjects();
+
+        foreach ($subjects as $subject) {
+            $subject_id = $subject->get_userid();
+            if ($subject_id == $userid) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     protected function get_candidates()
     {
         global $DB;
