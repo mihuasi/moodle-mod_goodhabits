@@ -214,6 +214,9 @@ class mod_goodhabits_renderer extends plugin_renderer_base {
 
         $prefs_mgr = new gh\PreferencesManager($instanceid, $userid);
         $pref_show_scores = $prefs_mgr->show_scores();
+        if ($isreview) {
+            $pref_show_scores = true;
+        }
 
         $canmanageentries = has_capability('mod/goodhabits:manage_entries', $this->page->context);
 
@@ -357,8 +360,11 @@ class mod_goodhabits_renderer extends plugin_renderer_base {
         echo $this->print_link_as_form($url, $text);
     }
 
-    public function print_see_historical_data($instanceid) {
+    public function print_see_historical_data($instanceid, $subject_id = null) {
         $params = array('instance' => $instanceid);
+        if ($subject_id) {
+            $params['subject_id'] = $subject_id;
+        }
         $url = new moodle_url('/mod/goodhabits/historical_data.php', $params);
         $text = gh\Helper::get_string('historical_data');
         echo $this->print_link_as_form($url, $text);
@@ -521,7 +527,7 @@ class mod_goodhabits_renderer extends plugin_renderer_base {
         $template_data['calendar'] = $this->get_calendar_data($calendar, $instanceid, $userid);
 
         $template_data['habits'] = $this->get_habits_data($calendar, $habits, $userid, $instanceid);
-        $template_data['extra_classes'] = $extraclasses;
+        $template_data['extra_classes'] = implode(' ', $extraclasses);
         if (!$review) {
             $template_data['help'] = $this->get_help_data($calendar, $instanceid, $userid);
         }

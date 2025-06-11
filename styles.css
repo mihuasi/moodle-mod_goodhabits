@@ -1209,3 +1209,7 @@ body.pagelayout-embedded .activity-header {
 .path-mod-goodhabits .chart-area canvas {
     min-height: 280px;
 }
+
+.path-mod-goodhabits .goodhabits-container.review .streak {
+    cursor: default;
+}

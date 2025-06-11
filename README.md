@@ -16,6 +16,10 @@ The intention of this plugin is to help track habits over time. Within an e-lear
 - Student users have control over their own review preferences.
 - A help feature guides new users through the process from setting up habits to answering questions. After they complete a single set of questions, there is a general how-to guide.
 
+## 2.2.1 Notes
+- Improve review
+- Allow review of historical data belonging to other users
+
 ## 2.1.2 Notes
 - Add historical data feature
 

@@ -95,6 +95,37 @@ class ViewHelper {
         return fullname($user);
     }
 
+    public static function get_access_review_as_string_id($instanceid, $userid)
+    {
+        $accessing_as = PreferencesManager::access_review_feature_as($instanceid, $userid);
+        $access_as_string = 'access_review_entries_as_admin';
+        if ($accessing_as == PreferencesManager::ACCESS_AS_PEER) {
+            $access_as_string = 'access_review_entries_as_peer';
+        }
+        return $access_as_string;
+    }
+
+    /**
+     * Generates HTML for the review intro.
+     *
+     * @param $fullname
+     * @throws coding_exception
+     */
+    public static function print_review_intro($fullname, $accessing_as_string_id, $out = true) {
+        $accessing_as_text = Helper::get_string($accessing_as_string_id);
+        $accessing_as = \html_writer::div($accessing_as_text, 'accessing-as');
+        $string = get_string('review_entries_name', 'mod_goodhabits', $fullname);
+        $string = \html_writer::div($string, 'intro-name', array('id' => 'intro-name'));
+        $string .= $accessing_as;
+        $output = \html_writer::div($string, 'intro');
+        echo $output;
+//        if ($out) {
+//            echo $output;
+//        } else {
+//            return $output;
+//        }
+    }
+
     /**
      * Returns an array of all of the allowable review options.
      *

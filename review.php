@@ -37,8 +37,12 @@ $name = $moduleinstance->name;
 $userid = optional_param('userid', 0, PARAM_INT);
 
 $context = context_module::instance($cm->id);
-//TODO: Check settings.
-$canreview = (has_capability('mod/goodhabits:review_as_admin', $context) OR has_capability('mod/goodhabits:review_as_peer', $context));
+
+$reviewer_user_id = $USER->id;
+$reviewer = new \mod_goodhabits\review\Reviewer($instanceid, $reviewer_user_id, $context);
+$reviewer->init();
+$canreview = $reviewer->can_review($userid);
+
 if (!$canreview) {
     throw new moodle_exception(get_string('no_access', 'mod_goodhabits'));
 }
@@ -103,6 +107,11 @@ if ($userid) {
 
     $extraclasses = array('review');
     $renderer->print_templated_calendar_area($calendar, $instanceid, $habits, $extraclasses, $userid, true);
+}
+
+$can_see_historical_data = has_capability('mod/goodhabits:view_others_historical_data', $context);
+if ($can_see_historical_data) {
+    $renderer->print_see_historical_data($instanceid, $userid);
 }
 
 echo $renderer->print_home_link($name);

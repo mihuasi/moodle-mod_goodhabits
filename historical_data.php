@@ -32,14 +32,27 @@ require_login();
 $instanceid = required_param('instance', PARAM_INT);
 $habit_id = optional_param('habit_id', 0, PARAM_INT);
 $end = optional_param('end_time', time(), PARAM_INT);
+$subject_id = optional_param('subject_id', 0, PARAM_INT);
 $moduleinstance = gh\Helper::get_module_instance($instanceid);
 $course = get_course($moduleinstance->course);
 $cm = get_coursemodule_from_instance('goodhabits', $moduleinstance->id, $course->id, false, MUST_EXIST);
 $name = $moduleinstance->name;
 
-$userid = $USER->id;
-
 $context = context_module::instance($cm->id);
+
+if ($subject_id) {
+    $reviewer_user_id = $USER->id;
+    $reviewer = new \mod_goodhabits\review\Reviewer($instanceid, $reviewer_user_id, $context);
+    $reviewer->init();
+    $canreview = $reviewer->can_review($subject_id);
+    if (!$canreview) {
+        throw new moodle_exception(get_string('no_access', 'mod_goodhabits'));
+    }
+
+    $userid = $subject_id;
+} else {
+    $userid = $USER->id;
+}
 
 require_capability('mod/goodhabits:view_own_historical_data', $context);
 
@@ -65,6 +78,12 @@ $PAGE->navbar->add($pagetitle, $pageurl);
 
 echo $OUTPUT->header();
 
+if ($subject_id) {
+    $access_as_string_id = gh\ViewHelper::get_access_review_as_string_id($instanceid, $userid);
+    $fullname = gh\ViewHelper::get_name($userid);
+    gh\ViewHelper::print_review_intro($fullname, $access_as_string_id);
+}
+
 $start = strtotime('-30 day', $end);
 
 if (!$habit_id) {
@@ -78,7 +97,8 @@ $formdata = [
     'selected' => $habit_id,
     'start' => $start,
     'end' => $end,
-    'instanceid' => $instanceid
+    'instanceid' => $instanceid,
+    'subject_id' => $subject_id
 ];
 
 $mform = new \mod_goodhabits\form\historical_data_filter(null, $formdata);

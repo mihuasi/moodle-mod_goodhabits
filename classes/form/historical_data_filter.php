@@ -16,9 +16,14 @@ class historical_data_filter extends \moodleform {
         $start = $this->_customdata['start'];
         $end = $this->_customdata['end'];
         $instanceid = $this->_customdata['instanceid'];
+        $subject_id = $this->_customdata['subject_id'];
 
         // Hidden instance field
         $mform->addElement('hidden', 'instance', $instanceid);
+        if ($subject_id) {
+            $mform->addElement('hidden', 'subject_id', $subject_id);
+        }
+
         $mform->setType('instance', PARAM_INT);
 
         // Habit checkboxes
