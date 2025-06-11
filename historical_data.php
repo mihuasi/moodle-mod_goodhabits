@@ -42,6 +42,7 @@ $context = context_module::instance($cm->id);
 
 if ($subject_id) {
     $reviewer_user_id = $USER->id;
+    $subject_fullname = gh\ViewHelper::get_name($subject_id);
     $reviewer = new \mod_goodhabits\review\Reviewer($instanceid, $reviewer_user_id, $context);
     $reviewer->init();
     $canreview = $reviewer->can_review($subject_id);
@@ -73,6 +74,11 @@ $params = array('instance' => $instanceid);
 $pageurl = new moodle_url('/mod/goodhabits/historical_data.php', $params);
 
 $PAGE->set_url($pageurl);
+if ($subject_id) {
+    $params = array('instance' => $instanceid, 'userid' => $subject_id);
+    $review_page_url = new moodle_url('/mod/goodhabits/review.php', $params);
+    $PAGE->navbar->add($subject_fullname, $review_page_url);
+}
 
 $PAGE->navbar->add($pagetitle, $pageurl);
 
@@ -80,8 +86,7 @@ echo $OUTPUT->header();
 
 if ($subject_id) {
     $access_as_string_id = gh\ViewHelper::get_access_review_as_string_id($instanceid, $userid);
-    $fullname = gh\ViewHelper::get_name($userid);
-    gh\ViewHelper::print_review_intro($fullname, $access_as_string_id);
+    gh\ViewHelper::print_review_intro($subject_fullname, $access_as_string_id);
 }
 
 $start = strtotime('-30 day', $end);
