@@ -102,15 +102,11 @@ if ($userid) {
     // Only allow if the user being queried can access this module.
     require_capability('mod/goodhabits:view', $context, $userid);
 
-    $accessing_as = gh\PreferencesManager::access_review_feature_as($instanceid, $userid);
-    $access_as_string = 'access_review_entries_as_admin';
-    if ($accessing_as == gh\PreferencesManager::ACCESS_AS_PEER) {
-        $access_as_string = 'access_review_entries_as_peer';
-    }
+    $access_as_string_id = gh\ViewHelper::get_access_review_as_string_id($instanceid, $userid);
 
     $fullname = gh\ViewHelper::get_name($userid);
 
-    $renderer->print_review_intro($fullname, $access_as_string);
+    gh\ViewHelper::print_review_intro($fullname, $access_as_string_id);
 
     $habits = gh\habit\HabitItemsHelper::get_all_habits_for_user($instanceid, $userid, 1);
 

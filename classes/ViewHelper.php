@@ -98,11 +98,11 @@ class ViewHelper {
     public static function get_access_review_as_string_id($instanceid, $userid)
     {
         $accessing_as = PreferencesManager::access_review_feature_as($instanceid, $userid);
-        $access_as_string = 'access_review_entries_as_admin';
+        $access_as_string_id = 'access_review_entries_as_admin';
         if ($accessing_as == PreferencesManager::ACCESS_AS_PEER) {
-            $access_as_string = 'access_review_entries_as_peer';
+            $access_as_string_id = 'access_review_entries_as_peer';
         }
-        return $access_as_string;
+        return $access_as_string_id;
     }
 
     /**

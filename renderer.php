@@ -480,20 +480,20 @@ class mod_goodhabits_renderer extends plugin_renderer_base {
         echo html_writer::div($string, 'intro');
     }
 
-    /**
-     * Generates HTML for the review intro.
-     *
-     * @param $fullname
-     * @throws coding_exception
-     */
-    public function print_review_intro($fullname, $accessing_as_string_id) {
-        $accessing_as_text = gh\Helper::get_string($accessing_as_string_id);
-        $accessing_as = html_writer::div($accessing_as_text, 'accessing-as');
-        $string = get_string('review_entries_name', 'mod_goodhabits', $fullname);
-        $string = html_writer::div($string, 'intro-name', array('id' => 'intro-name'));
-        $string .= $accessing_as;
-        echo html_writer::div($string, 'intro');
-    }
+//    /**
+//     * Generates HTML for the review intro.
+//     *
+//     * @param $fullname
+//     * @throws coding_exception
+//     */
+//    public function print_review_intro($fullname, $accessing_as_string_id) {
+//        $accessing_as_text = gh\Helper::get_string($accessing_as_string_id);
+//        $accessing_as = html_writer::div($accessing_as_text, 'accessing-as');
+//        $string = get_string('review_entries_name', 'mod_goodhabits', $fullname);
+//        $string = html_writer::div($string, 'intro-name', array('id' => 'intro-name'));
+//        $string .= $accessing_as;
+//        echo html_writer::div($string, 'intro');
+//    }
 
     /**
      * Generates the overall calendar area using a mustache template.
