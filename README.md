@@ -1,4 +1,4 @@
-# Good Habits Activity Module (2.1.2) for Moodle #
+# Good Habits Activity Module (2.2.1) for Moodle #
 
 The intention of this plugin is to help track habits over time. Within an e-learning context this may help cultivate behaviours that improve learning outcomes.
 
