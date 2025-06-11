@@ -38,14 +38,23 @@ $userid = optional_param('userid', 0, PARAM_INT);
 
 $context = context_module::instance($cm->id);
 
-$reviewer_user_id = $USER->id;
-$reviewer = new \mod_goodhabits\review\Reviewer($instanceid, $reviewer_user_id, $context);
-$reviewer->init();
-$canreview = $reviewer->can_review($userid);
+$can_access_review = (has_capability('mod/goodhabits:review_as_admin', $context) OR has_capability('mod/goodhabits:review_as_peer', $context));
 
-if (!$canreview) {
+$reviewer_user_id = $USER->id;
+
+if (!$can_access_review) {
     throw new moodle_exception(get_string('no_access', 'mod_goodhabits'));
 }
+
+if ($userid) {
+    $reviewer = new \mod_goodhabits\review\Reviewer($instanceid, $reviewer_user_id, $context);
+    $reviewer->init();
+    $can_review_user = $reviewer->can_review($userid);
+    if (!$can_review_user) {
+        throw new moodle_exception(get_string('no_access', 'mod_goodhabits'));
+    }
+}
+
 $reviewconf = get_config('goodhabits', 'review');
 if ($reviewconf == gh\ViewHelper::REVIEW_OPTION_DISABLE) {
     throw new moodle_exception(get_string('accessing_review_when_disabled', 'mod_goodhabits'));
