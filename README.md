@@ -80,7 +80,7 @@ The intention of this plugin is to help track habits over time. Within an e-lear
 
 ## License ##
 
-2024 Joe Cape <joe.sc.cape@gmail.com>
+2025 Joe Cape <joe.sc.cape@gmail.com>
 
 This program is free software: you can redistribute it and/or modify it under
 the terms of the GNU General Public License as published by the Free Software
