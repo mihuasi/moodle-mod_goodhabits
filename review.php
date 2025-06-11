@@ -71,7 +71,7 @@ $PAGE->set_heading($pagetitle);
 $PAGE->set_course($course);
 $PAGE->set_cm($cm);
 
-$params = array('instance' => $instanceid);
+$params = array('instance' => $instanceid, 'userid' => $userid);
 
 $pageurl = new moodle_url('/mod/goodhabits/review.php', $params);
 
@@ -112,12 +112,13 @@ if ($userid) {
 
     $extraclasses = array('review');
     $renderer->print_templated_calendar_area($calendar, $instanceid, $habits, $extraclasses, $userid, true);
+
+    $can_see_historical_data = has_capability('mod/goodhabits:view_others_historical_data', $context);
+    if ($can_see_historical_data) {
+        $renderer->print_see_historical_data($instanceid, $userid);
+    }
 }
 
-$can_see_historical_data = has_capability('mod/goodhabits:view_others_historical_data', $context);
-if ($can_see_historical_data) {
-    $renderer->print_see_historical_data($instanceid, $userid);
-}
 
 echo $renderer->print_home_link($name);
 
