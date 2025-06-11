@@ -1,5 +1,5 @@
 <?php
-namespace mod_goodhabits\insights;
+namespace mod_goodhabits\historical_data;
 
 use mod_goodhabits\calendar\FlexiCalendar;
 

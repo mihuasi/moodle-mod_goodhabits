@@ -41,11 +41,11 @@ $userid = $USER->id;
 
 $context = context_module::instance($cm->id);
 
-require_capability('mod/goodhabits:view_own_insights', $context);
+require_capability('mod/goodhabits:view_own_historical_data', $context);
 
 $habits = HabitItemsHelper::get_all_habits_for_user($instanceid, $userid);
 
-$titleid = 'insights';
+$titleid = 'historical_data';
 $pagetitle = gh\Helper::get_string($titleid);
 
 $PAGE->set_context($context);
@@ -57,7 +57,7 @@ $PAGE->set_cm($cm);
 
 $params = array('instance' => $instanceid);
 
-$pageurl = new moodle_url('/mod/goodhabits/insights.php', $params);
+$pageurl = new moodle_url('/mod/goodhabits/historical_data.php', $params);
 
 $PAGE->set_url($pageurl);
 
@@ -81,10 +81,10 @@ $formdata = [
     'instanceid' => $instanceid
 ];
 
-$mform = new \mod_goodhabits\form\insights_filter(null, $formdata);
+$mform = new \mod_goodhabits\form\historical_data_filter(null, $formdata);
 
 if ($mform->is_cancelled()) {
-    redirect(new moodle_url('/mod/goodhabits/insights.php', ['instance' => $instanceid]));
+    redirect(new moodle_url('/mod/goodhabits/historical_data.php', ['instance' => $instanceid]));
 } else if ($data = $mform->get_data()) {
     // Use submitted data
     $habit_id = $data->habit;
@@ -114,42 +114,42 @@ if ($custom AND $data) {
     $line_habit_id = (int)$line_parts[0];
     $line_metric = $line_parts[1] ?? '';
 
-    $bar_entries = gh\insights\Helper::get_habit_entries($instanceid, $userid, $limits, [$bar_habit_id]);
-    $line_entries = gh\insights\Helper::get_habit_entries($instanceid, $userid, $limits, [$line_habit_id]);
+    $bar_entries = gh\historical_data\Helper::get_habit_entries($instanceid, $userid, $limits, [$bar_habit_id]);
+    $line_entries = gh\historical_data\Helper::get_habit_entries($instanceid, $userid, $limits, [$line_habit_id]);
 
-    $bar_data = gh\insights\Helper::structure_data($bar_entries);
-    $line_data = gh\insights\Helper::structure_data($line_entries);
+    $bar_data = gh\historical_data\Helper::structure_data($bar_entries);
+    $line_data = gh\historical_data\Helper::structure_data($line_entries);
 
-    gh\insights\Helper::add_missing_dates($calendar, $start, $end);
+    gh\historical_data\Helper::add_missing_dates($calendar, $start, $end);
 
-    $metric = gh\insights\Helper::map_metric_term($bar_metric);
+    $metric = gh\historical_data\Helper::map_metric_term($bar_metric);
 
-    $bar_series = gh\insights\Helper::populate_effort_outcome_series($bar_data, $metric, 'bar');
+    $bar_series = gh\historical_data\Helper::populate_effort_outcome_series($bar_data, $metric, 'bar');
 
-    $metric = gh\insights\Helper::map_metric_term($line_metric);
+    $metric = gh\historical_data\Helper::map_metric_term($line_metric);
 
-    $line_series = gh\insights\Helper::populate_effort_outcome_series($line_data, $metric, \core\chart_series::TYPE_LINE);
+    $line_series = gh\historical_data\Helper::populate_effort_outcome_series($line_data, $metric, \core\chart_series::TYPE_LINE);
 
-    gh\insights\Helper::remove_redundant_years();
+    gh\historical_data\Helper::remove_redundant_years();
 
-    $dates = gh\insights\Helper::get_graph_dates();
+    $dates = gh\historical_data\Helper::get_graph_dates();
 
     $x_series = $bar_series;
     $y_series = $line_series;
 
 } else {
-    $entries = gh\insights\Helper::get_habit_entries($instanceid, $userid, $limits, [$habit_id]);
+    $entries = gh\historical_data\Helper::get_habit_entries($instanceid, $userid, $limits, [$habit_id]);
 
-    $entries_data = gh\insights\Helper::structure_data($entries);
+    $entries_data = gh\historical_data\Helper::structure_data($entries);
 
-    gh\insights\Helper::add_missing_dates($calendar, $start, $end);
+    gh\historical_data\Helper::add_missing_dates($calendar, $start, $end);
 
-    $x_series = gh\insights\Helper::populate_effort_outcome_series($entries_data, 'x');
-    $y_series = gh\insights\Helper::populate_effort_outcome_series($entries_data, 'y');
+    $x_series = gh\historical_data\Helper::populate_effort_outcome_series($entries_data, 'x');
+    $y_series = gh\historical_data\Helper::populate_effort_outcome_series($entries_data, 'y');
 
-    gh\insights\Helper::remove_redundant_years();
+    gh\historical_data\Helper::remove_redundant_years();
 
-    $dates = gh\insights\Helper::get_graph_dates();
+    $dates = gh\historical_data\Helper::get_graph_dates();
 }
 
 

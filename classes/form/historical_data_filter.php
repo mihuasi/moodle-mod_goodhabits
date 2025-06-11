@@ -7,7 +7,7 @@ defined('MOODLE_INTERNAL') || die();
 
 require_once($CFG->libdir.'/formslib.php');
 
-class insights_filter extends \moodleform {
+class historical_data_filter extends \moodleform {
 
     protected function definition() {
         $mform = $this->_form;

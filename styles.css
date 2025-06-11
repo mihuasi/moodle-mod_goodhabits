@@ -1118,7 +1118,7 @@ body.pagelayout-embedded .activity-header {
 .path-mod-goodhabits .habits .habit .streak .streak-second-line,
 .path-mod-goodhabits .habits .habit .streak .streak-first-line,
 .path-mod-goodhabits .habits .habit .streak .no-entries,
-.path-mod-goodhabits .habits .habit .streak .streak-insights,
+.path-mod-goodhabits .habits .habit .streak .streak-historical_data,
 .path-mod-goodhabits .habits .habit .streak .streak-close-option {
     display: none;
 }
@@ -1127,7 +1127,7 @@ body.pagelayout-embedded .activity-header {
 .path-mod-goodhabits .habits .habit.streak-open .streak .streak-second-line,
 .path-mod-goodhabits .habits .habit.streak-open .streak .streak-first-line,
 .path-mod-goodhabits .habits .habit.streak-open .streak .no-entries,
-.path-mod-goodhabits .habits .habit.streak-open .streak .streak-insights,
+.path-mod-goodhabits .habits .habit.streak-open .streak .streak-historical_data,
 .path-mod-goodhabits .habits .habit.streak-open .streak .streak-close-option {
     display: block;
 }

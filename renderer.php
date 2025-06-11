@@ -174,13 +174,13 @@ class mod_goodhabits_renderer extends plugin_renderer_base {
 
         $current_period_end = $calendar->get_latest_limit();
 
-        $url = new moodle_url('/mod/goodhabits/insights.php', [
+        $url = new moodle_url('/mod/goodhabits/historical_data.php', [
             'instance' => $instanceid,
             'habit_id' => $habit->id,
             'end_time' => $current_period_end
         ]);
 
-        $habit_data['insights_url'] = $url->out();
+        $habit_data['historical_data_url'] = $url->out();
 
         $checkmarks = $this->get_checkmarks_data($calendar, $habit, $userid, $instanceid);
         $habit_data['checkmarks'] = $checkmarks;
@@ -357,10 +357,10 @@ class mod_goodhabits_renderer extends plugin_renderer_base {
         echo $this->print_link_as_form($url, $text);
     }
 
-    public function print_see_insights($instanceid) {
+    public function print_see_historical_data($instanceid) {
         $params = array('instance' => $instanceid);
-        $url = new moodle_url('/mod/goodhabits/insights.php', $params);
-        $text = gh\Helper::get_string('insights');
+        $url = new moodle_url('/mod/goodhabits/historical_data.php', $params);
+        $text = gh\Helper::get_string('historical_data');
         echo $this->print_link_as_form($url, $text);
     }
 

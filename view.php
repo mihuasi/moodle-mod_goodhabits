@@ -146,7 +146,7 @@ if ($canreview) {
     $renderer->print_review_entries($instanceid, $access_review_string);
 }
 
-$renderer->print_see_insights($instanceid);
+$renderer->print_see_historical_data($instanceid);
 
 if ($canmanagepersonal) {
     $renderer->print_manage_habits($instanceid);

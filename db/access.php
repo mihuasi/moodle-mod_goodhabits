@@ -111,7 +111,7 @@ $capabilities = array(
         )
     ),
 
-    'mod/goodhabits:view_own_insights' => array(
+    'mod/goodhabits:view_own_historical_data' => array(
         'captype' => 'read',
         'contextlevel' => CONTEXT_MODULE,
         'archetypes' => array(
