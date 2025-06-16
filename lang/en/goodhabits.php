@@ -284,7 +284,7 @@ $string['simple_view_effort_5'] = 'Effort:';
 $string['simple_view_outcome_0'] = 'What benefit did this bring? Were any goals achieved? Go with whatever makes intuitive sense:';
 $string['simple_view_outcome_1'] = 'Did you achieve your goals? Whatever rating feels right is simply a point of reflection, not a final grade:';
 $string['simple_view_outcome_2'] = 'Are you seeing results?';
-$string['simple_view_outcome_3'] = 'Sometimes you might have a clear marker of objective success, which makes it easy to rate the outcome highly. But it\'s ok to take a more subjective measure - simply feeling good about this habit at this time:';
+$string['simple_view_outcome_3'] = 'A clear outcome lets you rate success easily, but it’s ok to just rate how happy you are with the habit:';
 $string['simple_view_outcome_4'] = 'If you can’t measure success right away, just rate how satisfied you feel with your habit:';
 $string['simple_view_outcome_5'] = 'Outcome:';
 
