@@ -547,6 +547,10 @@
     .path-mod-goodhabits .simple-view .prev-habit {
         left: -50px;
     }
+
+    .path-mod-goodhabits div.habits-wrapper {
+        width: 90%;
+    }
 }
 
 @media only screen and (max-width: 683px) {
@@ -644,10 +648,6 @@
     .path-mod-goodhabits .simple-view .next-habit {
         right: -32px;
     }
-
-    .path-mod-goodhabits div.habits-wrapper {
-        width: 90%;
-    }
 }
 
 @media only screen and (max-width: 525px) {
@@ -686,7 +686,7 @@
     }
 }
 
-@media only screen and (max-width: 340px) {
+@media only screen and (max-width: 339px) {
     .path-mod-goodhabits .viewport-too-small {
         display: block;
         background-color: #faabab;
@@ -811,12 +811,12 @@
 
 /* Left arrow positioning */
 .path-mod-goodhabits .prev-habit {
-    left: -120px;; /* Position on the left */
+    left: 10px;; /* Position on the left */
 }
 
 /* Right arrow positioning */
 .path-mod-goodhabits .next-habit {
-    right: -50px; /* Position on the right */
+    right: 10px; /* Position on the right */
 }
 
 /* Optional: Hover effect */
@@ -910,10 +910,14 @@
 }
 
 .path-mod-goodhabits .habits-wrapper {
-    max-width: 400px;
-    width: 60%;
-    margin-left: auto;
-    margin-right: auto;
+    /*max-width: 400px;*/
+    width: 90%;
+    /*margin-left: auto;*/
+    /*margin-right: auto;*/
+    position: relative;
+    margin: 0 auto;
+    max-width: 480px; /* Adjust as needed */
+    padding: 0 32px; /* Adjust as needed – makes room for arrows */
 }
 
 
