@@ -76,10 +76,6 @@ if ($skip) {
     gh\BreaksHelper::process_skip($instanceid, $skip, $calendar);
 }
 
-$auto = new gh\AutoSimple($calendar, $moduleinstance->id, $USER->id);
-//$auto->execute();
-
-
 $PAGE->set_url('/mod/goodhabits/view.php', array('id' => $cm->id));
 $PAGE->set_title(format_string($moduleinstance->name));
 $PAGE->set_heading(format_string($course->fullname));
