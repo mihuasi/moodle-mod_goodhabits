@@ -276,7 +276,7 @@ $string['dyk_mng_habits_5'] = 'Some habits may have been set up for the whole gr
 
 $string['simple_view_effort_0'] = 'Using the sliding scale, how much effort would you say you put in - go with a gut feel:';
 $string['simple_view_effort_1'] = 'How much do you feel you put in? Remember that it is normal for effort to fluctuate:';
-$string['simple_view_effort_2'] = 'Imagine you did nothing at all for this habit. <br /><br /> Then think of all the things you did that you might not have done. This is one way to rate your effort:';
+$string['simple_view_effort_2'] = 'Think about different possible courses of action. Were there any moments you made a particularly good choice?';
 $string['simple_view_effort_3'] = 'How much of a priority did you make this habit?';
 $string['simple_view_effort_4'] = 'How would you rate the energy and focus you’ve dedicated to this habit?';
 $string['simple_view_effort_5'] = 'Effort:';
