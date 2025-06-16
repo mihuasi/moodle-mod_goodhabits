@@ -285,7 +285,7 @@ $string['simple_view_outcome_0'] = 'What benefit did this bring? Were any goals 
 $string['simple_view_outcome_1'] = 'Did you achieve your goals? Whatever rating feels right is simply a point of reflection, not a final grade:';
 $string['simple_view_outcome_2'] = 'Are you seeing results?';
 $string['simple_view_outcome_3'] = 'Sometimes you might have a clear marker of objective success, which makes it easy to rate the outcome highly. But it\'s ok to take a more subjective measure - simply feeling good about this habit at this time:';
-$string['simple_view_outcome_4'] = 'Sometimes objective measures of success are highly uncertain. You don\'t really know the final outcome until much later (think of taking a test).<br /><br /> This can be another reason to prefer rating your subjective level of satisfaction with the habit:';
+$string['simple_view_outcome_4'] = 'If you can’t measure success right away, just rate how satisfied you feel with your habit:';
 $string['simple_view_outcome_5'] = 'Outcome:';
 
 $string['block_of_days'] = 'block of days';
