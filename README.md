@@ -1,4 +1,4 @@
-# Good Habits Activity Module (2.2.1) for Moodle #
+# Good Habits Activity Module (2.2.4) for Moodle #
 
 The intention of this plugin is to help track habits over time. Within an e-learning context this may help cultivate behaviours that improve learning outcomes.
 
@@ -15,6 +15,9 @@ The intention of this plugin is to help track habits over time. Within an e-lear
 - Can be set up to allow for admin review of entries, or for peer review.
 - Student users have control over their own review preferences.
 - A help feature guides new users through the process from setting up habits to answering questions. After they complete a single set of questions, there is a general how-to guide.
+
+## 2.2.4 Notes
+- Fix grid styling due to Bootstrap changes (affects Moodle 5.2)
 
 ## 2.2.1 Notes
 - Improve review
@@ -80,7 +83,7 @@ The intention of this plugin is to help track habits over time. Within an e-lear
 
 ## License ##
 
-2025 Joe Cape <joe.sc.cape@gmail.com>
+2026 Joe Cape <joe.sc.cape@gmail.com>
 
 This program is free software: you can redistribute it and/or modify it under
 the terms of the GNU General Public License as published by the Free Software
